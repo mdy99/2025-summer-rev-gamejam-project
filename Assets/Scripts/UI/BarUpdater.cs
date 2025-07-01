@@ -45,6 +45,8 @@ public class BarUpdater : MonoBehaviour
     public void UpdateBar(int delta) => CurBarValue += delta; // 현재 바 값을 delta만큼 업데이트
     public void UpdateMaxBar(int delta) => MaxBarValue += delta; // 최대 바 값을 delta만큼 업데이트
 
+    private Coroutine regenCoroutine; // 재생성 코루틴
+
     private const int LIMITBARVALUE = 200; // 최대 바의 제한 값
     private const int MINBARVALUE =0;    // 최소 바의 값
     
@@ -60,10 +62,15 @@ public class BarUpdater : MonoBehaviour
     private float barUpdateSpeed =1.8f; // 바의 채움 비율 업데이트 속도
     private float targetFillAmount = 1f; // 목표 채움 비율
 
+    private int regenValue = 10; // 자동 재생성 시 증가하는 바의 값
+
     // Start is called before the first frame update
     void Start()
     {
         InitSetting(); // 초기 설정
+        if(gameObject.tag == "MpBar"){
+            regenCoroutine = StartCoroutine(AutoRegenBar()); // 자동 회복 시작
+        }
     }
 
     // Update is called once per frame
@@ -118,4 +125,24 @@ public class BarUpdater : MonoBehaviour
             Debug.LogWarning("Bar text component is not assigned.");
         }
     }
+
+    private IEnumerator AutoRegenBar(){
+        WaitForSeconds waitTime = new WaitForSeconds(1f); // 1초 대기 시간
+        while(true){
+            if(curBarValue < maxBarValue) // 현재 바 값이 최대 바 값보다 작을 때
+            {
+                CurBarValue += regenValue; // 현재 바 값을 regenValue만큼 증가
+            }
+            yield return waitTime; // 대기 시간 동안 대기
+        }
+    }
+
+    private void StopRegen(){
+        if (regenCoroutine != null)
+        {
+            StopCoroutine(regenCoroutine); // 자동 재생성 코루틴 중지
+            regenCoroutine = null; // 코루틴 변수 초기화
+        }
+    }
+
 }
