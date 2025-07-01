@@ -40,7 +40,7 @@ public class BarUpdater : MonoBehaviour
         }
     }
 
-    public int debugValue=0;
+    public int debugValue=0; // 디버그용 바 값 변경 변수
 
     public void UpdateBar(int delta) => CurBarValue += delta; // 현재 바 값을 delta만큼 업데이트
     public void UpdateMaxBar(int delta) => MaxBarValue += delta; // 최대 바 값을 delta만큼 업데이트
