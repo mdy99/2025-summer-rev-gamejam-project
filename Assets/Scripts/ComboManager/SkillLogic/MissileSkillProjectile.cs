@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class MissileSkillProjectile : MonoBehaviour
 {
-    public float speed = 10f; // 미사일 속도
-    public int damage = 1; // 미사일 피해량
-    public float aoeRadius = 3f; // 범위 공격 반경
+    public SkillData data; // 스킬 데이터
     public GameObject aoeEffectPrefab; // 범위 공격 이펙트 프리팹
 
     private Vector2 direction; // 미사일 이동 방향
@@ -19,7 +17,7 @@ public class MissileSkillProjectile : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(direction * speed * Time.deltaTime); // 미사일 이동
+        transform.Translate(direction * data.speed * Time.deltaTime); // 미사일 이동
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -29,7 +27,7 @@ public class MissileSkillProjectile : MonoBehaviour
 
             GameObject aoeEffect = Instantiate(aoeEffectPrefab, hitPoint, Quaternion.Euler(-90, 0, 0)); // 범위 공격 이펙트 생성
             AOEDamage aOEDamage = aoeEffect.GetComponent<AOEDamage>();
-            aOEDamage.Initialize(aoeRadius, damage); // AOE 범위와 피해량 설정
+            aOEDamage.Initialize(data.aoeRadius, data.damage); // AOE 범위와 피해량 설정
             Destroy(gameObject); // 미사일 오브젝트 제거
         }
     }

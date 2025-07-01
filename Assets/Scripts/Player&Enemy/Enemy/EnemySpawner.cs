@@ -22,10 +22,10 @@ public class EnemySpawner : MonoBehaviour
     private float timer;
 
     [Header("맵 경계")]
-    private float minX = -30f; // 생성 위치의 최소 x 좌표
-    private float maxX = 30f; // 생성 위치의 최대 x 좌표
-    private float minY = -20f; // 생성 위치의 최소 y 좌표
-    private float maxY = 20f; // 생성 위치의 최대 y 좌표
+    private float minX = -29f; // 생성 위치의 최소 x 좌표
+    private float maxX = 29f; // 생성 위치의 최대 x 좌표
+    private float minY = -17f; // 생성 위치의 최소 y 좌표
+    private float maxY = 17f; // 생성 위치의 최대 y 좌표
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +69,7 @@ public class EnemySpawner : MonoBehaviour
                 if(spawnPosition == Vector2.negativeInfinity) return; // 유효한 위치가 없으면 함수 종료
 
                 enemy.transform.position = spawnPosition; // 적의 위치 설정
+                enemy.GetComponent<IEnemy>().Init(enemyDatas[Random.Range(0, enemyDatas.Length)]); // 적 초기화
                 enemy.SetActive(true); // 적 활성화
                 return; // 하나의 적만 생성하고 함수 종료
             }

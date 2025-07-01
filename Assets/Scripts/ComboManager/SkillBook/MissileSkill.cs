@@ -23,5 +23,6 @@ public class MissileSkill : ISkill
 
         GameObject missile = GameObject.Instantiate(data.prefab, firePoisiton, Quaternion.identity); // 미사일 생성
         missile.GetComponent<MissileSkillProjectile>().Initialize(dir); // 미사일 초기화
+        BarManager.Instance.UpdateMpBar(-data.mpCost); // 마나 UI 바 업데이트
     }
 }

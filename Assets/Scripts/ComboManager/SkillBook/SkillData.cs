@@ -27,4 +27,8 @@ public class SkillData : ScriptableObject
     public SkillCategory skillCategory; // 스킬 카테고리
     public string SkillName; // 스킬 이름
     public string Description; // 스킬 설명
+    public int mpCost; // 마나 소모량
+    public float speed; // 스킬 속도
+    public int damage; // 스킬 피해량
+    public float aoeRadius; // 범위 공격 반경
 }

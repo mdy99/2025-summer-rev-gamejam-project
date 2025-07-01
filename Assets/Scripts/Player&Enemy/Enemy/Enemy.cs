@@ -66,9 +66,15 @@ public class Enemy : MonoBehaviour, IEnemy
 
         isLive = false; // 적을 죽음 상태로 변경
       //  enemyAnimator.SetTrigger("die"); // 죽음 애니메이션 트리거 설정
-        StartCoroutine(DisableAfterAnimation(1.0f)); // 대기 후 적 오브젝트 비활성화
+        StartCoroutine(DisableAfterAnimation(0.1f)); // 대기 후 적 오브젝트 비활성화
 
+        GiveReward(); // 보상 지급 함수 호출
         Debug.Log($"Enemy {enemyData.name} has died!"); // 디버그 메시지 출력
+    }
+
+    void GiveReward()
+    {
+        BarManager.Instance.UpdateMpBar(enemyData.rewardMp); // 적 처치 시 플레이어에게 체력 보상 지급
     }
 
     private IEnumerator DisableAfterAnimation(float delay = 0f)

@@ -47,9 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 374fb0c9dc346d64c953a2286fc15e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  damage: 10
-  aoeRadius: 3
+  data: {fileID: 11400000, guid: 8bc4918ccf1e9e0458fa668bc1df53c3, type: 2}
   aoeEffectPrefab: {fileID: 2427901435903505602, guid: 8a915dbbc4b23bf4f931629039cfbf6f, type: 3}
 --- !u!61 &-3865689964207638144
 BoxCollider2D:
