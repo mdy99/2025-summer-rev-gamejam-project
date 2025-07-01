@@ -35,4 +35,20 @@ public class BarManager : MonoBehaviour
         mpBar.GetComponent<BarUpdater>().UpdateBar(value); // mpBar의 현재 값을 10만큼 증가
     }
 
+    public void UpdateMaxHpBar(int value){
+        hpBar.GetComponent<BarUpdater>().UpdateMaxBar(value); // hpBar의 최대 값을 10만큼 증가
+    }
+    public void UpdateMaxMpBar(int value){
+        mpBar.GetComponent<BarUpdater>().UpdateMaxBar(value); // mpBar의 최대 값을 10만큼 증가
+    }
+
+    public int GetHpBarValue()
+    {
+        return hpBar.GetComponent<BarUpdater>().CurBarValue; // 현재 hpBar의 값을 반환
+    }
+    public int GetMpBarValue()
+    {
+        return mpBar.GetComponent<BarUpdater>().CurBarValue; // 현재 mpBar의 값을 반환
+    }
+
 }

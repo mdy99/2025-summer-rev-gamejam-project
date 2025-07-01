@@ -1532,10 +1532,10 @@ MonoBehaviour:
   waveSettings:
   - waveNumber: 1
     enemyCount: 12
-    enemyGoalTotal: 50
+    enemyGoalTotal: 35
   - waveNumber: 2
     enemyCount: 15
-    enemyGoalTotal: 60
+    enemyGoalTotal: 50
   - waveNumber: 3
     enemyCount: 20
     enemyGoalTotal: 70
@@ -1567,6 +1567,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rewardPanel: {fileID: 954211388}
+  reinforcePanel: {fileID: 0}
+  rewardSlots: []
+  nextWaveButton: {fileID: 0}
 --- !u!1 &641348562
 GameObject:
   m_ObjectHideFlags: 0

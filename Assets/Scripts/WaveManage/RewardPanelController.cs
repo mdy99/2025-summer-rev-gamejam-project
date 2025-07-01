@@ -18,10 +18,19 @@ public class RewardPanelController : MonoBehaviour
     {
         nextWaveButton.interactable = false; // 초기에는 다음 웨이브 버튼 비활성화
         reinforcePanel.OnReinforceSelected += HandleReinforceSelected; // 강화 선택 이벤트에 리스너 등록
+
         foreach (var slot in rewardSlots)
         {
-            slot.OnRuneSelected += HandleAnyRuneSelected; // 룬 선택 이벤트에 리스너 등록
+            slot.OnAnyRuneSelected += HandleAnyRuneSelected; // 룬 선택 이벤트에 리스너 등록
             slot.Disable(); // 초기에는 모든 보상 슬롯 비활성화
+        }
+    }
+
+    private void HandleReinforceSelected()
+    {
+        foreach (var slot in rewardSlots)
+        {
+            slot.Enable(); // 모든 보상 슬롯 활성화
         }
     }
 
@@ -52,17 +61,6 @@ public class RewardPanelController : MonoBehaviour
             slot.Disable(); // 모든 보상 슬롯 비활성화
         }
     }
-
-    private void HandleReinforceSelected()
-    {
-        foreach (var slot in rewardSlots)
-        {
-            slot.Enable(); // 모든 보상 슬롯 활성화
-        }
-    }
-
-
-
 
     public void OpenPanel(){
         rewardPanel.SetActive(true); // 보상 패널 활성화

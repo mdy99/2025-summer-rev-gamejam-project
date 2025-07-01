@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour, IEnemy
         //     Debug.LogWarning("EnemyData animatorController is not set!"); // 애니메이터 컨트롤러가 설정되지 않은 경우 경고 메시지 출력
         // }
 
-        Debug.Log($"Enemy {enemyData.enemyName} initialized with HP: {currentHp}"); // 디버그 메시지 출력
+        // Debug.Log($"Enemy {enemyData.enemyName} initialized with HP: {currentHp}"); // 디버그 메시지 출력
     }
 
     // Start is called before the first frame update

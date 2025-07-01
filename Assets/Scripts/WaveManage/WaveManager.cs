@@ -68,6 +68,10 @@ public class WaveManager : MonoBehaviour
 
     private void StartNextWave()
     {
+        if (CurrentState == WaveState.InWave && rewardPanelController.GetActive())
+        {
+            rewardPanelController.ClosePanel(); // 보상 패널 닫기
+        }
         if (currentWave < totalWaves)
         {
             currentWave++;
