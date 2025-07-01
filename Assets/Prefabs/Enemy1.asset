@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 937a14e72a3bf9c4c8a7e1f947bf95ac, type: 3}
   m_Name: Enemy1
   m_EditorClassIdentifier: 
-  enemyName: 
-  description: 
-  hp: 0
-  atk: 0
-  speed: 0
-  attackCooldown: 0
-  animatorController: {fileID: 0}
+  enemyName: "\uBAAC\uC2A4\uD1301"
+  description: "\uBAAC\uC2A4\uD1301\uC774\uB2E4"
+  hp: 20
+  atk: 5
+  speed: 2
+  attackCooldown: 1
+  rewardMp: 10
+  enemyPrefab: {fileID: 9048753774802062996, guid: 7e8e75ad4963266488728623270cc1f7, type: 3}
