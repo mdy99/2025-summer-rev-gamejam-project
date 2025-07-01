@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class BarUpdater : MonoBehaviour
 {
+
     // UI에서 바를 나타내는 이미지 컴포넌트
     public Image backBarImage; // 배경 바 이미지 
     public Image slowBarImage;  // 느리게 업데이트되는 바 이미지
