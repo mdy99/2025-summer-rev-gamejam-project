@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("몬스터 프리팹들")]
     public EnemyData[] enemyDatas; // 몬스터 데이터 배열
-    public int poolSize = 10; // 풀의 크기
+    [SerializeField]private int poolSize = 10; // 풀의 크기
 
     private List<GameObject> enemyPool = new List<GameObject>(); // 적 풀
 
@@ -17,8 +17,19 @@ public class EnemySpawner : MonoBehaviour
     public GameObject midBossPrefab; // 중간 보스 프리팹
     public GameObject finalBossPrefab; // 최종 보스 프리팹
 
-    [Header("스폰 간격")]
-    public float spawnInterval = 2.0f; // 적 생성 간격
+    private float spawnInterval = 2.0f; // 적 생성 간격
+
+    public float SpawnInterval{
+        get => spawnInterval;
+        set{
+            if(value <= 0) {
+                Debug.LogWarning("Spawn interval must be greater than 0. Setting to default value of 2.0f.");
+                return;
+            }
+            spawnInterval = value; // 적 생성 간격 설정
+        }
+    }
+
     private float timer;
 
     [Header("맵 경계")]
@@ -30,35 +41,47 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < poolSize; i++)
-        {
-            int randIndex = Random.Range(0,enemyDatas.Length); // 랜덤으로 몬스터 프리팹 선택
-            EnemyData data = enemyDatas[randIndex]; // 선택한 몬스터 데이터
+        AdjustPoolSize();
+    }
 
-            GameObject enemy = Instantiate(data.enemyPrefab); // 선택한 프리팹으로 적 생성
-            enemy.SetActive(false); // 초기에는 비활성화
+    void AdjustPoolSize(){
+        int currentSize = enemyPool.Count;
 
-            IEnemy enemyComponent = enemy.GetComponent<IEnemy>();
-            enemyComponent.Init(data); // 적 초기화
-            enemyPool.Add(enemy);
+        if(currentSize < poolSize){
+            int diff = poolSize - currentSize;
+
+            for (int i = 0; i < diff; i++)
+            {
+                int randIndex = Random.Range(0,enemyDatas.Length); // 랜덤으로 몬스터 프리팹 선택
+                EnemyData data = enemyDatas[randIndex]; // 선택한 몬스터 데이터
+
+                GameObject enemy = Instantiate(data.enemyPrefab); // 선택한 프리팹으로 적 생성
+                enemy.SetActive(false); // 초기에는 비활성화
+
+                IEnemy enemyComponent = enemy.GetComponent<IEnemy>();
+                enemyComponent.Init(data); // 적 초기화
+                enemyPool.Add(enemy);
+            }
         }
-        // 보스도 미리 인스턴스화
-        // Instantiate(midBossPrefab).SetActive(false); // 중간 보스 비활성화
-        // Instantiate(finalBossPrefab).SetActive(false); // 최종 보스 비활
+        else if(currentSize > poolSize){
+            int diff = currentSize - poolSize;
+            
+            for(int i = 0; i < diff; i++) {
+                GameObject enemyToRemove = enemyPool[enemyPool.Count - 1];
+                enemyPool.RemoveAt(enemyPool.Count - 1);
+                Destroy(enemyToRemove);
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= spawnInterval)
-        {
-            SpawnEnemy();
-            timer = 0f; // 타이머 초기화
-        }
     }
 
-    void SpawnEnemy()
+
+
+    public void SpawnEnemy()
     {
         // 비활성화된 적 오브젝트를 찾음
         foreach (GameObject enemy in enemyPool)
@@ -74,6 +97,7 @@ public class EnemySpawner : MonoBehaviour
                 return; // 하나의 적만 생성하고 함수 종료
             }
         }
+    }
 
     Vector2 GetValidSpawnPosition(){
         for(int i=0;i<30;i++) // 최대 30번 시도
@@ -92,10 +116,9 @@ public class EnemySpawner : MonoBehaviour
         return Vector2.negativeInfinity; // 유효한 위치를 찾지 못하면 무한대 반환
     }
 
-        void SpawnBoss(GameObject bossPrefab)
-        {
+    void SpawnBoss(GameObject bossPrefab)
+    {
             Vector2 bossPosition = new Vector2(0,maxY-2f);
             Instantiate(bossPrefab, bossPosition, Quaternion.identity); // 보스 생성
-        }
     }
 }

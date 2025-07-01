@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private float lastAttackTime = -999f; // 마지막 공격 시간
     
+    
+
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -67,7 +69,7 @@ public class Enemy : MonoBehaviour, IEnemy
         isLive = false; // 적을 죽음 상태로 변경
       //  enemyAnimator.SetTrigger("die"); // 죽음 애니메이션 트리거 설정
         StartCoroutine(DisableAfterAnimation(0.1f)); // 대기 후 적 오브젝트 비활성화
-
+        WaveManager.Instance.OnEnemyKilled(); // 웨이브 매니저에 적 처치 알림
         GiveReward(); // 보상 지급 함수 호출
         Debug.Log($"Enemy {enemyData.name} has died!"); // 디버그 메시지 출력
     }
@@ -103,7 +105,7 @@ public class Enemy : MonoBehaviour, IEnemy
             return; // 플레이어와의 거리가 너무 가까우면 이동하지 않음
         } 
 
-//          enemyAnimator.SetBool("isMoving", true); // 플레이어와의 거리가 멀면 이동 애니메이션을 시작
+//      enemyAnimator.SetBool("isMoving", true); // 플레이어와의 거리가 멀면 이동 애니메이션을 시작
 
         Vector2 directVector = target.transform.position - transform.position; // 플레이어 방향 벡터
         Vector2 nextVector = directVector.normalized * enemyData.speed* Time.fixedDeltaTime; // 플레이어 방향으로 이동 벡터
