@@ -7,6 +7,8 @@ public class PlayerMoveController : MonoBehaviour
     private SpriteRenderer spriteRenderer; // 플레이어의 스프라이트 렌더러
     private Rigidbody2D playerRigidbody; // 플레이어의 Rigidbody2D 컴포넌트
     private LineRenderer lineRenderer; // 그래플링 훅을 위한 LineRenderer 컴포넌트
+    public CoolDownDisplay coolDownDisplay; // 그래플링 훅 쿨타임 표시를 위한 CoolDownDisplay 컴포넌트
+
     private float moveSpeed = 5f; // 플레이어 이동 속도
 
     private Vector2 targetPosition; // 플레이어가 이동할 목표 위치
@@ -58,6 +60,7 @@ public class PlayerMoveController : MonoBehaviour
             if(!isGrappling){
                 isGrappling = true; // 그래플링 훅 사용 시작
                 lastGrappleTime = Time.time; // 그래플링 훅 사용 시간 기록
+                coolDownDisplay.StartCoolDown(grappleCooldown); // 그래플링 훅 쿨타임 시작
             }
             else{
                 isGrappling = false; // 그래플링 훅 사용 중지
@@ -104,7 +107,7 @@ public class PlayerMoveController : MonoBehaviour
         spriteRenderer.flipX = targetPosition.x > playerRigidbody.position.x; // 목표 위치에 따라 스프라이트 방향을 뒤집음
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
+    private void OnCollisionStay2D(Collision2D other) {
         if(other.gameObject.CompareTag("Enemy"))
         {
             isMoving = false; // 장애물에 충돌하면 이동 중지

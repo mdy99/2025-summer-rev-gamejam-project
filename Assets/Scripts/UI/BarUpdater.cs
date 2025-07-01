@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -13,6 +14,8 @@ public class BarUpdater : MonoBehaviour
     public Image slowBarImage;  // 느리게 업데이트되는 바 이미지
     public Image fastBarImage;  // 빠르게 업데이트되는 바 이미지
     public TMP_Text barText; // 현재 바 값을 표시하는 텍스트
+
+    public static event Action OnPlayerDead; // 플레이어가 죽었을 때 호출되는 이벤트
 
     public int CurBarValue{
         get => curBarValue;
@@ -43,7 +46,7 @@ public class BarUpdater : MonoBehaviour
     public void UpdateMaxBar(int delta) => MaxBarValue += delta; // 최대 바 값을 delta만큼 업데이트
 
     private const int LIMITBARVALUE = 200; // 최대 바의 제한 값
-    private const int MINBARVALUE =10;    // 최소 바의 값
+    private const int MINBARVALUE =0;    // 최소 바의 값
     
     // BackBar의 너비를 부드럽게 업데이트하기 위한 변수
     private float baseBackWidth; // 기본 바의 너비 (픽셀 단위)
@@ -83,6 +86,11 @@ public class BarUpdater : MonoBehaviour
         
         curBackWidth = Mathf.Lerp(curBackWidth, targetBackWidth, backBarUpdateSpeed * Time.deltaTime);
         backBarImage.rectTransform.sizeDelta = new Vector2(curBackWidth, backBarImage.rectTransform.sizeDelta.y);
+        if( curBarValue <= MINBARVALUE) // 현재 바 값이 최소 값 이하일 때
+        {
+            OnPlayerDead?.Invoke(); // 플레이어가 죽었음을 알리는 이벤트 호출
+            CurBarValue = MINBARVALUE; // 현재 바 값을 최소 값으로 설정
+        }
     }
 
     private void InitSetting(){

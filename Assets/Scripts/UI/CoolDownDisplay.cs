@@ -9,6 +9,11 @@ public class CoolDownDisplay : MonoBehaviour
     private float coolDownTime; // 쿨타임 시간
     private float lastUsedTime; // 마지막 그래플링 훅 사용 시간
 
+    void Awake()
+    {
+        coolDownImage = GetComponent<Image>(); // 쿨타임 이미지 컴포넌트 가져오기
+    }
+
     public float CoolDownTime
     {
         get { return coolDownTime; }
