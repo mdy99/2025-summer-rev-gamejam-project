@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 937a14e72a3bf9c4c8a7e1f947bf95ac, type: 3}
-  m_Name: Enemy1
+  m_Name: DirtyOilSlime
   m_EditorClassIdentifier: 
-  enemyName: "\uBAAC\uC2A4\uD1301"
+  enemyName: Dirty Oil Slime
   description: "\uBAAC\uC2A4\uD1301\uC774\uB2E4"
   hp: 20
   atk: 5
