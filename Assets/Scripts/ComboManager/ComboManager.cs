@@ -10,6 +10,7 @@ public class ComboManager : MonoBehaviour
     [SerializeField] private Transform playerTransform; // 스킬 데이터 리스트 (룬과 스킬 매핑)
 
     private SkillBook skillBook; // 스킬북 (룬과 스킬 매핑)
+    [SerializeField] private RuneInfoDatabase runeInfoDatabase; // 룬 정보 데이터베이스
 
     private KeyCode MORSE_KEY = KeyCode.A; // 콤보 입력 키 (모스 부호 입력 키)
     private KeyCode ENTER_KEY = KeyCode.W; // 콤보 제출 키 (엔터키)
@@ -21,8 +22,9 @@ public class ComboManager : MonoBehaviour
     private ComboUIRenderer comboUIRenderer; // 콤보 UI 렌더러
     private KeyPressedDetector keyPressedDetector; // 키 입력 탐지기
 
-
     private List<string> activeRunes = new List<string>(); // 현재 활성화된 룬 리스트
+
+
 
     void Update()
     {
@@ -51,6 +53,23 @@ public class ComboManager : MonoBehaviour
     void TryCastSkill(){
         string runeKey = string.Join("", activeRunes); // 현재 활성화된 룬들을 문자열로 결합
         Debug.Log("Trying to cast skill with rune key: " + runeKey); // 디버그 로그 출력
+
+        int totalDamage = 0; // 총 데미지 초기화
+        int totalMpCose = 0; // 총 마나 소모 초기화
+
+        foreach(string rune in activeRunes) // 활성화된 룬들에 대해
+        {
+            if(runeInfoDatabase.ToDictionary().TryGetValue(rune, out RuneInfo runeInfo)) // 룬 정보 데이터베이스에서 룬 정보를 찾음
+            {
+                totalDamage += runeInfo.damage; // 룬의 데미지를 총 데미지에 더함
+                totalMpCose += runeInfo.mpCost; // 룬의 마나 소모를 총 마나 소모에 더함
+            }
+            else
+            {
+                Debug.LogWarning("Rune info not found for rune: " + rune); // 경고 로그 출력
+            }
+        }
+        Debug.Log($"Total Damage: {totalDamage}, Total MP Cost: {totalMpCose}"); // 총 데미지와 마나 소모 로그 출력
 
         if(skillBook.TryGetSkill(runeKey, out ISkill skill)) // 스킬북에서 룬에 해당하는 스킬을 찾음
         {
@@ -85,7 +104,7 @@ public class ComboManager : MonoBehaviour
         comboResultHandler = new ComboResultHandler(comboUIRenderer); // 콤보 결과 핸들러 초기화
         keyPressedDetector = GetComponent<KeyPressedDetector>(); // 키 입력 탐지기 초기화
         keyPressedDetector.KeySetting(MORSE_KEY); // 키 입력 탐지기에 모스 부호 입력 키 설정
-        skillBook = new SkillBook(skillDatas, ()=> playerTransform.position); // 스킬북 초기화
+        skillBook = new SkillBook(skillDatas, ()=> playerTransform.position, runeInfoDatabase.ToDictionary()); // 스킬북 초기화
     }
 
     void AddSymbol(string symbol)

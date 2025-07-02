@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3c4d73a97f4e2e4f8008ba62734bd1b, type: 3}
+  m_Name: RuneInfoDatabase
+  m_EditorClassIdentifier: 
+  runes:
+  - runeCode: A
+    damage: 10
+    mpCost: 10
+  - runeCode: B
+    damage: 9
+    mpCost: 9
+  - runeCode: C
+    damage: 11
+    mpCost: 11
+  - runeCode: D
+    damage: 10
+    mpCost: 10
+  - runeCode: E
+    damage: 9
+    mpCost: 9
+  - runeCode: F
+    damage: 12
+    mpCost: 9
+  - runeCode: G
+    damage: 15
+    mpCost: 12
+  - runeCode: H
+    damage: 9
+    mpCost: 9
+  - runeCode: I
+    damage: 10
+    mpCost: 9
+  - runeCode: J
+    damage: 9
+    mpCost: 9
+  - runeCode: K
+    damage: 15
+    mpCost: 13
+  - runeCode: L
+    damage: 13
+    mpCost: 10
+  - runeCode: M
+    damage: 9
+    mpCost: 9
+  - runeCode: N
+    damage: 9
+    mpCost: 9
+  - runeCode: O
+    damage: 9
+    mpCost: 9
+  - runeCode: P
+    damage: 9
+    mpCost: 9
+  - runeCode: Q
+    damage: 16
+    mpCost: 9
+  - runeCode: R
+    damage: 12
+    mpCost: 9
+  - runeCode: S
+    damage: 10
+    mpCost: 9
+  - runeCode: T
+    damage: 13
+    mpCost: 9
+  - runeCode: U
+    damage: 9
+    mpCost: 9
+  - runeCode: V
+    damage: 9
+    mpCost: 9
+  - runeCode: W
+    damage: 9
+    mpCost: 9
+  - runeCode: X
+    damage: 9
+    mpCost: 9
+  - runeCode: Y
+    damage: 9
+    mpCost: 9
+  - runeCode: Z
+    damage: 10
+    mpCost: 9
+  - runeCode: 0
+    damage: 9
+    mpCost: 9
+  - runeCode: 1
+    damage: 9
+    mpCost: 9
+  - runeCode: 2
+    damage: 9
+    mpCost: 9
+  - runeCode: 3
+    damage: 9
+    mpCost: 9
+  - runeCode: 4
+    damage: 9
+    mpCost: 9
+  - runeCode: 5
+    damage: 9
+    mpCost: 9
+  - runeCode: 6
+    damage: 9
+    mpCost: 9
+  - runeCode: 7
+    damage: 9
+    mpCost: 9
+  - runeCode: 8
+    damage: 9
+    mpCost: 9
+  - runeCode: 9
+    damage: 12
+    mpCost: 9

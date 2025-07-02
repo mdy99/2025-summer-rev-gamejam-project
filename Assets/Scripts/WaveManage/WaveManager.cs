@@ -15,7 +15,9 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] private int totalWaves = 7; // 총 웨이브 수
     [SerializeField] private List<WaveData> waveSettings = new List<WaveData>();
-    
+
+    [SerializeField] private List<SkillData> memorizedSkills = new List<SkillData>(); // 기억된 스킬 데이터
+
     public int currentWave=0; // 현재 웨이브 번호
     private float timer = 0f; // 웨이브 스폰 타이머
 
@@ -91,6 +93,7 @@ public class WaveManager : MonoBehaviour
     private void EndCurrentWave()
     {
         CurrentState = WaveState.RewardTime; // 현재 웨이브 종료 상태로 변경
+        rewardPanelController.SetupRewardSlots(memorizedSkills); // 보상 슬롯 설정
         rewardPanelController.OpenPanel(); // 보상 패널 열기
         Debug.Log($"Wave {currentWave} completed!");
     }
@@ -101,4 +104,5 @@ public class WaveManager : MonoBehaviour
         CurrentState = WaveState.InWave; // 웨이브 스폰 상태로 변경
         StartNextWave(); // 다음 웨이브 시작
     }
+
 }

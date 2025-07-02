@@ -27,8 +27,26 @@ public class SkillData : ScriptableObject
     public SkillCategory skillCategory; // 스킬 카테고리
     public string SkillName; // 스킬 이름
     public string Description; // 스킬 설명
-    public int mpCost; // 마나 소모량
+
+    [HideInInspector] public int mpCost; // 마나 소모량
+    [HideInInspector] public int damage; // 스킬 피해량
+
     public float speed; // 스킬 속도
-    public int damage; // 스킬 피해량
     public float aoeRadius; // 범위 공격 반경
+
+    public void InitializeFromRunes(Dictionary<string, RuneInfo> runeInfoMap)
+    {
+        mpCost = 0; // 초기화
+        damage = 0; // 초기화
+
+        string[] runes = runeCode.Split('-'); // 룬 코드를 '-'로 분리
+        foreach (string rune in runes){
+            if(runeInfoMap.TryGetValue(rune, out RuneInfo info)){
+                mpCost += info.mpCost; // 룬의 마나 소모량을 누적
+                damage += info.damage; // 룬의 피해량을 누적
+            } else {
+                Debug.LogWarning($"Rune {rune} not found in runeInfoMap."); // 룬 정보가 없을 경우 경고 로그 출력
+            }
+        }
+    }
 }

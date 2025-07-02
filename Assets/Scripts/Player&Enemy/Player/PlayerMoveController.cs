@@ -45,6 +45,8 @@ public class PlayerMoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(WaveManager.Instance.CurrentState == WaveState.RewardTime) return;
+
         if(Input.GetMouseButton(1) && !isGrappling) // 마우스 우클릭
         {
             Vector3 mousePos = Input.mousePosition;

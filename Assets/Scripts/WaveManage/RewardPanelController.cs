@@ -26,6 +26,15 @@ public class RewardPanelController : MonoBehaviour
         }
     }
 
+    public void SetupRewardSlots(List<SkillData> memorizedSkills)
+    {
+        for (int i = 0; i < rewardSlots.Count; i++)
+        {
+            var skill = memorizedSkills[i]; // memorizedSkills에서 스킬 데이터 가져오기
+            rewardSlots[i].Initialize(skill); // 슬롯 초기화
+        }
+    }
+
     private void HandleReinforceSelected()
     {
         foreach (var slot in rewardSlots)
@@ -69,6 +78,7 @@ public class RewardPanelController : MonoBehaviour
     }
 
     public void ClosePanel(){
+        //rewardSlots.ForEach(slot => slot.ResetSlot()); // 모든 보상 슬롯 초기화
         rewardPanel.SetActive(false); // 보상 패널 비활성화
         Time.timeScale = 1f; // 게임 재개
     }
