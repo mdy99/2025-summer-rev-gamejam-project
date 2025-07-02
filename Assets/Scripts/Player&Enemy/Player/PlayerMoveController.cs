@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMoveController : MonoBehaviour
@@ -24,8 +25,38 @@ public class PlayerMoveController : MonoBehaviour
     private float grappleCooldown = 1.2f; // 그래플링 훅 쿨타임
     private float lastGrappleTime = -Mathf.Infinity; // 마지막 그래플링 훅 사용 시간
 
+    private bool isDead = false; // 플레이어가 죽었는지 여부
+
+    public ParticleSystem SkillEffect; // 플레이어가 죽었을 때 생성되는 파티클 이펙트
+
+    Animator animator; // 플레이어의 애니메이터 컴포넌트
+
+    void OnEnable()
+    {
+        BarUpdater.OnPlayerDead += Die; // 플레이어가 죽었을 때 이벤트 핸들러 등록
+    }
+
+    void OnDisable()
+    {
+        BarUpdater.OnPlayerDead -= Die; // 플레이어가 죽었을 때 이벤트 핸들러 등록        
+    }
+
+    void Die(){
+        if(isDead) return; // 이미 죽었으면 아무 작업도 하지 않음
+        Debug.Log("Player is dead!"); // 플레이어가 죽었을 때 디버그 메시지 출력
+        isDead = true; // 플레이어가 죽었음을 표시
+        animator.SetTrigger("isDead"); // 애니메이터의 죽음 트리거를 설정
+        animator.SetBool("isMoving", false); // 이동 중이 아닐 때 애니메이터의 이동 상태를 false로 설정
+
+        playerRigidbody.velocity = Vector2.zero; // 플레이어의 속도를 0으로 설정하여 이동 중지
+        isMoving = false; // 이동 중지
+        isGrappling = false; // 그래플링 훅 사용 중지
+        lineRenderer.positionCount = 0; // LineRenderer 비활성화
+    }
+
     void Start()
     {
+        animator = GetComponent<Animator>(); // 플레이어의 애니메이터 컴포넌트를 가져옴
         playerRigidbody = GetComponent<Rigidbody2D>(); // 플레이어의 Rigidbody2D 컴포넌트를 가져옴
         spriteRenderer = GetComponent<SpriteRenderer>(); // 플레이어의 스프라이트 렌더러를 가져옴
         lineRenderer = GetComponent<LineRenderer>();
@@ -45,7 +76,8 @@ public class PlayerMoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(WaveManager.Instance.CurrentState == WaveState.RewardTime) return;
+        if(isDead) return; // 플레이어가 죽었으면 업데이트 중지
+        if(WaveManager.Instance.CurrentState == WaveState.RewardTime) return;        
 
         if(Input.GetMouseButton(1) && !isGrappling) // 마우스 우클릭
         {
@@ -63,6 +95,7 @@ public class PlayerMoveController : MonoBehaviour
                 isGrappling = true; // 그래플링 훅 사용 시작
                 lastGrappleTime = Time.time; // 그래플링 훅 사용 시간 기록
                 coolDownDisplay.StartCoolDown(grappleCooldown); // 그래플링 훅 쿨타임 시작
+                animator.SetBool("isGrappling", true); // 애니메이터의 그래플링 훅 상태를 true로 설정
             }
             else{
                 isGrappling = false; // 그래플링 훅 사용 중지
@@ -73,7 +106,11 @@ public class PlayerMoveController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!isMoving) return; // 이동 중이 아닐 때는 아무 작업도 하지 않음
+        if(isDead) return; // 플레이어가 죽었으면 업데이트 중지
+        if(!isMoving) {
+            animator.SetBool("isMoving", false); // 이동 중이 아닐 때 애니메이터의 이동 상태를 false로 설정
+            return;
+        } // 이동 중이 아닐 때는 아무 작업도 하지 않음
 
         Vector2 currentPosition = playerRigidbody.position; // 현재 플레이어 위치
         Vector2 direction = (targetPosition - currentPosition).normalized; // 목표 위치로 향하는 방향 벡터
@@ -98,24 +135,38 @@ public class PlayerMoveController : MonoBehaviour
             playerRigidbody.MovePosition(targetPosition); // 목표 위치에 도달하면 정확히 이동
             isMoving = false; // 이동 완료
             isGrappling = false; // 그래플링 훅 사용 중지
+            animator.SetBool("isGrappling", false); // 애니메이터의 그래플링 훅 상태를 false로 설정
             playerRigidbody.velocity = Vector2.zero; // 속도를 0으로 설정하여 이동 중지
+            animator.SetBool("isMoving", false); // 이동 중이 아닐 때 애니메이터의 이동 상태를 false로 설정
             return;
         }
         playerRigidbody.MovePosition(newPosition); // 플레이어 위치 업데이트
+        // 이동 중인데 그래플링이 아님 → 걷는 애니메이션
+        if (isMoving && !isGrappling)
+        {
+            animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            animator.SetBool("isMoving", false);
+        }
     }
 
     void LateUpdate()
     {
+        if(isDead) return; // 플레이어가 죽었으면 업데이트 중지
         spriteRenderer.flipX = targetPosition.x > playerRigidbody.position.x; // 목표 위치에 따라 스프라이트 방향을 뒤집음
     }
 
     private void OnCollisionStay2D(Collision2D other) {
+        if(isDead) return; // 플레이어가 죽었으면 충돌 처리 중지
         if(other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
         {
             isMoving = false; // 장애물에 충돌하면 이동 중지
             isGrappling = false; // 그래플링 훅 사용 중지
             playerRigidbody.velocity = Vector2.zero; // 속도를 0으로 설정하여 이동 중지
             lineRenderer.positionCount = 0; // LineRenderer 비활성화
+            animator.SetBool("isMoving", false); // 이동 중이 아닐 때 애니메이터의 이동 상태를 false로 설정
         }
     }
 }

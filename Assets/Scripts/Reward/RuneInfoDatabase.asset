@@ -15,7 +15,7 @@ MonoBehaviour:
   runes:
   - runeCode: A
     damage: 10
-    mpCost: 10
+    mpCost: 20
   - runeCode: B
     damage: 10
     mpCost: 9

@@ -24,7 +24,12 @@ public class ComboManager : MonoBehaviour
 
     private List<string> activeRunes = new List<string>(); // 현재 활성화된 룬 리스트
 
+    [SerializeField] private ParticleSystem magicCircleEffect; // 마법진 이펙트
 
+    void Start()
+    {
+        magicCircleEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+    }
 
     void Update()
     {
@@ -84,6 +89,7 @@ public class ComboManager : MonoBehaviour
     void EndCombo(){
         ClearCombo(); // 현재 쌓여있는 콤보들 다 제거
         comboUIRenderer.SetPanelActive(false); // 콤보 UI 패널 비활성화
+        magicCircleEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 
     void OnEnable()
@@ -119,6 +125,7 @@ public class ComboManager : MonoBehaviour
         if(comboUIRenderer.IsPanelActive()==false) // 콤보 UI 패널이 활성화되어 있지 않으면
         {
             comboUIRenderer.SetPanelActive(true); // 콤보 UI 패널 활성화
+            magicCircleEffect.Play(); // 마법진 이펙트 재생
         }
     }
 

@@ -18,8 +18,19 @@ public class Enemy : MonoBehaviour, IEnemy
     private bool isLive=true; // 적이 살아있는지 여부
 
     private float lastAttackTime = -999f; // 마지막 공격 시간
-    
-    
+
+    private bool isPlayerDead = false; // 플레이어가 죽었는지 여부
+
+    void OnEnable()
+    {
+        BarUpdater.OnPlayerDead += OnPlayerDead; // 플레이어가 죽었을 때 이벤트 핸들러 등록
+    }
+
+    void OnPlayerDead(){
+        isPlayerDead = true; // 플레이어가 죽었음을 표시
+        enemyRigid.velocity = Vector2.zero; // 적의 속도를 0으로 설정하여 이동 중지
+        isLive = false; // 적을 죽음 상태로 변경
+    }
 
     void Awake()
     {
@@ -124,6 +135,7 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private void DamagePlayer(int damage)
     {
+        if (isPlayerDead) return; // 플레이어가 죽었으면 함수 종료
       //  enemyAnimator.SetTrigger("attack"); // 공격 애니메이션 트리거 설정
         lastAttackTime = Time.time; // 마지막 공격 시간을 현재 시간으로 갱신
     
