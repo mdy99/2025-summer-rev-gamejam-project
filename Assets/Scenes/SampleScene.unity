@@ -232,6 +232,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 954211389}
     m_Modifications:
+    - target: {fileID: 389410288205400998, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 1-3Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 1375420216166981178, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 1-2Text
+      objectReference: {fileID: 0}
     - target: {fileID: 1713465270067827669, guid: a1e7650701f73f44399b9048782f589e, type: 3}
       propertyPath: m_Name
       value: Reward1
@@ -323,6 +331,22 @@ PrefabInstance:
     - target: {fileID: 4306545756478831916, guid: a1e7650701f73f44399b9048782f589e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627979390339716314, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 1-3Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 6102091120728731500, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 1-2Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908837735719096381, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 1-1Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714383777628026653, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 1-1Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1588,6 +1612,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillDatas:
   - {fileID: 11400000, guid: 8bc4918ccf1e9e0458fa668bc1df53c3, type: 2}
+  - {fileID: 11400000, guid: 057c19c72b844f548ae28f8de1706c6e, type: 2}
+  - {fileID: 11400000, guid: 60231575e6744554f80c5eb1b43cefaf, type: 2}
   playerTransform: {fileID: 1552563358}
   runeInfoDatabase: {fileID: 11400000, guid: f844c65f833866c42ab640167e5876d1, type: 2}
   magicCircleEffect: {fileID: 824330585}
@@ -3335,6 +3361,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 954211389}
     m_Modifications:
+    - target: {fileID: 389410288205400998, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 3-3Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 1375420216166981178, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 3-2Text
+      objectReference: {fileID: 0}
     - target: {fileID: 1713465270067827669, guid: a1e7650701f73f44399b9048782f589e, type: 3}
       propertyPath: m_Name
       value: Reward3
@@ -3426,6 +3460,22 @@ PrefabInstance:
     - target: {fileID: 4306545756478831916, guid: a1e7650701f73f44399b9048782f589e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627979390339716314, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 3-3Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 6102091120728731500, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 3-2Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908837735719096381, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 3-1Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714383777628026653, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 3-1Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4119,6 +4169,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 954211389}
     m_Modifications:
+    - target: {fileID: 389410288205400998, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 2-3Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 1375420216166981178, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 2-2Text
+      objectReference: {fileID: 0}
     - target: {fileID: 1713465270067827669, guid: a1e7650701f73f44399b9048782f589e, type: 3}
       propertyPath: m_Name
       value: Reward2
@@ -4210,6 +4268,22 @@ PrefabInstance:
     - target: {fileID: 4306545756478831916, guid: a1e7650701f73f44399b9048782f589e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627979390339716314, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 2-3Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 6102091120728731500, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 2-2Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908837735719096381, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 2-1Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714383777628026653, guid: a1e7650701f73f44399b9048782f589e, type: 3}
+      propertyPath: m_Name
+      value: 2-1Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

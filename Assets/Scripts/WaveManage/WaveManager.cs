@@ -53,9 +53,7 @@ public class WaveManager : MonoBehaviour
         if(CurrentState != WaveState.InWave) return; // 현재 상태가 웨이브 스폰 중이 아닐 경우 업데이트 중지
 
         // 웨이브 중일 때,
-        SpawnEnemyInWave(); // 적 스폰 함수 호출
-        // TODO: 현재 웨이브 종료 조건 추가 
-        
+        SpawnEnemyInWave(); // 적 스폰 함수 호출        
     }
 
     void SpawnEnemyInWave(){
@@ -71,6 +69,8 @@ public class WaveManager : MonoBehaviour
     private void StartNextWave()
     {
         killCount = 0; // 웨이브 시작 시 처치 카운트 초기화
+        enemySpawner.DisableAllEnemies(); // 적 풀 사이즈 조정
+        
         if (CurrentState == WaveState.InWave && rewardPanelController.GetActive())
         {
             rewardPanelController.ClosePanel(); // 보상 패널 닫기

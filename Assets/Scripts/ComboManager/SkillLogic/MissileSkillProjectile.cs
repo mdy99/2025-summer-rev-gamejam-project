@@ -12,12 +12,17 @@ public class MissileSkillProjectile : MonoBehaviour
     public void Initialize(Vector2 direction)
     {
         this.direction = direction.normalized; // 방향 벡터를 정규화
-        Destroy(gameObject, 1f); // 5초 후에 미사일 오브젝트 제거
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0f); // z축 위치를 0으로 설정 (2D 게임에서 z축은 사용하지 않음)
+        Destroy(gameObject, 1f); // 1초 후에 미사일 오브젝트 제거
     }
 
     void Update()
     {
-        transform.Translate(direction * data.speed * Time.deltaTime); // 미사일 이동
+        transform.position += (Vector3)direction * data.speed * Time.deltaTime;
+
+        // 매 프레임 z축 고정
+        Vector3 pos = transform.position;
+        transform.position = new Vector3(pos.x, pos.y, 0f);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

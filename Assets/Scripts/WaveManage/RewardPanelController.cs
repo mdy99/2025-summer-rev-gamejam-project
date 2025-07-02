@@ -30,10 +30,16 @@ public class RewardPanelController : MonoBehaviour
 
     public void SetupRewardSlots(List<SkillData> memorizedSkills)
     {
-        for (int i = 0; i < rewardSlots.Count; i++)
-        {
-            var skill = memorizedSkills[i]; // memorizedSkills에서 스킬 데이터 가져오기
-            rewardSlots[i].Initialize(skill); // 슬롯 초기화
+        foreach(var slot in rewardSlots){
+            SkillType type = slot.GetSkillType(); // 슬롯의 스킬 타입 가져오기
+            SkillData matchingSkill = memorizedSkills.Find(skill => skill.skillType == type); // memorizedSkills에서 해당 타입의 스킬 찾기
+            if (matchingSkill != null)
+            {
+                slot.Initialize(matchingSkill); // 슬롯에 스킬 데이터 설정
+            }
+            else{
+                Debug.LogWarning($"No matching skill found for slot type: {type}"); // 해당 타입의 스킬이 없는 경우 경고 메시지 출력
+            }
         }
     }
 

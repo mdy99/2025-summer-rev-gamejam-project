@@ -74,13 +74,6 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-
-
     public void SpawnEnemy()
     {
         // 비활성화된 적 오브젝트를 찾음
@@ -95,6 +88,17 @@ public class EnemySpawner : MonoBehaviour
                 enemy.GetComponent<IEnemy>().Init(enemyDatas[Random.Range(0, enemyDatas.Length)]); // 적 초기화
                 enemy.SetActive(true); // 적 활성화
                 return; // 하나의 적만 생성하고 함수 종료
+            }
+        }
+    }
+
+    public void DisableAllEnemies()
+    {
+        foreach (GameObject enemy in enemyPool)
+        {
+            if (enemy.activeInHierarchy)
+            {
+                enemy.SetActive(false); // 모든 적 비활성화
             }
         }
     }

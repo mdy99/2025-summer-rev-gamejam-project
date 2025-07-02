@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour, IEnemy
         Debug.Log($"Enemy {enemyData.name} took {damage} damage! Remaining HP: {currentHp}"); // 디버그 메시지 출력
 
         if (currentHp <= 0) Die(); // 체력이 0 이하가 되면 적을 죽임
-     //   else enemyAnimator.SetTrigger("hit"); // 적이 공격을 받았을 때 맞는 애니메이션 트리거 설정
+        else enemyAnimator.SetTrigger("isDamaged"); // 적이 공격을 받았을 때 맞는 애니메이션 트리거 설정
     }
 
     void Die()
@@ -78,7 +78,7 @@ public class Enemy : MonoBehaviour, IEnemy
         if (!isLive) return; // 적이 이미 죽었으면 함수 종료
 
         isLive = false; // 적을 죽음 상태로 변경
-      //  enemyAnimator.SetTrigger("die"); // 죽음 애니메이션 트리거 설정
+        enemyAnimator.SetTrigger("isDead"); // 죽음 애니메이션 트리거 설정
         StartCoroutine(DisableAfterAnimation(0.1f)); // 대기 후 적 오브젝트 비활성화
         WaveManager.Instance.OnEnemyKilled(); // 웨이브 매니저에 적 처치 알림
         GiveReward(); // 보상 지급 함수 호출
@@ -92,7 +92,14 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private IEnumerator DisableAfterAnimation(float delay = 0f)
     {
-//        yield return new WaitForSeconds(enemyAnimator.GetCurrentAnimatorStateInfo(0).length); // 애니메이션이 끝날 때까지 대기
+        //yield return null; // 현재 애니메이션이 끝날 때까지 대기
+        while(!enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Dead")) // 애니메이션이 "Dead" 상태가 될 때까지 대기
+        {
+            yield return null; // 다음 프레임까지 대기
+        }
+        float dieAnimLength = enemyAnimator.GetCurrentAnimatorStateInfo(0).length; // 죽음 애니메이션의 길이 가져오기
+        yield return new WaitForSeconds(dieAnimLength); // 애니메이션이 끝날 때까지 대기 후 추가 딜레이 시간 대기
+
         yield return new WaitForSeconds(delay); // 추가 딜레이 시간 대기
         gameObject.SetActive(false); // 적 오브젝트를 비활성화
     }
@@ -112,11 +119,11 @@ public class Enemy : MonoBehaviour, IEnemy
     private void TraceTarget(){
         if (target == null || !isLive) return; // 플레이어가 없거나 적이 죽었으면 함수 종료
         if(Vector2.Distance(transform.position, target.transform.position) < 0.01f){
-          //  enemyAnimator.SetBool("isMoving", false); // 플레이어와의 거리가 너무 가까우면 이동 애니메이션을 중지
+            enemyAnimator.SetBool("isMoving", false); // 플레이어와의 거리가 너무 가까우면 이동 애니메이션을 중지
             return; // 플레이어와의 거리가 너무 가까우면 이동하지 않음
         } 
 
-//      enemyAnimator.SetBool("isMoving", true); // 플레이어와의 거리가 멀면 이동 애니메이션을 시작
+        enemyAnimator.SetBool("isMoving", true); // 플레이어와의 거리가 멀면 이동 애니메이션을 시작
 
         Vector2 directVector = target.transform.position - transform.position; // 플레이어 방향 벡터
         Vector2 nextVector = directVector.normalized * enemyData.speed* Time.fixedDeltaTime; // 플레이어 방향으로 이동 벡터
@@ -136,7 +143,6 @@ public class Enemy : MonoBehaviour, IEnemy
     private void DamagePlayer(int damage)
     {
         if (isPlayerDead) return; // 플레이어가 죽었으면 함수 종료
-      //  enemyAnimator.SetTrigger("attack"); // 공격 애니메이션 트리거 설정
         lastAttackTime = Time.time; // 마지막 공격 시간을 현재 시간으로 갱신
     
         BarManager.Instance.UpdateHpBar(-damage); // 플레이어의 체력 UI 바를 감소시킴
