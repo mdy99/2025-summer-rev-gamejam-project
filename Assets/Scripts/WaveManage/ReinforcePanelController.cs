@@ -68,11 +68,13 @@ public class ReinforcePanelController : MonoBehaviour
     void HpButtonClicked()
     {
         BarManager.Instance.UpdateMaxHpBar(10); // 예시로 HP 최대치 10 증가
+        BarManager.Instance.UpdateHpBar(10); // HP 현재치도 10 증가
     }
 
     void MpButtonClicked()
     {
         BarManager.Instance.UpdateMaxMpBar(10); // 예시로 MP 최대치 10 증가
+        BarManager.Instance.UpdateMpBar(10); // MP 현재치도 10 증가
     }
 
     void MpRegenButtonClicked()

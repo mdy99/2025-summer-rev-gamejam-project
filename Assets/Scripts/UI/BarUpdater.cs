@@ -91,6 +91,8 @@ public class BarUpdater : MonoBehaviour
         // 바의 채움 비율을 부드럽게 업데이트
         slowBarImage.fillAmount = Mathf.Lerp(slowBarImage.fillAmount, targetFillAmount, barUpdateSpeed * Time.deltaTime);
         
+        if(Time.timeScale<0.1f) return;// 게임이 일시 정지 상태일 때
+
         curBackWidth = Mathf.Lerp(curBackWidth, targetBackWidth, backBarUpdateSpeed * Time.deltaTime);
         backBarImage.rectTransform.sizeDelta = new Vector2(curBackWidth, backBarImage.rectTransform.sizeDelta.y);
         if( curBarValue <= MINBARVALUE) // 현재 바 값이 최소 값 이하일 때
@@ -99,6 +101,25 @@ public class BarUpdater : MonoBehaviour
             CurBarValue = MINBARVALUE; // 현재 바 값을 최소 값으로 설정
         }
     }
+
+    public void SmoothIncreaseBackBar(){
+        StartCoroutine(SmoothBackBarCoroutine(0.1f, targetBackWidth)); // 부드럽게 바의 너비를 증가시키는 코루틴 시작
+    }
+
+    private IEnumerator SmoothBackBarCoroutine(float duration, float targetWidth){
+        float startWidth = backBarImage.rectTransform.sizeDelta.x; // 시작 너비 저장
+        float elapsedTime = 0f; // 경과 시간 초기화
+
+        while(elapsedTime < duration){
+            elapsedTime += Time.unscaledDeltaTime; // 경과 시간 업데이트
+            float t = elapsedTime / duration; // 0과 1 사이의 비율 계산
+            backBarImage.rectTransform.sizeDelta = new Vector2(Mathf.Lerp(startWidth, targetWidth, t), backBarImage.rectTransform.sizeDelta.y);
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        backBarImage.rectTransform.sizeDelta = new Vector2(targetWidth, backBarImage.rectTransform.sizeDelta.y); // 최종 너비 설정
+    }
+
 
     private void InitSetting(){
         baseBackWidth = backBarImage.rectTransform.sizeDelta.x; // 초기 너비 저장

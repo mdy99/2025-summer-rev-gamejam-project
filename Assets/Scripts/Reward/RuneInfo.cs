@@ -12,6 +12,13 @@ public class RuneInfo
     public void AddRuneInfo(int damageValue, int mpCostValue)
     {
         damage += damageValue;
-        mpCost += mpCostValue;
+        if(mpCostValue < 0 && mpCost + mpCostValue < 0)
+        {
+            Debug.LogWarning("MP cost cannot be negative. Setting to 0.");
+            mpCost = 0; // MP cost cannot be negative
+        }
+        else if (mpCostValue > 0 || mpCost + mpCostValue >= 0){
+            mpCost += mpCostValue;
+        }
     }
 }

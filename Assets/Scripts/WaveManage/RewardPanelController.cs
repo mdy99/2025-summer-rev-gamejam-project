@@ -24,6 +24,8 @@ public class RewardPanelController : MonoBehaviour
             slot.OnAnyRuneSelected += HandleAnyRuneSelected; // 룬 선택 이벤트에 리스너 등록
             slot.Disable(); // 초기에는 모든 보상 슬롯 비활성화
         }
+
+        nextWaveButton.onClick.AddListener(OnClickNextWave); // 다음 웨이브 버튼 클릭 이벤트 등록
     }
 
     public void SetupRewardSlots(List<SkillData> memorizedSkills)

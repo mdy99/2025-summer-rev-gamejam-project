@@ -37,9 +37,11 @@ public class BarManager : MonoBehaviour
 
     public void UpdateMaxHpBar(int value){
         hpBar.GetComponent<BarUpdater>().UpdateMaxBar(value); // hpBar의 최대 값을 10만큼 증가
+        hpBar.GetComponent<BarUpdater>().SmoothIncreaseBackBar(); // hpBar의 배경 바를 부드럽게 증가
     }
     public void UpdateMaxMpBar(int value){
         mpBar.GetComponent<BarUpdater>().UpdateMaxBar(value); // mpBar의 최대 값을 10만큼 증가
+        mpBar.GetComponent<BarUpdater>().SmoothIncreaseBackBar(); // mpBar의 배경 바를 부드럽게 증가
     }
 
     public int GetHpBarValue()

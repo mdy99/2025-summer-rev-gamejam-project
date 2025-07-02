@@ -1126,8 +1126,8 @@ MonoBehaviour:
     enemyGoalTotal: 0
   memorizedSkills:
   - {fileID: 11400000, guid: 8bc4918ccf1e9e0458fa668bc1df53c3, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 057c19c72b844f548ae28f8de1706c6e, type: 2}
+  - {fileID: 11400000, guid: 60231575e6744554f80c5eb1b43cefaf, type: 2}
   currentWave: 0
   enemySpawner: {fileID: 560528693}
   killCount: 0
