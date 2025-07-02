@@ -68,7 +68,7 @@ public class RewardPanelController : MonoBehaviour
 
         foreach (var slot in rewardSlots)
         {
-            // slot.ResetSlot(); // 슬롯 초기화 (필요한 경우)
+            slot.ResetSlot(); // 슬롯 초기화 (필요한 경우)
             slot.Disable(); // 모든 보상 슬롯 비활성화
         }
     }

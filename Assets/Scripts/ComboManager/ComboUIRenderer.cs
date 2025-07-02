@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,8 @@ public class ComboUIRenderer : MonoBehaviour
     private Vector2 visiblePosition; // 콤보 UI 패널을 표시할 위치
     private bool isAnimating = false; // 애니메이션 중인지 여부
 
+    [SerializeField] private Animator animator; // 플레이어 애니메이터
+    
     void Awake()
     {
         InitSpriteDictionary(); // 룬 스프라이트 딕셔너리 초기화
@@ -36,7 +39,13 @@ public class ComboUIRenderer : MonoBehaviour
 
     // 콤보 UI에 모스부호 이미지 추가
     public void AddSymbolImage(string symbol){
-        GameObject prefab = (symbol ==".") ? dotPrefab : dashPrefab; // 심볼에 따라 프리팹 선택
+        GameObject prefab = (symbol == ".") ? dotPrefab : dashPrefab; // 심볼에 따라 프리팹 선택
+        if(symbol == "."){
+            animator.SetTrigger("TriggerDot"); // 점 추가 애니메이션 트리거
+        }
+        else{
+            animator.SetTrigger("TriggerDash"); // 대시 추가 애니메이션 트리거
+        }
         GameObject img = Instantiate(prefab, comboPanel); // 콤보 UI 패널에 프리팹 인스턴스 생성
         spawnedCombo.Add(img); // 생성된 오브젝트를 리스트에 추가
     }

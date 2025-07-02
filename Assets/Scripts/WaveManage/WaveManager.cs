@@ -70,6 +70,7 @@ public class WaveManager : MonoBehaviour
 
     private void StartNextWave()
     {
+        killCount = 0; // 웨이브 시작 시 처치 카운트 초기화
         if (CurrentState == WaveState.InWave && rewardPanelController.GetActive())
         {
             rewardPanelController.ClosePanel(); // 보상 패널 닫기
@@ -94,6 +95,7 @@ public class WaveManager : MonoBehaviour
     {
         CurrentState = WaveState.RewardTime; // 현재 웨이브 종료 상태로 변경
         rewardPanelController.SetupRewardSlots(memorizedSkills); // 보상 슬롯 설정
+        rewardPanelController.ResetPanel(); // 보상 패널 초기화
         rewardPanelController.OpenPanel(); // 보상 패널 열기
         Debug.Log($"Wave {currentWave} completed!");
     }

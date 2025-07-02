@@ -6384,6 +6384,7 @@ MonoBehaviour:
   dashPrefab: {fileID: 1032986067212494518, guid: c0ddd26b211ee4547b507d6fda4a727d, type: 3}
   runePrefab: {fileID: 6650678924405606488, guid: 799f943d426a1c24ebf542f139261ff8, type: 3}
   canvasGroup: {fileID: 1415628935}
+  animator: {fileID: 1552563365}
 --- !u!114 &856924774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6415,6 +6416,7 @@ MonoBehaviour:
   playerTransform: {fileID: 1552563358}
   runeInfoDatabase: {fileID: 11400000, guid: f844c65f833866c42ab640167e5876d1, type: 2}
   magicCircleEffect: {fileID: 824330585}
+  animator: {fileID: 0}
 --- !u!4 &856924776
 Transform:
   m_ObjectHideFlags: 0
