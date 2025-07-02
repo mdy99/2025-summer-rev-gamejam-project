@@ -110,7 +110,7 @@ public class PlayerMoveController : MonoBehaviour
     }
 
     private void OnCollisionStay2D(Collision2D other) {
-        if(other.gameObject.CompareTag("Enemy"))
+        if(other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Obstacle"))
         {
             isMoving = false; // 장애물에 충돌하면 이동 중지
             isGrappling = false; // 그래플링 훅 사용 중지
