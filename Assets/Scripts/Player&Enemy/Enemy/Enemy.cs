@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public enum EnemyType
 {
@@ -14,6 +15,8 @@ public enum EnemyType
 
 public class Enemy : MonoBehaviour, IEnemy
 {
+    public GameObject itemPrefab; // 아이템 프리팹
+
     [Header("컴포넌트")]
     private Rigidbody2D target; // 플레이어 오브젝트
     private SpriteRenderer spriteRenderer; // 적의 스프라이트 렌더러
@@ -21,7 +24,7 @@ public class Enemy : MonoBehaviour, IEnemy
     private Animator enemyAnimator; // 적의 애니메이터 컴포넌트
     
     [Header("데이터")]
-    public EnemyData enemyData; // 적의 데이터 (체력, 공격력 등)
+    private EnemyData enemyData; // 적의 데이터 (체력, 공격력 등)
     [SerializeField] private int currentHp; // 현재 적의 체력
     [SerializeField] private float debugSpeed; // 적의 이동 속도
     private bool isLive=true; // 적이 살아있는지 여부
@@ -55,17 +58,6 @@ public class Enemy : MonoBehaviour, IEnemy
         debugSpeed = enemyData.speed; // 디버그용 속도 설정
         isLive = true; // 적을 살아있는 상태로 초기화
         lastAttackTime = -999f; // 마지막 공격 시간을 초기화
-        
-        // if(enemyData.animatorController != null && enemyAnimator != null) // 애니메이터 컨트롤러가 설정되어 있고 애니메이터 컴포넌트가 존재하는 경우
-        // {
-        //     enemyAnimator.runtimeAnimatorController = enemyData.animatorController; // 애니메이터 컨트롤러 설정
-        // }
-        // else
-        // {
-        //     Debug.LogWarning("EnemyData animatorController is not set!"); // 애니메이터 컨트롤러가 설정되지 않은 경우 경고 메시지 출력
-        // }
-
-        // Debug.Log($"Enemy {enemyData.enemyName} initialized with HP: {currentHp}"); // 디버그 메시지 출력
     }
 
     // Start is called before the first frame update
@@ -92,7 +84,28 @@ public class Enemy : MonoBehaviour, IEnemy
         StartCoroutine(DisableAfterAnimation(0.1f)); // 대기 후 적 오브젝트 비활성화
         WaveManager.Instance.OnEnemyKilled(); // 웨이브 매니저에 적 처치 알림
         GiveReward(); // 보상 지급 함수 호출
+        TryDropItem(); // 아이템 드랍 시도
         Debug.Log($"Enemy {enemyData.name} has died!"); // 디버그 메시지 출력
+    }
+
+    void TryDropItem(){
+        foreach(var dropInfo in enemyData.dropItems) // 적이 드랍할 아이템들에 대해
+        {
+            if(Random.value < dropInfo.dropChance) // 드랍 확률에 따라 아이템 드랍 여부 결정
+            {
+                Vector2 offset = GetRandomDropPosition(); // 아이템 드랍 위치 오프셋 계산
+                Vector2 dropPosition = (Vector2)transform.position + offset; // 드랍 위치
+
+                GameObject drop = Instantiate(itemPrefab, dropPosition, Quaternion.identity); // 아이템 프리팹 인스턴스 생성
+                drop.GetComponent<ItemObject>().itemData = dropInfo.itemData; // 아이템 데이터 설정
+                // break; // 아이템 하나만 드랍하고 루프 종료 지금은 여러개 드롭 가능
+            }
+        }
+    }
+
+    Vector2 GetRandomDropPosition(){
+        float radius = 2f;
+        return Random.insideUnitCircle * radius;
     }
 
     void GiveReward()

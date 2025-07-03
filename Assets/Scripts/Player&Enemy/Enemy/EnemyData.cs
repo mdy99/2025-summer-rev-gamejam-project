@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class DropItemInfo{
+    public ItemData itemData; // 드랍할 아이템 데이터
+    [Range(0f, 1f)] public float dropChance; // 아이템 드랍 확률 (0~1 사이)
+}
+
 [CreateAssetMenu(fileName = "EnemyData", menuName = "ScriptableObjects/EnemyData", order = 1)]
 public class EnemyData : ScriptableObject
 {
@@ -16,5 +22,7 @@ public class EnemyData : ScriptableObject
 
     public EnemyType enemyType; // 적의 타입 (슬라임, 문어, 코끼리 등)
     public GameObject enemyPrefab; // 적의 프리팹
+
+    public List<DropItemInfo> dropItems; // 적이 드랍할 아이템들
 }
 

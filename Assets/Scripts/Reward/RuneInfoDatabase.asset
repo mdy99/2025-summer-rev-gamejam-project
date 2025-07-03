@@ -15,109 +15,109 @@ MonoBehaviour:
   runes:
   - runeCode: A
     damage: 10
-    mpCost: 10
+    mpCost: 30
   - runeCode: B
     damage: 10
-    mpCost: 9
+    mpCost: 30
   - runeCode: C
     damage: 11
-    mpCost: 11
+    mpCost: 30
   - runeCode: D
     damage: 10
-    mpCost: 10
+    mpCost: 30
   - runeCode: E
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: F
     damage: 12
-    mpCost: 9
+    mpCost: 30
   - runeCode: G
     damage: 15
-    mpCost: 12
+    mpCost: 30
   - runeCode: H
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: I
     damage: 10
-    mpCost: 9
+    mpCost: 30
   - runeCode: J
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: K
     damage: 15
-    mpCost: 13
+    mpCost: 30
   - runeCode: L
     damage: 13
-    mpCost: 10
+    mpCost: 30
   - runeCode: M
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: N
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: O
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: P
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: Q
     damage: 16
-    mpCost: 9
+    mpCost: 30
   - runeCode: R
     damage: 12
-    mpCost: 9
+    mpCost: 30
   - runeCode: S
     damage: 10
-    mpCost: 9
+    mpCost: 30
   - runeCode: T
     damage: 13
-    mpCost: 9
+    mpCost: 30
   - runeCode: U
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: V
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: W
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: X
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: Y
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: Z
     damage: 10
-    mpCost: 9
+    mpCost: 30
   - runeCode: 0
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: 1
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: 2
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: 3
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: 4
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: 5
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: 6
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: 7
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: 8
     damage: 9
-    mpCost: 9
+    mpCost: 30
   - runeCode: 9
     damage: 12
-    mpCost: 9
+    mpCost: 30

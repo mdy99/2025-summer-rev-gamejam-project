@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum WaveState
@@ -28,6 +29,21 @@ public class WaveManager : MonoBehaviour
     public EnemySpawner enemySpawner;
 
     public int killCount=0; // 현재 웨이브에서 처치한 적의 수
+
+    public string ReinforceRandomSkillDamage(int amount){
+        if(memorizedSkills.Count == 0) return null; // 기억된 스킬이 없으면 함수 종료
+
+        SkillData randomSkill = memorizedSkills[Random.Range(0, memorizedSkills.Count)]; // 랜덤으로 스킬 선택
+        if(randomSkill.runeCode.Count() == 0) return null; // 선택된 스킬에 룬 코드가 없으면 함수 종료
+
+        string randomRuneCode = randomSkill.runeCode[Random.Range(0, randomSkill.runeCode.Length)].ToString(); // 랜덤으로 룬 코드 선택
+
+        RuneManager runeManager = FindObjectOfType<RuneManager>(); // 룬 매니저 찾기
+        if(runeManager != null){
+            runeManager.ReinforceRune(randomRuneCode, amount, 0); // 룬 강화
+        }
+        return randomRuneCode; // 강화된 룬 코드 반환
+    }
 
     public void OnEnemyKilled(){
         killCount++;
@@ -85,7 +101,7 @@ public class WaveManager : MonoBehaviour
     private void StartNextWave()
     {
         killCount = 0; // 웨이브 시작 시 처치 카운트 초기화
-        enemySpawner.DisableAllEnemies(); // 적 풀 사이즈 조정
+        enemySpawner.DisableAllEnemies(); // 모든 적 비활성화
         
         if (CurrentState == WaveState.InWave && rewardPanelController.GetActive())
         {
@@ -104,6 +120,7 @@ public class WaveManager : MonoBehaviour
             CurrentState = WaveState.InWave; // 웨이브 스폰 상태로 변경
 
             // TODO: 웨이브 시작 로직 추가
+            enemySpawner.AdjustPoolSizeForWave(waveSettings[currentWave - 1]); // 적 풀 사이즈 조정
         }
     }
 

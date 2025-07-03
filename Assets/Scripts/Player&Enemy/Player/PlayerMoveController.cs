@@ -27,8 +27,6 @@ public class PlayerMoveController : MonoBehaviour
 
     private bool isDead = false; // 플레이어가 죽었는지 여부
 
-    public ParticleSystem SkillEffect; // 플레이어가 죽었을 때 생성되는 파티클 이펙트
-
     Animator animator; // 플레이어의 애니메이터 컴포넌트
 
     void OnEnable()
@@ -39,6 +37,20 @@ public class PlayerMoveController : MonoBehaviour
     void OnDisable()
     {
         BarUpdater.OnPlayerDead -= Die; // 플레이어가 죽었을 때 이벤트 핸들러 등록        
+    }
+
+    public void SpeedUpForDuration(float duration, float speedMultiplier)
+    {
+        if(isDead) return; // 플레이어가 죽었으면 속도 증가 중지
+        moveSpeed *= speedMultiplier; // 이동 속도 증가
+        StartCoroutine(ResetSpeedAfterDuration(duration, speedMultiplier)); // 일정 시간 후에 속도 원래대로 되돌리기
+
+    }
+
+    private IEnumerator ResetSpeedAfterDuration(float duration, float speedMultiplier = 1f)
+    {
+        yield return new WaitForSeconds(duration); // 지정된 시간 동안 대기
+        moveSpeed /= speedMultiplier; // 이동 속도를 원래대로 되돌림
     }
 
     void Die(){
