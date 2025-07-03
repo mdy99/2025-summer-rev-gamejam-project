@@ -12,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]private int poolSize = 10; // 풀의 크기
 
     private List<GameObject> enemyPool = new List<GameObject>(); // 적 풀
+    private Dictionary<EnemyType, Queue<GameObject>> enemyPools = new Dictionary<EnemyType, Queue<GameObject>>(); // 적 타입별 풀
 
     [Header("보스 프리팹")]
     public GameObject midBossPrefab; // 중간 보스 프리팹
@@ -45,36 +46,38 @@ public class EnemySpawner : MonoBehaviour
     }
 
     void AdjustPoolSize(){
-        int currentSize = enemyPool.Count;
+        enemyPools.Clear(); // 기존 풀 초기화
 
-        if(currentSize < poolSize){
-            int diff = poolSize - currentSize;
+        // int currentSize = enemyPool.Count;
 
-            for (int i = 0; i < diff; i++)
-            {
-                int randIndex = Random.Range(0,enemyDatas.Length); // 랜덤으로 몬스터 프리팹 선택
-                EnemyData data = enemyDatas[randIndex]; // 선택한 몬스터 데이터
+        // if(currentSize < poolSize){
+        //     int diff = poolSize - currentSize;
 
-                GameObject enemy = Instantiate(data.enemyPrefab); // 선택한 프리팹으로 적 생성
-                enemy.SetActive(false); // 초기에는 비활성화
+        //     for (int i = 0; i < diff; i++)
+        //     {
+        //         int randIndex = Random.Range(0,enemyDatas.Length); // 랜덤으로 몬스터 프리팹 선택
+        //         EnemyData data = enemyDatas[randIndex]; // 선택한 몬스터 데이터
 
-                IEnemy enemyComponent = enemy.GetComponent<IEnemy>();
-                enemyComponent.Init(data); // 적 초기화
-                enemyPool.Add(enemy);
-            }
-        }
-        else if(currentSize > poolSize){
-            int diff = currentSize - poolSize;
+        //         GameObject enemy = Instantiate(data.enemyPrefab); // 선택한 프리팹으로 적 생성
+        //         enemy.SetActive(false); // 초기에는 비활성화
+
+        //         IEnemy enemyComponent = enemy.GetComponent<IEnemy>();
+        //         enemyComponent.Init(data); // 적 초기화
+        //         enemyPool.Add(enemy);
+        //     }
+        // }
+        // else if(currentSize > poolSize){
+        //     int diff = currentSize - poolSize;
             
-            for(int i = 0; i < diff; i++) {
-                GameObject enemyToRemove = enemyPool[enemyPool.Count - 1];
-                enemyPool.RemoveAt(enemyPool.Count - 1);
-                Destroy(enemyToRemove);
-            }
-        }
+        //     for(int i = 0; i < diff; i++) {
+        //         GameObject enemyToRemove = enemyPool[enemyPool.Count - 1];
+        //         enemyPool.RemoveAt(enemyPool.Count - 1);
+        //         Destroy(enemyToRemove);
+        //     }
+        // }
     }
 
-    public void SpawnEnemy()
+    private void SpawnEnemy(EnemyData enemyData)
     {
         // 비활성화된 적 오브젝트를 찾음
         foreach (GameObject enemy in enemyPool)
@@ -85,9 +88,20 @@ public class EnemySpawner : MonoBehaviour
                 if(spawnPosition == Vector2.negativeInfinity) return; // 유효한 위치가 없으면 함수 종료
 
                 enemy.transform.position = spawnPosition; // 적의 위치 설정
-                enemy.GetComponent<IEnemy>().Init(enemyDatas[Random.Range(0, enemyDatas.Length)]); // 적 초기화
+                enemy.GetComponent<IEnemy>().Init(enemyData); // 적 초기화
                 enemy.SetActive(true); // 적 활성화
                 return; // 하나의 적만 생성하고 함수 종료
+            }
+        }
+    }
+
+    public void SpawnEnemyByType(EnemyType type){
+        foreach(var data in enemyDatas)
+        {
+            if(data.enemyType == type)
+            {
+                SpawnEnemy(data);
+                return;
             }
         }
     }

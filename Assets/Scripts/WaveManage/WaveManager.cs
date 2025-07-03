@@ -60,10 +60,26 @@ public class WaveManager : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= enemySpawner.SpawnInterval)
         {
-            enemySpawner.SpawnEnemy();
+            WaveData currentWaveData = waveSettings[currentWave - 1]; // 현재 웨이브 데이터 가져오기
+            EnemyType selectedType = GetRandomEnemyType(currentWaveData.enemySpawnRatios); // 현재 웨이브에 맞는 적 타입 랜덤 선택
+            enemySpawner.SpawnEnemyByType(selectedType); // 적 스폰 함수 호출
             timer = 0f; // 타이머 초기화
         }
 
+    }
+
+    EnemyType GetRandomEnemyType(List<EnemySpawnRatio> ratios)
+    {
+        float rand = UnityEngine.Random.value; // 0~1 사이의 랜덤 값 생성
+        float cumulative =0f; // 누적 확률 초기화
+        
+        foreach(var ratio in ratios){
+            cumulative += ratio.spawnRatio;
+            if(rand <= cumulative){
+                return ratio.enemyType;
+            }
+        }
+        return ratios[ratios.Count - 1].enemyType; // 모든 확률을 합쳐도 랜덤 값이 범위를 벗어날 경우 마지막 타입 반환
     }
 
     private void StartNextWave()

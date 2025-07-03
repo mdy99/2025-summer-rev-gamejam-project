@@ -1130,24 +1130,33 @@ MonoBehaviour:
   - waveNumber: 1
     enemyCount: 12
     enemyGoalTotal: 35
+    enemySpawnRatios:
+    - enemyType: 1
+      spawnRatio: 1
   - waveNumber: 2
     enemyCount: 15
     enemyGoalTotal: 50
+    enemySpawnRatios: []
   - waveNumber: 3
     enemyCount: 20
     enemyGoalTotal: 70
+    enemySpawnRatios: []
   - waveNumber: 4
     enemyCount: 25
     enemyGoalTotal: 0
+    enemySpawnRatios: []
   - waveNumber: 5
     enemyCount: 30
     enemyGoalTotal: 90
+    enemySpawnRatios: []
   - waveNumber: 6
     enemyCount: 40
     enemyGoalTotal: 120
+    enemySpawnRatios: []
   - waveNumber: 7
     enemyCount: 45
     enemyGoalTotal: 0
+    enemySpawnRatios: []
   memorizedSkills:
   - {fileID: 11400000, guid: 8bc4918ccf1e9e0458fa668bc1df53c3, type: 2}
   - {fileID: 11400000, guid: 057c19c72b844f548ae28f8de1706c6e, type: 2}

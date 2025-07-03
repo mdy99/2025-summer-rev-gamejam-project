@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 937a14e72a3bf9c4c8a7e1f947bf95ac, type: 3}
-  m_Name: DirtyOilSlime
+  m_Name: Placto
   m_EditorClassIdentifier: 
-  enemyName: Dirty Oil Slime
-  description: "\uC624\uD3D0\uC218 \uC2AC\uB77C\uC784\uC774\uB2E4."
-  hp: 20
-  atk: 5
-  speed: 2
+  enemyName: Placto
+  description: "\uAE30\uC0DD \uD50C\uB77C\uC2A4\uD2F1 \uC219\uC8FC \uBB38\uC5B4\uB2E4"
+  hp: 15
+  atk: 22
+  speed: 3.7
   attackCooldown: 1
   rewardMp: 10
-  enemyType: 1
-  enemyPrefab: {fileID: 9048753774802062996, guid: 7e8e75ad4963266488728623270cc1f7, type: 3}
+  enemyType: 2
+  enemyPrefab: {fileID: 9048753774802062996, guid: 339557cacc7ef1044bde918fa56d1e14, type: 3}

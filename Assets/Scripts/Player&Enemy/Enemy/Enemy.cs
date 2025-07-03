@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
 
+public enum EnemyType
+{
+    None = 0, // 적 없음
+    Slime = 1, // 슬라임
+    Octo=2, // 문어
+    Elephant=3, // 코끼리
+    Boss=4, // 보스
+}
 
 public class Enemy : MonoBehaviour, IEnemy
 {
@@ -14,7 +22,8 @@ public class Enemy : MonoBehaviour, IEnemy
     
     [Header("데이터")]
     public EnemyData enemyData; // 적의 데이터 (체력, 공격력 등)
-    private int currentHp; // 현재 적의 체력
+    [SerializeField] private int currentHp; // 현재 적의 체력
+    [SerializeField] private float debugSpeed; // 적의 이동 속도
     private bool isLive=true; // 적이 살아있는지 여부
 
     private float lastAttackTime = -999f; // 마지막 공격 시간
@@ -43,6 +52,7 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         enemyData = data; // 적의 데이터를 초기화
         currentHp = enemyData.hp; // 현재 체력을 적의 체력으로 설정
+        debugSpeed = enemyData.speed; // 디버그용 속도 설정
         isLive = true; // 적을 살아있는 상태로 초기화
         lastAttackTime = -999f; // 마지막 공격 시간을 초기화
         

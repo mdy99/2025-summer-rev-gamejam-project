@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyData", menuName = "ScriptableObjects/EnemyData", order = 1)]
 public class EnemyData : ScriptableObject
 {
+    
     public string enemyName; // 적의 이름
     public string description; // 적의 설명
     public int hp; // 적의 체력
@@ -13,7 +14,7 @@ public class EnemyData : ScriptableObject
     public float attackCooldown; // 공격 쿨타임
     public int rewardMp; // 처치 시 플레이어에게 지급되는 마나
 
-    //public RuntimeAnimatorController animatorController; // 적의 애니메이터 컨트롤러
+    public EnemyType enemyType; // 적의 타입 (슬라임, 문어, 코끼리 등)
     public GameObject enemyPrefab; // 적의 프리팹
 }
 
