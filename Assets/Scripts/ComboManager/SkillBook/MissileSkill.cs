@@ -16,6 +16,14 @@ public class MissileSkill : ISkill
 
     public void Execute()
     {
+        if (data.mpCost > BarManager.Instance.Mp) // 현재 마나가 부족한 경우
+        {
+            Debug.LogWarning("Not enough MP to execute skill: " + data.runeCode);
+            NarrationText.Instance.UpdateNarration("마나가 부족합니다."); // 마나 부족 메시지 표시
+            return; // 마나가 부족하면 스킬 실행 중단
+        }
+        BarManager.Instance.UpdateMpBar(-data.mpCost); // 마나 UI 바 업데이트
+
         Debug.Log($"Missile Skill Executed: {data.runeCode}"); // 스킬 실행 로그 출력
         // 미사일 스킬 실행 로직
         Vector3 firePoisiton = firePointProvider(); // 현재 플레이어 위치를 기준으로 미사일 발사 위치를 가져옴
@@ -31,6 +39,5 @@ public class MissileSkill : ISkill
         GameObject missile = GameObject.Instantiate(data.prefab, firePoisiton, rotation); // 미사일 생성
 
         missile.GetComponent<MissileSkillProjectile>().Initialize(dir); // 미사일 초기화
-        BarManager.Instance.UpdateMpBar(-data.mpCost); // 마나 UI 바 업데이트
     }
 }

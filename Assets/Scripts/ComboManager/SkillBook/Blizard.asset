@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e784be854c53bf4b8a7a02f629ce945, type: 3}
+  m_Name: Blizard
+  m_EditorClassIdentifier: 
+  runeCode: BLZ
+  prefab: {fileID: 4474901239956904972, guid: c5fa8d2f7014ee345bcea50cadd7034b, type: 3}
+  skillType: 3
+  skillCategory: 3
+  SkillName: Blizard
+  Description: "5\uCD08 \uAC04 \uC6D0 \uBC94\uC704\uC5D0 \uB370\uBBF8\uC9C0\uB97C
+    \uC900\uB2E4"
+  mpCost: 0
+  damage: 0
+  speed: 10
+  aoeRadius: 15

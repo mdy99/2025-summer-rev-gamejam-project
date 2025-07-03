@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: EleFactory
   description: "\uC5F0\uAE30\uB97C \uB0B4\uBFDC\uB294 \uACF5\uB07C\uB9AC\uB2E4"
-  hp: 30
+  hp: 20
   atk: 30
   speed: 1.4
   attackCooldown: 1
-  rewardMp: 10
+  rewardMp: 15
+  increaseHp: 12
+  increaseAtk: 3
   enemyType: 3
   enemyPrefab: {fileID: 9048753774802062996, guid: 58b3f818e66c0574cabeb198ee77abd3, type: 3}
   dropItems:
@@ -27,6 +29,6 @@ MonoBehaviour:
   - itemData: {fileID: 11400000, guid: 4515ef7865b1a0a48a049d1dcf1a3281, type: 2}
     dropChance: 0.5
   - itemData: {fileID: 11400000, guid: e4bd585ea5a7f7f49a516277568b729f, type: 2}
-    dropChance: 0
+    dropChance: 0.055555556
   - itemData: {fileID: 11400000, guid: de38793d9f60e3247a073ffb3c777cfb, type: 2}
     dropChance: 0.06666667

@@ -20,6 +20,9 @@ public class EnemyData : ScriptableObject
     public float attackCooldown; // 공격 쿨타임
     public int rewardMp; // 처치 시 플레이어에게 지급되는 마나
 
+    public int increaseHp; // 체력 증가량
+    public int increaseAtk; // 공격력 증가량
+
     public EnemyType enemyType; // 적의 타입 (슬라임, 문어, 코끼리 등)
     public GameObject enemyPrefab; // 적의 프리팹
 

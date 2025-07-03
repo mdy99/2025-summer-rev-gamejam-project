@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class CoolDownDisplay : MonoBehaviour
 {
-    [SerializeField] private Image coolDownImage; // 쿨타임 이미지
+    private Image coolDownImage; // 쿨타임 이미지
     private float coolDownTime; // 쿨타임 시간
     private float lastUsedTime; // 마지막 그래플링 훅 사용 시간
 
     void Awake()
     {
         coolDownImage = GetComponent<Image>(); // 쿨타임 이미지 컴포넌트 가져오기
+        coolDownImage.fillAmount = 1f; // 초기화 시 이미지 채움 비율을 0으로 설정
     }
 
     public float CoolDownTime
@@ -41,7 +42,7 @@ public class CoolDownDisplay : MonoBehaviour
     public void ResetCoolDown()
     {
         StopAllCoroutines(); // 모든 코루틴 중지
-        coolDownImage.fillAmount = 0f; // 이미지 채움 비율을 0으로 설정
+        coolDownImage.fillAmount = 1f; // 이미지 채움 비율을 0으로 설정
     }
 
     private void Start()
@@ -52,16 +53,16 @@ public class CoolDownDisplay : MonoBehaviour
         }
         ResetCoolDown(); // 초기화 시 쿨타임 이미지 비활성화
     }
-
-    private IEnumerator CoolDownCoroutine()
+private IEnumerator CoolDownCoroutine()
+{
+    float elapsedTime = 0f; // 경과 시간 초기화
+    while (elapsedTime < coolDownTime)
     {
-        float elapsedTime = 0f; // 경과 시간 초기화
-        while (elapsedTime < coolDownTime)
-        {
-            elapsedTime = Time.time - lastUsedTime; // 경과 시간 계산
-            coolDownImage.fillAmount = 1f - (elapsedTime / coolDownTime); // 이미지의 채움 비율 업데이트
-            yield return null; // 다음 프레임까지 대기
-        }
-        coolDownImage.fillAmount = 0f; // 쿨타임이 끝나면 이미지 채움 비율을 0으로 설정
+        elapsedTime = Time.time - lastUsedTime; // 경과 시간 계산
+        coolDownImage.fillAmount = Mathf.Clamp01(elapsedTime / coolDownTime); // 0 → 1로 차오르게 설정
+        yield return null; // 다음 프레임까지 대기
     }
+    coolDownImage.fillAmount = 1f; // 쿨타임이 끝나면 완전히 채움
+}
+
 }

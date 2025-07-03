@@ -11,6 +11,8 @@ public class BarManager : MonoBehaviour
 
         public GameObject hpBar; // 플레이어의 체력을 표시하는 UI 바 오브젝트
         public GameObject mpBar; // 플레이어의 마나를 표시하는 UI 바 오브젝트
+        public int Hp => hpBar.GetComponent<BarUpdater>().CurBarValue; // 현재 플레이어의 체력 값
+        public int Mp => mpBar.GetComponent<BarUpdater>().CurBarValue; // 현재
 
     void Awake()
     {
@@ -42,6 +44,10 @@ public class BarManager : MonoBehaviour
     public void UpdateMaxMpBar(int value){
         mpBar.GetComponent<BarUpdater>().UpdateMaxBar(value); // mpBar의 최대 값을 10만큼 증가
         mpBar.GetComponent<BarUpdater>().SmoothIncreaseBackBar(); // mpBar의 배경 바를 부드럽게 증가
+    }
+
+    public void UpdateMpRegenBar(int value){
+        mpBar.GetComponent<BarUpdater>().UpdateMpRegenBar(value); // mpBar의 재생 속도를 5만큼 증가
     }
 
     public int GetHpBarValue()

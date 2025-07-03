@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -32,6 +33,14 @@ public class Enemy : MonoBehaviour, IEnemy
     private float lastAttackTime = -999f; // 마지막 공격 시간
 
     private bool isPlayerDead = false; // 플레이어가 죽었는지 여부
+
+
+    void ShowDamageText(int damage, bool isPlayer = false)
+    {
+        Vector3 spawnPos = isPlayer ? target.position : transform.position + new Vector3(0, 1f, 0); // 피해 텍스트가 적 위에 나타나도록 위치 설정
+        GameObject damageText = DamageTextPool.Instance.GetText(spawnPos); // 피해 텍스트 풀에서 가져오기
+        damageText.GetComponent<DamageText>().Init(damage); // 피해 텍스트에 피해량 설정
+    }
 
     void OnEnable()
     {
@@ -69,10 +78,18 @@ public class Enemy : MonoBehaviour, IEnemy
     public void TakeDamage(int damage)
     {
         currentHp -= damage; // 적의 체력 감소
+        StartCoroutine(HitFlash()); // 적이 맞았을 때 색상 변경 효과 시작
+        ShowDamageText(damage); // 피해 텍스트 표시
         Debug.Log($"Enemy {enemyData.name} took {damage} damage! Remaining HP: {currentHp}"); // 디버그 메시지 출력
 
         if (currentHp <= 0) Die(); // 체력이 0 이하가 되면 적을 죽임
         else enemyAnimator.SetTrigger("isDamaged"); // 적이 공격을 받았을 때 맞는 애니메이션 트리거 설정
+    }
+
+    IEnumerator HitFlash(){
+        spriteRenderer.color = Color.red; // 적의 색상을 빨간색으로 변경하여 맞았음을 표시
+        yield return new WaitForSeconds(0.1f); // 0.1초 대기
+        spriteRenderer.color = Color.white; // 적의 색상을 원래대로 되돌림
     }
 
     void Die()
@@ -101,6 +118,11 @@ public class Enemy : MonoBehaviour, IEnemy
                 // break; // 아이템 하나만 드랍하고 루프 종료 지금은 여러개 드롭 가능
             }
         }
+    }
+
+    public void IncreaseStatus(){
+        enemyData.hp += enemyData.increaseHp; // 적의 체력 증가
+        enemyData.atk += enemyData.increaseAtk; // 적의 공격력 증가
     }
 
     Vector2 GetRandomDropPosition(){
@@ -169,6 +191,7 @@ public class Enemy : MonoBehaviour, IEnemy
         lastAttackTime = Time.time; // 마지막 공격 시간을 현재 시간으로 갱신
     
         BarManager.Instance.UpdateHpBar(-damage); // 플레이어의 체력 UI 바를 감소시킴
+        ShowDamageText(damage,true); // 피해 텍스트 표시
         Debug.Log($"Enemy {enemyData.name} attacked the player for {enemyData.atk} damage!"); // 디버그 메시지 출력
     }
 }

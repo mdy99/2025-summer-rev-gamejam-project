@@ -112,6 +112,20 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    public void IncreaseAllEnemiesStatus(){
+        foreach(GameObject enemy in enemyPool){
+            IEnemy enemyComponent = enemy.GetComponent<IEnemy>();
+            if(enemyComponent != null && enemy.activeInHierarchy)
+            {
+                (enemyComponent as Enemy)?.IncreaseStatus(); // 적의 체력과 공격력 증가
+            }
+            else
+            {
+                Debug.LogWarning($"Enemy component not found or enemy is not active: {enemy.name}");
+            }
+        }
+    }
+
     public void DisableAllEnemies(){
         foreach(var pool in enemyPools.Values)
         {

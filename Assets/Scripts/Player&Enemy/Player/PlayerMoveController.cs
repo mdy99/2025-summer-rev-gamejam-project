@@ -15,8 +15,8 @@ public class PlayerMoveController : MonoBehaviour
     private Vector2 targetPosition; // 플레이어가 이동할 목표 위치
     private bool isMoving = false; // 플레이어가 이동 중인지 여부
 
-    private float backgroundWidth = 60f; // 배경의 너비 (예시 값, 실제 게임에 맞게 조정 필요)
-    private float backgroundHeight = 36f; // 배경의 높이 (예시 값, 실제 게임에 맞게 조정 필요)
+    private float backgroundWidth = 80f; // 배경의 너비 (예시 값, 실제 게임에 맞게 조정 필요)
+    private float backgroundHeight = 50f; // 배경의 높이 (예시 값, 실제 게임에 맞게 조정 필요)
     private float minX, minY, maxX, maxY;// 배경의 최소 x 좌표
 
     private bool isGrappling = false; // 그래플링 훅 사용 여부

@@ -101,7 +101,6 @@ public class WaveManager : MonoBehaviour
     private void StartNextWave()
     {
         killCount = 0; // 웨이브 시작 시 처치 카운트 초기화
-        enemySpawner.DisableAllEnemies(); // 모든 적 비활성화
         
         if (CurrentState == WaveState.InWave && rewardPanelController.GetActive())
         {
@@ -126,6 +125,9 @@ public class WaveManager : MonoBehaviour
 
     private void EndCurrentWave()
     {
+        enemySpawner.DisableAllEnemies(); // 모든 적 비활성화
+        enemySpawner.IncreaseAllEnemiesStatus(); // 모든 적의 상태 증가
+        
         CurrentState = WaveState.RewardTime; // 현재 웨이브 종료 상태로 변경
         rewardPanelController.SetupRewardSlots(memorizedSkills); // 보상 슬롯 설정
         rewardPanelController.ResetPanel(); // 보상 패널 초기화

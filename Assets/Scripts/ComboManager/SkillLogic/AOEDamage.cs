@@ -27,4 +27,6 @@ public class AOEDamage : MonoBehaviour
         }
         Destroy(gameObject, 0.5f); // AOE 효과가 끝나면 오브젝트 제거
     }
+
+    
 }

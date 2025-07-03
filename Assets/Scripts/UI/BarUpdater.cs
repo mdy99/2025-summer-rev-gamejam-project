@@ -62,7 +62,7 @@ public class BarUpdater : MonoBehaviour
     private float barUpdateSpeed =1.8f; // 바의 채움 비율 업데이트 속도
     private float targetFillAmount = 1f; // 목표 채움 비율
 
-    private int regenValue = 10; // 자동 재생성 시 증가하는 바의 값
+    private int regenValue = 7; // 자동 재생성 시 증가하는 바의 값
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +71,13 @@ public class BarUpdater : MonoBehaviour
         if(gameObject.tag == "MpBar"){
             regenCoroutine = StartCoroutine(AutoRegenBar()); // 자동 회복 시작
         }
+    }
+
+    public void UpdateMpRegenBar(int value)
+    {
+        regenValue += value; // 재생성 속도 업데이트
+        StopRegen(); // 기존 재생성 코루틴 중지
+        regenCoroutine = StartCoroutine(AutoRegenBar()); // 새로운 재생성 코루틴 시작
     }
 
     // Update is called once per frame
@@ -97,6 +104,7 @@ public class BarUpdater : MonoBehaviour
         backBarImage.rectTransform.sizeDelta = new Vector2(curBackWidth, backBarImage.rectTransform.sizeDelta.y);
         if( curBarValue <= MINBARVALUE) // 현재 바 값이 최소 값 이하일 때
         {
+            if(gameObject.tag == "MpBar") return; // MP 바일 경우 플레이어가 죽었을 때 이벤트를 발생시키지 않음 
             OnPlayerDead?.Invoke(); // 플레이어가 죽었음을 알리는 이벤트 호출
             CurBarValue = MINBARVALUE; // 현재 바 값을 최소 값으로 설정
         }

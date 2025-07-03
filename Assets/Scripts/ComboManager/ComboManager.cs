@@ -26,8 +26,6 @@ public class ComboManager : MonoBehaviour
 
     [SerializeField] private ParticleSystem magicCircleEffect; // 마법진 이펙트
 
-    [SerializeField] private Animator animator; // 플레이어 애니메이터
-
     void Start()
     {
         magicCircleEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);

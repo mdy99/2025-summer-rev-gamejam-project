@@ -79,6 +79,6 @@ public class ReinforcePanelController : MonoBehaviour
 
     void MpRegenButtonClicked()
     {
-        // MP 재생 속도 증가 로직
+        BarManager.Instance.UpdateMpRegenBar(5); // 예시로 MP 재생 속도 5 증가
     }
 }

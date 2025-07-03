@@ -20,6 +20,12 @@ public class SkillBook
             if(data.skillCategory == SkillCategory.Projectile){
                 skillMap[data.runeCode] = new MissileSkill(data, firePointProvider); // 투사체 스킬 생성
             }
+            if(data.skillCategory == SkillCategory.InstantRectangle){
+                skillMap[data.runeCode] = new InstantRectSkill(data, firePointProvider); // 직선형 즉시 스킬 생성
+            }
+            if(data.skillCategory == SkillCategory.InstantCircle){
+                skillMap[data.runeCode] = new InstantCircleSkill(data, firePointProvider); // 원형 즉시 스킬 생성
+            }
         }
     }
 

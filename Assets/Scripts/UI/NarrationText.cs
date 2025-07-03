@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class NarrationText : MonoBehaviour
 {
+    public static NarrationText Instance { get; private set; }
+
     [SerializeField] private TMP_Text UpperNarrationText;
     [SerializeField] private TMP_Text MiddleNarrationText;
     [SerializeField] private TMP_Text LowerNarrationText;
-
-    public static NarrationText Instance { get; private set; }
 
     private Coroutine upperCoroutine;
     private Coroutine middleCoroutine;
     private Coroutine lowerCoroutine;
 
-    private void Awake()
+    void Awake()
     {
         if (Instance == null)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Instance = this; // 싱글톤 인스턴스 설정
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // 이미 인스턴스가 존재하면 현재 오브젝트 제거
         }
     }
 

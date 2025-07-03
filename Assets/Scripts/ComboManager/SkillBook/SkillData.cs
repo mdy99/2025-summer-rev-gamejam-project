@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // 스킬 타입을 정의하는 열거형
@@ -14,8 +15,9 @@ public enum SkillType
 public enum SkillCategory
 {
     None, // 카테고리 없음
-    Projectile // 투사체 스킬
-    // 추가 카테고리 정의
+    Projectile, // 투사체 스킬
+    InstantRectangle, // 직선형 즉시 스킬
+    InstantCircle, // 원형 즉시 스킬
 }
 
 [CreateAssetMenu(menuName = "Skills/SkillData")]
@@ -39,7 +41,7 @@ public class SkillData : ScriptableObject
         mpCost = 0; // 초기화
         damage = 0; // 초기화
 
-        string[] runes = runeCode.Split('-'); // 룬 코드를 '-'로 분리
+        string[] runes = runeCode.Select(c => c.ToString()).ToArray(); // 룬 코드를 문자열 배열로 변환
         foreach (string rune in runes){
             if(runeInfoMap.TryGetValue(rune, out RuneInfo info)){
                 mpCost += info.mpCost; // 룬의 마나 소모량을 누적
