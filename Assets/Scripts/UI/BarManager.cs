@@ -13,6 +13,9 @@ public class BarManager : MonoBehaviour
         public GameObject mpBar; // 플레이어의 마나를 표시하는 UI 바 오브젝트
         public int Hp => hpBar.GetComponent<BarUpdater>().CurBarValue; // 현재 플레이어의 체력 값
         public int Mp => mpBar.GetComponent<BarUpdater>().CurBarValue; // 현재
+        public int MaxHp => hpBar.GetComponent<BarUpdater>().MaxBarValue; // 플레이어의 최대 체력 값
+        public int MaxMp => mpBar.GetComponent<BarUpdater>().MaxBarValue; //
+        public int MpRegen => mpBar.GetComponent<BarUpdater>().getMpRegenValue(); // 현재 플레이어의 마나 재생 속도 값
 
     void Awake()
     {

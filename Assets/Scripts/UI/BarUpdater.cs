@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 public class BarUpdater : MonoBehaviour
 {
+    public static event Action OnHpChanged;
+    public static event Action OnMpChanged;
+    public static event Action OnMpRegenChanged;
 
     // UI에서 바를 나타내는 이미지 컴포넌트
     public Image backBarImage; // 배경 바 이미지 
@@ -17,11 +20,18 @@ public class BarUpdater : MonoBehaviour
 
     public static event Action OnPlayerDead; // 플레이어가 죽었을 때 호출되는 이벤트
 
+    public int getMpRegenValue() => regenValue;
+
     public int CurBarValue{
         get => curBarValue;
         set{
             curBarValue = Mathf.Clamp(value, MINBARVALUE, maxBarValue);
             ApplyBarUI(); // 바의 UI를 업데이트
+
+        if (gameObject.tag == "HpBar")
+            OnHpChanged?.Invoke();
+        else if (gameObject.tag == "MpBar")
+            OnMpChanged?.Invoke();
         }
     }
 
@@ -78,6 +88,7 @@ public class BarUpdater : MonoBehaviour
         regenValue += value; // 재생성 속도 업데이트
         StopRegen(); // 기존 재생성 코루틴 중지
         regenCoroutine = StartCoroutine(AutoRegenBar()); // 새로운 재생성 코루틴 시작
+        OnMpRegenChanged?.Invoke();
     }
 
     // Update is called once per frame

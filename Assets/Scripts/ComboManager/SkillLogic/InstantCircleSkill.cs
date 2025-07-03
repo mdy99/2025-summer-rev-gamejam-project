@@ -17,7 +17,7 @@ public class InstantCircleSkill : ISkill
         if (skillData.mpCost > BarManager.Instance.Mp) // 현재 마나가 부족한 경우
         {
             Debug.LogWarning("Not enough MP to execute skill: " + skillData.runeCode);
-            NarrationText.Instance.UpdateNarration("마나가 부족합니다."); // 마나 부족 메시지 표시
+            NarrationText.Instance.UpdateNarration("마나가 부족합니다.",Color.gray); // 마나 부족 메시지 표시
             return; // 마나가 부족하면 스킬 실행 중단
         }
         BarManager.Instance.UpdateMpBar(-skillData.mpCost); // 마나 UI 바 업데이트

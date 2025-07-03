@@ -33,21 +33,24 @@ public class NarrationText : MonoBehaviour
         LowerNarrationText.text = "";
     }
 
-    public void UpdateNarration(string newNarration)
-    {
-        // 위로 밀기
-        UpperNarrationText.text = MiddleNarrationText.text;
-        if (upperCoroutine != null) StopCoroutine(upperCoroutine);
-        upperCoroutine = StartCoroutine(ClearAfterDelay(UpperNarrationText, 3f));
+public void UpdateNarration(string newNarration, Color color)
+{
+    // 위로 밀기
+    UpperNarrationText.text = MiddleNarrationText.text;
+    UpperNarrationText.color = MiddleNarrationText.color;
+    if (upperCoroutine != null) StopCoroutine(upperCoroutine);
+    upperCoroutine = StartCoroutine(ClearAfterDelay(UpperNarrationText, 3f));
 
-        MiddleNarrationText.text = LowerNarrationText.text;
-        if (middleCoroutine != null) StopCoroutine(middleCoroutine);
-        middleCoroutine = StartCoroutine(ClearAfterDelay(MiddleNarrationText, 3f));
+    MiddleNarrationText.text = LowerNarrationText.text;
+    MiddleNarrationText.color = LowerNarrationText.color;
+    if (middleCoroutine != null) StopCoroutine(middleCoroutine);
+    middleCoroutine = StartCoroutine(ClearAfterDelay(MiddleNarrationText, 3f));
 
-        LowerNarrationText.text = newNarration;
-        if (lowerCoroutine != null) StopCoroutine(lowerCoroutine);
-        lowerCoroutine = StartCoroutine(ClearAfterDelay(LowerNarrationText, 3f));
-    }
+    LowerNarrationText.text = newNarration;
+    LowerNarrationText.color = color;
+    if (lowerCoroutine != null) StopCoroutine(lowerCoroutine);
+    lowerCoroutine = StartCoroutine(ClearAfterDelay(LowerNarrationText, 3f));
+}
 
     private IEnumerator ClearAfterDelay(TMP_Text text, float delay)
     {

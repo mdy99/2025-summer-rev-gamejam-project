@@ -14,11 +14,15 @@ public class WaveManager : MonoBehaviour
 {
     public static WaveManager Instance { get; private set; } // 싱글톤 인스턴스
 
+    public delegate void MemorizedSkillsChanged();
+    public event MemorizedSkillsChanged OnMemorizedSkillsChanged; // 기억된 스킬이 변경될 때 호출되는 이벤트
+
     [SerializeField] private int totalWaves = 7; // 총 웨이브 수
     [SerializeField] private List<WaveData> waveSettings = new List<WaveData>();
 
     [SerializeField] private List<SkillData> memorizedSkills = new List<SkillData>(); // 기억된 스킬 데이터
-
+    public List<SkillData> MemorizedSkills => memorizedSkills;
+    
     public int currentWave=0; // 현재 웨이브 번호
     private float timer = 0f; // 웨이브 스폰 타이머
 
@@ -45,6 +49,14 @@ public class WaveManager : MonoBehaviour
         return randomRuneCode; // 강화된 룬 코드 반환
     }
 
+    public void ReplaceSkill(int index, SkillData newSkill){
+        if(index>=0 && index < memorizedSkills.Count){
+            memorizedSkills[index] = newSkill;
+            OnMemorizedSkillsChanged?.Invoke(); // 기억된 스킬이 변경되었음을 알림
+            Debug.Log($"Skill at index {index} replaced with {newSkill.name}");
+        }
+    }
+
     public void OnEnemyKilled(){
         killCount++;
         Debug.Log($"Enemy killed! Current kill count: {killCount}");
@@ -62,6 +74,7 @@ public class WaveManager : MonoBehaviour
     void Start(){
         rewardPanelController = GetComponent<RewardPanelController>();
         StartNextWave(); // 첫 번째 웨이브 시작
+        RuneReinforceTracker.Instance.ResetTracker();
     }
 
     void Update()
@@ -127,7 +140,7 @@ public class WaveManager : MonoBehaviour
     {
         enemySpawner.DisableAllEnemies(); // 모든 적 비활성화
         enemySpawner.IncreaseAllEnemiesStatus(); // 모든 적의 상태 증가
-        
+
         CurrentState = WaveState.RewardTime; // 현재 웨이브 종료 상태로 변경
         rewardPanelController.SetupRewardSlots(memorizedSkills); // 보상 슬롯 설정
         rewardPanelController.ResetPanel(); // 보상 패널 초기화

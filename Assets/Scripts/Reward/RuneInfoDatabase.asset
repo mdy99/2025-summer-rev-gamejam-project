@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runes:
   - runeCode: A
-    damage: 10
+    damage: 15
     mpCost: 40
   - runeCode: B
-    damage: 10
+    damage: 12
     mpCost: 40
   - runeCode: C
     damage: 11
@@ -65,8 +65,8 @@ MonoBehaviour:
     damage: 16
     mpCost: 40
   - runeCode: R
-    damage: 12
-    mpCost: 40
+    damage: 22
+    mpCost: 35
   - runeCode: S
     damage: 10
     mpCost: 40
@@ -89,7 +89,7 @@ MonoBehaviour:
     damage: 9
     mpCost: 40
   - runeCode: Z
-    damage: 10
+    damage: 17
     mpCost: 40
   - runeCode: 0
     damage: 9

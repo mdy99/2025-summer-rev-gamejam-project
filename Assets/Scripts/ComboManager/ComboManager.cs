@@ -83,6 +83,7 @@ public class ComboManager : MonoBehaviour
         else
         {
             Debug.LogWarning("No skill found for rune key: " + runeKey); // 경고 로그 출력
+            NarrationText.Instance.UpdateNarration("해당 룬 조합을 메모라이즈하지 않았습니다.",Color.white); // 룬에 대한 스킬이 없다는 메시지 표시
         }
     }
 

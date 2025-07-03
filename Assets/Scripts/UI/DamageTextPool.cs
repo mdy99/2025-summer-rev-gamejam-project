@@ -9,7 +9,7 @@ public class DamageTextPool : MonoBehaviour
     public static DamageTextPool Instance { get; private set; } // 싱글톤 인스턴스
 
     public GameObject damageTextPrefab; // 피해 텍스트 프리팹
-    public int poolSize = 20; // 풀의 크기
+    private int poolSize = 20; // 풀의 크기
 
     private Queue<GameObject> damageTextPool = new Queue<GameObject>(); // 피해 텍스트 풀
 

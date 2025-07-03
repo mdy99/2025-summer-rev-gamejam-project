@@ -70,9 +70,15 @@ public class RewardSlotController : MonoBehaviour
 
         alreadySelected = true; // 룬 선택 상태로 변경
 
-        // 룬 선택 이벤트 호출---
-        // 룬 데미지 증가, 자원 감소
-        runeManager.ReinforceRune(assignedRuneCodes[index], ReinforceDamage, ReinforceMpCost);
+        // 룬 선택 이벤트 호출
+        string runeCode = assignedRuneCodes[index];
+
+        // 강화 수치 외부 Tracker에 위임
+        var (damage, mpCost) = RuneReinforceTracker.Instance.ReinforceRune(runeCode);
+
+        runeManager.ReinforceRune(runeCode, damage, mpCost);
+
+        NarrationText.Instance.UpdateNarration($"{runeCode} 룬이 강화되었습니다! {damage}의 데미지 증가와 {mpCost}의 마나 감소가 적용됩니다.", Color.magenta);
         OnAnyRuneSelected?.Invoke();
     }
 

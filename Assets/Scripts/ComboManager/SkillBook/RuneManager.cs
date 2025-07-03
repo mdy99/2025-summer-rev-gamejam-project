@@ -4,12 +4,45 @@ using UnityEngine;
 
 public class RuneManager : MonoBehaviour
 {
+    public static RuneManager Instance { get; private set; } // 싱글톤 인스턴스
+
+    public delegate void RuneChanged();
+    public event RuneChanged OnRuneChanged;
+
     [Header("Rune Database")]
     [SerializeField] private RuneInfoDatabase runeInfoDatabase; // 룬 정보 데이터베이스
 
     private Dictionary<string, RuneInfo> runeDictionary; // 룬 정보를 저장할 딕셔너리
+
+    public int GetDamage(string runeCode){
+        if (runeDictionary.TryGetValue(runeCode, out RuneInfo runeInfo))
+        {
+            return runeInfo.damage; // 룬의 데미지 반환
+        }
+        else
+        {
+            Debug.LogWarning($"Rune {runeCode} not found in the database.");
+            return 0; // 룬이 없으면 0 반환
+        }
+    }
+
+    public int GetMpCost(string runeCode){
+        if (runeDictionary.TryGetValue(runeCode, out RuneInfo runeInfo))
+        {
+            return runeInfo.mpCost; // 룬의 마나 소모 반환
+        }
+        else
+        {
+            Debug.LogWarning($"Rune {runeCode} not found in the database.");
+            return 0; // 룬이 없으면 0 반환
+        }
+    }
+
     private void Awake()
     {
+        if(Instance == null) Instance = this;
+        else Destroy(gameObject);
+    
         runeDictionary = new Dictionary<string, RuneInfo>();
         foreach(var rune in runeInfoDatabase.runes)
         {
@@ -22,6 +55,7 @@ public class RuneManager : MonoBehaviour
         if (runeDictionary.TryGetValue(runeCode, out RuneInfo runeInfo))
         {
             runeInfo.AddRuneInfo(damageValue, mpCostValue); // 룬 정보 강화
+            OnRuneChanged?.Invoke(); // UI 갱신 알림 추가
             Debug.Log($"Reinforced {runeCode}: Damage +{damageValue}, MP Cost {mpCostValue}");
         }
         else

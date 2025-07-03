@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemObject : MonoBehaviour
@@ -38,26 +39,26 @@ public class ItemObject : MonoBehaviour
             case ItemType.HpUp:
                 int randomAmount = Random.Range(10, 20); // 랜덤으로 10~20 사이의 체력 회복량 선택
                 BarManager.Instance.UpdateHpBar(randomAmount); // 체력 회복
-                NarrationText.Instance.UpdateNarration("체력이 " + randomAmount + "만큼 회복되었습니다!"); // 내레이션 업데이트
+                NarrationText.Instance.UpdateNarration("체력이 " + randomAmount + "만큼 회복되었습니다!",Color.green); // 내레이션 업데이트
                 break;
             case ItemType.MpUp:
                 int randomMpAmount = Random.Range(10, 30); // 랜덤으로 10~30 사이의 마나 회복량 선택
                 BarManager.Instance.UpdateMpBar(randomMpAmount); // 마나 회복
-                NarrationText.Instance.UpdateNarration("마나가 " + randomMpAmount + "만큼 회복되었습니다!"); // 내레이션 업데이트
+                NarrationText.Instance.UpdateNarration("마나가 " + randomMpAmount + "만큼 회복되었습니다!",Color.blue); // 내레이션 업데이트
                 break;
             case ItemType.DamageUp:
                 int randomDamage = Random.Range(1,5); // 랜덤으로 1~5 사이의 공격력 증가량 선택
                 string runeCode = WaveManager.Instance.ReinforceRandomSkillDamage(randomDamage); // 랜덤 스킬 공격력 증가
                 if (runeCode != null)
                 {
-                    NarrationText.Instance.UpdateNarration($"{runeCode}의 공격력이 " + randomDamage + "만큼 증가했습니다!"); // 내레이션 업데이트
+                    NarrationText.Instance.UpdateNarration($"{runeCode}의 공격력이 " + randomDamage + "만큼 증가했습니다!",Color.magenta); // 내레이션 업데이트
                 }
                 break;
             case ItemType.SpeedUp:
                 float randomDuration = Random.Range(3f, 7f); // 랜덤으로 3~7초 사이의 지속 시간 선택
                 float randomMultiplier = Random.Range(1.2f, 2f); // 랜덤으로 1.2~2배 사이의 속도 증가 배율 선택
                 playerMoveController.SpeedUpForDuration(randomDuration, randomMultiplier); // 이동 속도 증가
-                NarrationText.Instance.UpdateNarration($"{randomDuration:F1}초 동안 이동 속도가 {randomMultiplier:F1}배 증가했습니다!"); // 내레이션 업데이트
+                NarrationText.Instance.UpdateNarration($"{randomDuration:F1}초 동안 이동 속도가 {randomMultiplier:F1}배 증가했습니다!",Color.cyan); // 내레이션 업데이트
                 break;
         }
         Destroy(gameObject); // 아이템 효과 적용 후 아이템 오브젝트 제거

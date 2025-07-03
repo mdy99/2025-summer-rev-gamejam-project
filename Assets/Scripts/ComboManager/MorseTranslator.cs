@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MorseTranslator
 {
+    private Dictionary<string, string> runeToMorseMap;
+
     private Dictionary<string, string> morseToRuneMap = new Dictionary<string, string>
     {
         { ".ㅡ", "A" },
@@ -44,7 +46,18 @@ public class MorseTranslator
         { "ㅡㅡㅡㅡ.", "9" }
     };
 
+    public MorseTranslator(){
+        runeToMorseMap = new Dictionary<string, string>();
+        foreach(var kvp in morseToRuneMap){
+            runeToMorseMap[kvp.Value] = kvp.Key;
+        }
+    }
+
     public string TranslateToRune(string morse){
         return morseToRuneMap.TryGetValue(morse, out string rune) ? rune : null;
+    }
+
+    public string TranslateToRuneReverse(string rune){
+        return runeToMorseMap.TryGetValue(rune, out string morse) ? morse: null;
     }
 }

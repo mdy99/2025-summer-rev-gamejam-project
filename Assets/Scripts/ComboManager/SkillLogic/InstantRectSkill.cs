@@ -18,7 +18,7 @@ public class InstantRectSkill : ISkill
         if (skillData.mpCost > BarManager.Instance.Mp) // 현재 마나가 부족한 경우
         {
             Debug.LogWarning("Not enough MP to execute skill: " + skillData.runeCode);
-            NarrationText.Instance.UpdateNarration("마나가 부족합니다."); // 마나 부족 메시지 표시
+            NarrationText.Instance.UpdateNarration("마나가 부족합니다.",Color.gray); // 마나 부족 메시지 표시
             return; // 마나가 부족하면 스킬 실행 중단
         }
         
@@ -30,7 +30,7 @@ public class InstantRectSkill : ISkill
         mouse.z = 0f; // z축 위치를 0으로 설정 (2D 게임에서 z축은 사용하지 않음)
         Vector2 dir = (mouse - center).normalized; // 마우스 위치를 기준으로 방향 계산
 
-        float spawnOffset = 6f; // 스킬 발사 위치 오프셋
+        float spawnOffset = 11f; // 스킬 발사 위치 오프셋
         Vector3 spawnPos = center + (Vector3)(dir * spawnOffset); // 방향에 맞게 오프셋 적용
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg; // 방향을 각도로 변환

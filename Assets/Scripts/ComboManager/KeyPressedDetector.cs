@@ -44,7 +44,7 @@ public class KeyPressedDetector : MonoBehaviour
                     OnSymbolDetected?.Invoke("."); // 심볼 감지 이벤트 호출
                 }
                 else{
-                    OnSymbolDetected?.Invoke("-"); // 심볼 감지 이벤트 호출
+                    OnSymbolDetected?.Invoke("ㅡ"); // 심볼 감지 이벤트 호출
                 }
             }
         }
