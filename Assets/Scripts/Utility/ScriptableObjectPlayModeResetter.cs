@@ -43,7 +43,7 @@ public static class ScriptableObjectPlayModeResetter
                 JsonUtility.FromJsonOverwrite(kv.Value, kv.Key);
                 EditorUtility.SetDirty(kv.Key); // 변경 내용 표시
             }
-            AssetDatabase.SaveAssets(); // 저장
+            //AssetDatabase.SaveAssets(); // 저장
             backups.Clear();
         }
     }

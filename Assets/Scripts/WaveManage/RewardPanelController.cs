@@ -36,6 +36,7 @@ public class RewardPanelController : MonoBehaviour
             if (matchingSkill != null)
             {
                 slot.Initialize(matchingSkill); // 슬롯에 스킬 데이터 설정
+                slot.ShowReinforceInfo();  // 슬롯에 강화 정보 표시
             }
             else{
                 Debug.LogWarning($"No matching skill found for slot type: {type}"); // 해당 타입의 스킬이 없는 경우 경고 메시지 출력
@@ -80,6 +81,7 @@ public class RewardPanelController : MonoBehaviour
     }
 
     public void OpenPanel(){
+        // RuneReinforceTracker.Instance.UpdateReinforceInfo(); // 룬 강화 트래커 초기화
         rewardPanel.SetActive(true); // 보상 패널 활성화
         Time.timeScale = 0f; // 게임 일시 정지
         reinforcePanel.ResetPanel(); // 강화 패널 초기화

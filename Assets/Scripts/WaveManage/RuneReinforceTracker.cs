@@ -1,11 +1,64 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class RuneReinforceTracker : MonoBehaviour
 {
     public static RuneReinforceTracker Instance { get; private set; }
 
+    [SerializeField] private TMP_Text reinforceText; // UI에 강화 횟수를 표시할 텍스트
+
     private Dictionary<string, int> runeReinforceCounts = new Dictionary<string, int>();
+
+    public void UpdateReinforceInfo()
+{
+    if (reinforceText == null) return;
+
+    string info = "[룬 강화 현황]\n";
+
+    int[] damageCurve = { 10, 8, 6, 5, 4 };
+    int[] mpCostCurve = { -5, -4, -3, -2, -1 };
+
+    foreach (var kvp in runeReinforceCounts)
+    {
+        string rune = kvp.Key;
+        int count = kvp.Value;
+
+        bool isMaxed = count >= damageCurve.Length;
+        string line;
+
+        if (isMaxed)
+        {
+            line = $"{rune}: 횟수 {count}회 → 최대 강화 도달";
+        }
+        else
+        {
+            int damage = damageCurve[count];
+            int mpCost = mpCostCurve[count];
+            line = $"{rune}: 횟수 {count}회 → 다음 강화 시 +{damage} / 마나 {mpCost}";
+        }
+
+        info += line + "\n";
+    }
+
+    reinforceText.text = info;
+}
+
+public (int count, int? nextDamage, int? nextMpCost, bool isMaxed) GetNextReinforceInfo(string runeCode)
+{
+    int[] damageCurve = { 10, 8, 6, 5, 4 };
+    int[] mpCostCurve = { -5, -4, -3, -2, -1 };
+
+    int count = GetReinforceCount(runeCode);
+    bool isMaxed = count >= damageCurve.Length;
+
+    int? nextDamage = isMaxed ? null : damageCurve[count];
+    int? nextMpCost = isMaxed ? null : mpCostCurve[count];
+
+    return (count, nextDamage, nextMpCost, isMaxed);
+}
+
+
 
     private void Awake()
     {

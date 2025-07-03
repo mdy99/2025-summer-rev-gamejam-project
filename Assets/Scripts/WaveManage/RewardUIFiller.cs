@@ -14,6 +14,11 @@ public class RewardUIFiller : MonoBehaviour
 
     void OnEnable()
     {
+
+    }
+
+    void Start()
+    {
         BarUpdater.OnHpChanged += UpdateBarTexts;
         BarUpdater.OnMpChanged += UpdateBarTexts;
         BarUpdater.OnMpRegenChanged += UpdateBarTexts;
@@ -33,7 +38,7 @@ public class RewardUIFiller : MonoBehaviour
         WaveManager.Instance.OnMemorizedSkillsChanged -= FillRewardSlots;
     }
 
-    void UpdateBarTexts()
+    public void UpdateBarTexts()
     {
         hpText.text = $"HP: {BarManager.Instance.MaxHp}";
         mpText.text = $"MP: {BarManager.Instance.MaxMp}";

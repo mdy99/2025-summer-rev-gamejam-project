@@ -32,6 +32,8 @@ public class WaveManager : MonoBehaviour
 
     public EnemySpawner enemySpawner;
 
+    public BackgroundDimmer backgroundDimmer; // 배경 디머
+
     public int killCount=0; // 현재 웨이브에서 처치한 적의 수
 
     public string ReinforceRandomSkillDamage(int amount){
@@ -133,6 +135,7 @@ public class WaveManager : MonoBehaviour
 
             // TODO: 웨이브 시작 로직 추가
             enemySpawner.AdjustPoolSizeForWave(waveSettings[currentWave - 1]); // 적 풀 사이즈 조정
+            backgroundDimmer.ApplyWaveEffect(currentWave); // 배경 디머 활성화
         }
     }
 

@@ -28,6 +28,29 @@ public class RewardSlotController : MonoBehaviour
     private int ReinforceDamage = 10;
     private int ReinforceMpCost = -5;
 
+    [SerializeField] private TMP_Text reinforceInfoText; // 룬 강화 횟수를 표시할 텍스트
+
+    public void ShowReinforceInfo()
+    {
+        string info = "[강화 정보]\n";
+
+        foreach (string runeCode in assignedRuneCodes)
+        {
+            var (count, damage, mpCost, isMaxed) = RuneReinforceTracker.Instance.GetNextReinforceInfo(runeCode);
+
+            if (isMaxed)
+            {
+                info += $"{runeCode}: {count}회 → 최대 강화 도달\n";
+            }
+            else
+            {
+                info += $"{runeCode}: {count}회 → 다음 +{damage} / 마나 {mpCost}\n";
+            }
+        }
+
+        reinforceInfoText.text = info;
+    }
+
     public void Initialize(SkillData skillData){
         assignedRuneCodes = SplitRuneCodes(skillData.runeCode); // 룬 코드 분할 및 할당
         for(int i=0;i<runeButtons.Count;i++)
@@ -78,6 +101,7 @@ public class RewardSlotController : MonoBehaviour
 
         runeManager.ReinforceRune(runeCode, damage, mpCost);
 
+        RuneReinforceTracker.Instance.UpdateReinforceInfo(); // 룬 강화 정보 업데이트
         NarrationText.Instance.UpdateNarration($"{runeCode} 룬이 강화되었습니다! {damage}의 데미지 증가와 {mpCost}의 마나 감소가 적용됩니다.", Color.magenta);
         OnAnyRuneSelected?.Invoke();
     }
