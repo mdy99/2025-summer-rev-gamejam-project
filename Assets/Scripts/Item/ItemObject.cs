@@ -41,23 +41,28 @@ public class ItemObject : MonoBehaviour
         switch(itemData.itemType)
         {
             case ItemType.HpUp:
-                BarManager.Instance.UpdateHpBar(itemData.increaseAmount); // 체력 회복
-                NarrationUpdate("체력이 " + itemData.increaseAmount + "만큼 회복되었습니다!"); // 내레이션 업데이트
+                int randomAmount = Random.Range(10, 20); // 랜덤으로 10~20 사이의 체력 회복량 선택
+                BarManager.Instance.UpdateHpBar(randomAmount); // 체력 회복
+                NarrationUpdate("체력이 " + randomAmount + "만큼 회복되었습니다!"); // 내레이션 업데이트
                 break;
             case ItemType.MpUp:
-                BarManager.Instance.UpdateMpBar(itemData.increaseAmount); // 마나 회복
-                NarrationUpdate("마나가 " + itemData.increaseAmount + "만큼 회복되었습니다!"); // 내레이션 업데이트
+                int randomMpAmount = Random.Range(10, 30); // 랜덤으로 10~30 사이의 마나 회복량 선택
+                BarManager.Instance.UpdateMpBar(randomMpAmount); // 마나 회복
+                NarrationUpdate("마나가 " + randomMpAmount + "만큼 회복되었습니다!"); // 내레이션 업데이트
                 break;
             case ItemType.DamageUp:
-                string runeCode = WaveManager.Instance.ReinforceRandomSkillDamage(itemData.increaseAmount); // 랜덤 스킬 공격력 증가
+                int randomDamage = Random.Range(1,5); // 랜덤으로 1~5 사이의 공격력 증가량 선택
+                string runeCode = WaveManager.Instance.ReinforceRandomSkillDamage(randomDamage); // 랜덤 스킬 공격력 증가
                 if (runeCode != null)
                 {
-                    NarrationUpdate($"{runeCode}의 공격력이 " + itemData.increaseAmount + "만큼 증가했습니다!"); // 내레이션 업데이트
+                    NarrationUpdate($"{runeCode}의 공격력이 " + randomDamage + "만큼 증가했습니다!"); // 내레이션 업데이트
                 }
                 break;
             case ItemType.SpeedUp:
-                playerMoveController.SpeedUpForDuration(itemData.duration, itemData.speedMultiplier); // 이동 속도 증가
-                NarrationUpdate($"{itemData.duration}초 동안 이동 속도가 " + itemData.speedMultiplier + "배 증가했습니다!"); // 내레이션 업데이트
+                float randomDuration = Random.Range(3f, 7f); // 랜덤으로 3~7초 사이의 지속 시간 선택
+                float randomMultiplier = Random.Range(1.2f, 2f); // 랜덤으로 1.2~2배 사이의 속도 증가 배율 선택
+                playerMoveController.SpeedUpForDuration(randomDuration, randomMultiplier); // 이동 속도 증가
+                NarrationUpdate($"{randomDuration:F1}초 동안 이동 속도가 {randomMultiplier:F1}배 증가했습니다!"); // 내레이션 업데이트
                 break;
         }
         Destroy(gameObject); // 아이템 효과 적용 후 아이템 오브젝트 제거

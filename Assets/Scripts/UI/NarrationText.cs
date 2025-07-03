@@ -1,12 +1,18 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NarrationText : MonoBehaviour
 {
-    private TMP_Text narrationText; // 내레이션 텍스트 컴포넌트
+    [SerializeField] private TMP_Text UpperNarrationText;
+    [SerializeField] private TMP_Text MiddleNarrationText;
+    [SerializeField] private TMP_Text LowerNarrationText;
 
-    public static NarrationText Instance { get; private set; } // 싱글톤 인스턴스
+    public static NarrationText Instance { get; private set; }
+
+    private Coroutine upperCoroutine;
+    private Coroutine middleCoroutine;
+    private Coroutine lowerCoroutine;
 
     private void Awake()
     {
@@ -19,11 +25,34 @@ public class NarrationText : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        narrationText = GetComponent<TMP_Text>(); // 내레이션 텍스트 컴포넌트 가져오기
+    }
+
+    void Start()
+    {
+        UpperNarrationText.text = "";
+        MiddleNarrationText.text = "";
+        LowerNarrationText.text = "";
     }
 
     public void UpdateNarration(string newNarration)
     {
-        narrationText.text = newNarration; // 내레이션 텍스트 업데이트
+        // 위로 밀기
+        UpperNarrationText.text = MiddleNarrationText.text;
+        if (upperCoroutine != null) StopCoroutine(upperCoroutine);
+        upperCoroutine = StartCoroutine(ClearAfterDelay(UpperNarrationText, 3f));
+
+        MiddleNarrationText.text = LowerNarrationText.text;
+        if (middleCoroutine != null) StopCoroutine(middleCoroutine);
+        middleCoroutine = StartCoroutine(ClearAfterDelay(MiddleNarrationText, 3f));
+
+        LowerNarrationText.text = newNarration;
+        if (lowerCoroutine != null) StopCoroutine(lowerCoroutine);
+        lowerCoroutine = StartCoroutine(ClearAfterDelay(LowerNarrationText, 3f));
+    }
+
+    private IEnumerator ClearAfterDelay(TMP_Text text, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        text.text = "";
     }
 }
