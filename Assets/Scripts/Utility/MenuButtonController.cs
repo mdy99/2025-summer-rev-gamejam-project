@@ -14,15 +14,8 @@ public class MenuButtonController : MonoBehaviour
         // 1. 일시정지 상태 해제
         Time.timeScale = 1f;
 
-        if (RuneManager.Instance != null)
-        {
-            // 이미 Destroy된 오브젝트인지도 확인
-            if (RuneManager.Instance.gameObject != null)
-            {
-                RuneManager.Instance?.NotifyRuneChanged(); // 룬 정보 변경 알림
-                RuneManager.Instance?.GetComponent<RuneInfoDatabase>()?.ResetDatabase();
-            }
-        }
+        RuneManager.Instance?.ResetRuneDatabase(); // 룬 데이터베이스 초기
+        
 
         // 강화 수치 초기화
         BarReinforceTracker.Instance?.ResetTracker();
