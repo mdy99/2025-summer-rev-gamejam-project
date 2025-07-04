@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class KeySettingManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class KeySettingManager : MonoBehaviour
 
     private enum KeySettingType { None, Morse, Enter }
     private KeySettingType waitingForKey = KeySettingType.None;
+    private bool isListeningForKey = false;
 
     void Awake()
     {
@@ -33,50 +35,53 @@ public class KeySettingManager : MonoBehaviour
 
     void Start()
     {
-        morseKeyButton.onClick.AddListener(() => WaitForKey(KeySettingType.Morse));
-        enterKeyButton.onClick.AddListener(() => WaitForKey(KeySettingType.Enter));
+        morseKeyButton.onClick.AddListener(() => StartKeyListening(KeySettingType.Morse));
+        enterKeyButton.onClick.AddListener(() => StartKeyListening(KeySettingType.Enter));
 
         UpdateUI();
     }
 
     void Update()
     {
-        if (waitingForKey == KeySettingType.None) return;
+        if (!isListeningForKey || waitingForKey == KeySettingType.None) return;
 
         foreach (KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode)))
         {
             if (Input.GetKeyDown(keyCode))
             {
-                switch (waitingForKey)
-                {
-                    case KeySettingType.Morse:
-                        morseKey = keyCode;
-                        break;
-                    case KeySettingType.Enter:
-                        enterKey = keyCode;
-                        break;
-                }
+                if (waitingForKey == KeySettingType.Morse)
+                    morseKey = keyCode;
+                else if (waitingForKey == KeySettingType.Enter)
+                    enterKey = keyCode;
 
                 Debug.Log($"입력된 키: {keyCode}");
+
                 waitingForKey = KeySettingType.None;
+                isListeningForKey = false;
+
                 UpdateUI();
                 break;
             }
         }
     }
 
-    void WaitForKey(KeySettingType type)
+    void StartKeyListening(KeySettingType type)
     {
         waitingForKey = type;
-        switch (type)
-        {
-            case KeySettingType.Morse:
-                morseKeyText.text = "모스 키: 입력 대기 중...";
-                break;
-            case KeySettingType.Enter:
-                enterKeyText.text = "엔터 키: 입력 대기 중...";
-                break;
-        }
+        isListeningForKey = false;
+        StartCoroutine(EnableKeyListeningNextFrame());
+
+        // 즉시 텍스트 갱신
+        if (type == KeySettingType.Morse)
+            morseKeyText.text = "모스 키: ...입력 대기 중...";
+        else if (type == KeySettingType.Enter)
+            enterKeyText.text = "엔터 키: ...입력 대기 중...";
+    }
+
+    IEnumerator EnableKeyListeningNextFrame()
+    {
+        yield return new WaitForEndOfFrame(); // 버튼 클릭한 프레임은 지나가게 한다
+        isListeningForKey = true;
     }
 
     void UpdateUI()
