@@ -26,8 +26,18 @@ public class ComboManager : MonoBehaviour
 
     [SerializeField] private ParticleSystem magicCircleEffect; // 마법진 이펙트
 
+    public void SetKeys(KeyCode morseKey, KeyCode enterKey)
+    {
+        MORSE_KEY = morseKey; // 모스 부호 입력 키 설정
+        ENTER_KEY = enterKey; // 콤보 제출 키 설정
+        keyPressedDetector.KeySetting(MORSE_KEY); // 키 입력 탐지기에 모스 부호 입력 키 설정
+    }
+
     void Start()
     {
+        var keySetting = KeySettingManager.Instance; // 키 설정 매니저 인스턴스 가져오기
+        SetKeys(keySetting.morseKey, keySetting.enterKey); // 모스 부호 입력 키와 콤보 제출 키 설정
+        
         magicCircleEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 
