@@ -16,6 +16,14 @@ public class RuneInfoDatabase : ScriptableObject
         }
         return dict;
     }
+public void ResetDatabase()
+    {
+        foreach (var rune in runes)
+        {
+            rune.ResetToInitialValues(); // 모든 룬의 초기값으로 리셋
+        }
+    }
+
 
 
 }

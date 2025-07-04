@@ -50,6 +50,8 @@ public class RuneScrollController : MonoBehaviour
         if(WaveManager.Instance != null){
             WaveManager.Instance.OnMemorizedSkillsChanged += UpdateRuneScroll; // 기억된 스킬이 변경될 때 룬 스크롤 업데이트
         }
+        
+        StartCoroutine(DelayedUpdate()); // 룬 스크롤 업데이트를 지연시킴
     }
 
     private void OnDisable()
@@ -71,6 +73,7 @@ public class RuneScrollController : MonoBehaviour
         if (WaveManager.Instance == null || WaveManager.Instance.MemorizedSkills == null)
         {
             Debug.LogWarning("WaveManager.Instance or MemorizedSkills is null.");
+            updateCoroutine = StartCoroutine(DelayedUpdate()); // 룬 스크롤 업데이트를 지연시킴
             return;
         }
 
@@ -121,8 +124,8 @@ public class RuneScrollController : MonoBehaviour
         string morse = morseTranslator.TranslateToRuneReverse(runeName);
         txtTr.GetComponent<TMP_Text>().text = morse ?? "?";
 
-        int damage = RuneManager.Instance.GetDamage(runeName); // 룬의 데미지 가져오기
-        int mpCost = RuneManager.Instance.GetMpCost(runeName); // 룬의 마나 소모 가져오기
+        int damage = RuneManager.Instance != null ? RuneManager.Instance.GetDamage(runeName) : 0;
+        int mpCost = RuneManager.Instance != null ? RuneManager.Instance.GetMpCost(runeName) : 0;
 
         panel.Find("RuneDamage").GetComponent<TMP_Text>().text = damage.ToString();
         panel.Find("RuneCost").GetComponent<TMP_Text>().text = mpCost.ToString();

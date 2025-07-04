@@ -9,6 +9,12 @@ public class RuneManager : MonoBehaviour
     public delegate void RuneChanged();
     public event RuneChanged OnRuneChanged;
 
+    public void NotifyRuneChanged()
+{
+    OnRuneChanged?.Invoke(); // 내부에서만 호출 가능
+}
+
+
     [Header("Rune Database")]
     [SerializeField] private RuneInfoDatabase runeInfoDatabase; // 룬 정보 데이터베이스
 
@@ -40,9 +46,15 @@ public class RuneManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null) Instance = this;
-        else Destroy(gameObject);
-    
+            if (Instance == null)
+    {
+        Instance = this;
+        DontDestroyOnLoad(gameObject); // 씬 전환 시에도 유지
+    }
+    else
+    {
+        Destroy(gameObject); // 중복 방지
+    }
         runeDictionary = new Dictionary<string, RuneInfo>();
         foreach(var rune in runeInfoDatabase.runes)
         {
@@ -51,6 +63,13 @@ public class RuneManager : MonoBehaviour
             runeDictionary[rune.runeCode] = rune; // 룬 코드로 룬 정보를 매핑
         }
     }
+
+    public void ResetRuneDatabase()
+{
+    runeInfoDatabase.ResetDatabase(); // ScriptableObject 상태 복원
+    NotifyRuneChanged(); // UI 갱신 트리거
+}
+
 
     public void ReinforceRune(string runeCode, int damageValue, int mpCostValue)
     {
