@@ -47,7 +47,6 @@ public class Enemy : MonoBehaviour, IEnemy
 
     void OnPlayerDead(){
         isPlayerDead = true; // 플레이어가 죽었음을 표시
-        enemyRigid.velocity = Vector2.zero; // 적의 속도를 0으로 설정하여 이동 중지
         isLive = false; // 적을 죽음 상태로 변경
     }
 
@@ -71,12 +70,16 @@ public class Enemy : MonoBehaviour, IEnemy
     protected virtual void Start()
     {
         target =GameObject.FindWithTag("Player")?.GetComponent<Rigidbody2D>(); // 플레이어의 Rigidbody2D 컴포넌트를 가져옴\
+        if(EnemyType.Boss == enemyData.enemyType) isBoss = true; // 적의 타입이 보스인지 확인
     }
 
     public void TakeDamage(int damage)
     {
         currentHp -= damage; // 적의 체력 감소
         if (!isLive) return; // ✅ 죽었으면 더 이상 데미지 받지 않음
+        if(isBoss){
+            NarrationText.Instance.UpdateNarration($"보스 체력: {currentHp}/{enemyData.hp}", Color.red); // 보스가 데미지를 받았을 때 내레이션 텍스트 업데이트
+        }
         StartCoroutine(HitFlash()); // 적이 맞았을 때 색상 변경 효과 시작
         ShowDamageText(damage); // 피해 텍스트 표시
         Debug.Log($"Enemy {enemyData.name} took {damage} damage! Remaining HP: {currentHp}"); // 디버그 메시지 출력

@@ -18,7 +18,7 @@ MonoBehaviour:
   atk: 22
   speed: 3.7
   attackCooldown: 1
-  rewardMp: 12
+  rewardMp: 20
   increaseHp: 10
   increaseAtk: 5
   enemyType: 2

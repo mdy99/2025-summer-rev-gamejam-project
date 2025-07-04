@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject midBossPrefab; // 중간 보스 프리팹
     public GameObject finalBossPrefab; // 최종 보스 프리팹
 
-    private float spawnInterval = 2.0f; // 적 생성 간격
+    private float spawnInterval = 1.2f; // 적 생성 간격
 
     public float SpawnInterval{
         get => spawnInterval;

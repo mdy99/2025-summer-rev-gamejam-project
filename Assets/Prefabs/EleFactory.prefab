@@ -100,12 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e0dc429e036f9947bf763593e41573e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleDrops:
-  - {fileID: 11400000, guid: de38793d9f60e3247a073ffb3c777cfb, type: 2}
-  - {fileID: 11400000, guid: e4bd585ea5a7f7f49a516277568b729f, type: 2}
-  - {fileID: 11400000, guid: 4515ef7865b1a0a48a049d1dcf1a3281, type: 2}
-  - {fileID: 11400000, guid: 2edc7fc0da4bd024499b1390c95e4f64, type: 2}
   itemPrefab: {fileID: 5268625958033386682, guid: 7aa1a80c03c450540a3a21b544a69930, type: 3}
+  isBoss: 0
   currentHp: 0
   debugSpeed: 0
 --- !u!50 &4454952537940062806
@@ -167,7 +163,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.6}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -178,7 +174,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.4, y: 4.8}
+  m_Size: {x: 6.4, y: 3.57}
   m_EdgeRadius: 0
 --- !u!95 &6188034479298136844
 Animator:

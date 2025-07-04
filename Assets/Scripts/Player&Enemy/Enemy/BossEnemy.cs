@@ -39,13 +39,15 @@ public class BossEnemy : Enemy
         chargeTargetPos = target.position;
 
         // 돌진 준비 애니메이션
-        enemyAnimator.SetTrigger("PrepareCharge");
-
+//        enemyAnimator.SetTrigger("PrepareCharge");
+        SoundManager.Instance.PlaySFX("BossCharge");
+        
         yield return new WaitForSeconds(chargeDelay);
 
         // 돌진 애니메이션
-        enemyAnimator.SetTrigger("StartCharge");
+  //      enemyAnimator.SetTrigger("StartCharge");
 
+        SoundManager.Instance.PlaySFX("RunBoss");
         float elapsed = 0f;
         Vector2 direction = (chargeTargetPos - (Vector2)transform.position).normalized;
 
@@ -57,7 +59,7 @@ public class BossEnemy : Enemy
         }
 
         enemyRigid.velocity = Vector2.zero;
-        enemyAnimator.SetTrigger("StopCharge");
+    //    enemyAnimator.SetTrigger("StopCharge");
 
         isCharging = false;
     }

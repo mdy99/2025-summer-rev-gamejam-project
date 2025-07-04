@@ -36,6 +36,14 @@ public class WaveManager : MonoBehaviour
 
     public int killCount=0; // 현재 웨이브에서 처치한 적의 수
 
+    public static event System.Action OnWaveFinished; // ✅ 승리 이벤트 추가
+
+    private void HandleVictory(){
+        NarrationText.Instance.UpdateNarration($"모든 적을 무찔렀습니다. 마왕 또한 쓰러졌습니다.", Color.cyan); // 웨이브 완료 시 내레이션 업데이트
+        CurrentState = WaveState.Finished; // 웨이브 상태를 Finished로 변경
+        OnWaveFinished?.Invoke(); // 웨이브가 끝났을 때 호출되는 이벤트
+    }
+
     public string ReinforceRandomSkillDamage(int amount){
         if(memorizedSkills.Count == 0) return null; // 기억된 스킬이 없으면 함수 종료
 
@@ -127,32 +135,27 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator GetReadySound(){
         SoundManager.Instance.PlaySFX("GetReady");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.9f);
         SoundManager.Instance.PlaySFX("Go");
     }
 
     private void StartNextWave()
     {
+        if(currentWave >= totalWaves){
+            HandleVictory(); // 웨이브 완료 처리
+            return;
+        }
+
+        currentWave ++;
+        killCount=0;
+        CurrentState = WaveState.InWave;
         StartCoroutine(GetReadySound());
-        killCount = 0; // 웨이브 시작 시 처치 카운트 초기화
-        NarrationText.Instance.UpdateNarration($"웨이브 {currentWave + 1} 시작!", Color.green); // 웨이브 시작 시 내레이션 업데이트
-        if (CurrentState == WaveState.InWave && rewardPanelController.GetActive())
+        if (rewardPanelController.GetActive())
         {
             rewardPanelController.ClosePanel(); // 보상 패널 닫기
         }
-        if (currentWave < totalWaves)
-        {
-            currentWave++;
-            if(currentWave > totalWaves){
-                CurrentState = WaveState.Finished; // 모든 웨이브가 끝났을 때
-                Debug.Log("All waves completed!");
-                return;
-            }
 
-            Debug.Log($"Starting Wave {currentWave}");
-            CurrentState = WaveState.InWave; // 웨이브 스폰 상태로 변경
-
-            // TODO: 웨이브 시작 로직 추가
+        NarrationText.Instance.UpdateNarration($"웨이브 {currentWave} 시작!", Color.green); // 웨이브 시작 시 내레이션 업데이트
             enemySpawner.AdjustPoolSizeForWave(waveSettings[currentWave - 1]); // 적 풀 사이즈 조정
             backgroundDimmer.ApplyWaveEffect(currentWave); // 배경 디머 활성화
 
@@ -164,7 +167,6 @@ public class WaveManager : MonoBehaviour
             else if(currentWave == 7){
                 enemySpawner.SpawnBoss(enemySpawner.finalBossPrefab); // 최종 보스 스폰
             }
-        }
     }
 
     private void EndCurrentWave()
