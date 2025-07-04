@@ -19,16 +19,16 @@ public class Enemy : MonoBehaviour, IEnemy
     public GameObject itemPrefab; // 아이템 프리팹
 
     [Header("컴포넌트")]
-    private Rigidbody2D target; // 플레이어 오브젝트
+    protected Rigidbody2D target; // 플레이어 오브젝트
     private SpriteRenderer spriteRenderer; // 적의 스프라이트 렌더러
-    private Rigidbody2D enemyRigid; // 적의 Rigidbody2D 컴포넌트
-    private Animator enemyAnimator; // 적의 애니메이터 컴포넌트
-    
+    protected Rigidbody2D enemyRigid; // 적의 Rigidbody2D 컴포넌트
+    protected Animator enemyAnimator; // 적의 애니메이터 컴포넌트
+
     [Header("데이터")]
     private EnemyData enemyData; // 적의 데이터 (체력, 공격력 등)
     [SerializeField] private int currentHp; // 현재 적의 체력
     [SerializeField] private float debugSpeed; // 적의 이동 속도
-    private bool isLive=true; // 적이 살아있는지 여부
+    protected bool isLive=true; // 적이 살아있는지 여부
 
     private float lastAttackTime = -999f; // 마지막 공격 시간
 
@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour, IEnemy
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         target =GameObject.FindWithTag("Player")?.GetComponent<Rigidbody2D>(); // 플레이어의 Rigidbody2D 컴포넌트를 가져옴\
     }
@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour, IEnemy
         spriteRenderer.color = Color.white; // 적의 색상을 원래대로 되돌림
     }
 
-    void Die()
+    protected virtual void Die()
     {
         if (!isLive) return; // 적이 이미 죽었으면 함수 종료
 
@@ -149,13 +149,13 @@ public class Enemy : MonoBehaviour, IEnemy
         gameObject.SetActive(false); // 적 오브젝트를 비활성화
     }
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (target == null || !isLive) return; // 플레이어가 없거나 적이 죽었으면 함수 종료
         TraceTarget(); // 플레이어를 추적하는 함수 호출
     }
 
-    void LateUpdate()
+    protected virtual void LateUpdate()
     {
         if (target == null || !isLive) return; // 플레이어가 없거나 적이 죽었으면 함수 종료
         spriteRenderer.flipX = target.transform.position.x > transform.position.x; // 플레이어의 위치에 따라 적의 스프라이트 방향을 뒤집음

@@ -136,6 +136,14 @@ public class WaveManager : MonoBehaviour
             // TODO: 웨이브 시작 로직 추가
             enemySpawner.AdjustPoolSizeForWave(waveSettings[currentWave - 1]); // 적 풀 사이즈 조정
             backgroundDimmer.ApplyWaveEffect(currentWave); // 배경 디머 활성화
+
+            if(currentWave == 3){
+                Debug.Log("Mid-boss wave started!");
+                enemySpawner.SpawnBoss(enemySpawner.midBossPrefab); // 중간 보스 스폰
+            }
+            else if(currentWave == 6){
+                enemySpawner.SpawnBoss(enemySpawner.finalBossPrefab); // 최종 보스 스폰
+            }
         }
     }
 

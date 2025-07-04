@@ -3896,8 +3896,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0b086cd7e43675144a3c693582f8485e, type: 2}
   - {fileID: 11400000, guid: 170b41a09f91903469cfe2f3f728f545, type: 2}
   poolSize: 10
-  midBossPrefab: {fileID: 0}
-  finalBossPrefab: {fileID: 0}
+  midBossPrefab: {fileID: 9048753774802062996, guid: f871799d13723194990e621deeee1b30, type: 3}
+  finalBossPrefab: {fileID: 9048753774802062996, guid: f871799d13723194990e621deeee1b30, type: 3}
 --- !u!1 &569211027
 GameObject:
   m_ObjectHideFlags: 0
@@ -5294,7 +5294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &954211389
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7912,7 +7912,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1286532312}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 511890428}
+        m_TargetAssemblyTypeName: MenuButtonController, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1286532312
 MonoBehaviour:
   m_ObjectHideFlags: 0

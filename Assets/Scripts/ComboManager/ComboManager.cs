@@ -35,9 +35,12 @@ public class ComboManager : MonoBehaviour
 
     void Start()
     {
-        var keySetting = KeySettingManager.Instance; // 키 설정 매니저 인스턴스 가져오기
-        SetKeys(keySetting.morseKey, keySetting.enterKey); // 모스 부호 입력 키와 콤보 제출 키 설정
-        
+        if(KeySettingManager.Instance != null) // 키 설정 매니저가 없으면
+        {
+            var keySetting = KeySettingManager.Instance; // 키 설정 매니저 인스턴스 가져오기
+            SetKeys(keySetting.morseKey, keySetting.enterKey); // 모스 부호 입력 키와 콤보 제출 키 설정
+        }
+
         magicCircleEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 

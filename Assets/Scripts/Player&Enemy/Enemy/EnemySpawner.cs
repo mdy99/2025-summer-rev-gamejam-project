@@ -156,9 +156,17 @@ public class EnemySpawner : MonoBehaviour
         return Vector2.negativeInfinity; // 유효한 위치를 찾지 못하면 무한대 반환
     }
 
-    void SpawnBoss(GameObject bossPrefab)
+    public void SpawnBoss(GameObject bossPrefab)
     {
-            Vector2 bossPosition = new Vector2(0,maxY-2f);
-            Instantiate(bossPrefab, bossPosition, Quaternion.identity); // 보스 생성
+        Vector2 bossPosition = new Vector2(0, maxY - 2f);
+        GameObject boss = Instantiate(bossPrefab, bossPosition, Quaternion.identity);
+
+        // ✅ EnemyData 초기화
+        BossEnemy bossEnemy = boss.GetComponent<BossEnemy>();
+        EnemyData bossData = GetEnemyDataByType(EnemyType.Boss); // EnemyType.Boss에 해당하는 데이터
+        if (bossEnemy != null && bossData != null)
+        {
+            bossEnemy.Init(bossData);
+        }
     }
 }

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937a14e72a3bf9c4c8a7e1f947bf95ac, type: 3}
+  m_Name: Boss
+  m_EditorClassIdentifier: 
+  enemyName: TrashBull
+  description: "\uC4F0\uB808\uAE30 \uD669\uC18C"
+  hp: 230
+  atk: 45
+  speed: 3
+  attackCooldown: 1
+  rewardMp: 100
+  increaseHp: 20
+  increaseAtk: 3
+  enemyType: 4
+  enemyPrefab: {fileID: 1178692644810669854, guid: bc20ef5efc5ad594a8bdc352d9e6392f, type: 3}
+  dropItems:
+  - itemData: {fileID: 11400000, guid: 2edc7fc0da4bd024499b1390c95e4f64, type: 2}
+    dropChance: 1
+  - itemData: {fileID: 11400000, guid: 4515ef7865b1a0a48a049d1dcf1a3281, type: 2}
+    dropChance: 1
+  - itemData: {fileID: 11400000, guid: e4bd585ea5a7f7f49a516277568b729f, type: 2}
+    dropChance: 1
+  - itemData: {fileID: 11400000, guid: de38793d9f60e3247a073ffb3c777cfb, type: 2}
+    dropChance: 1
