@@ -32,9 +32,17 @@ public class MissileSkillProjectile : MonoBehaviour
             SoundManager.Instance.PlaySFX("Hit");
             Vector3 hitPoint = other.transform.position; // 충돌 지점
 
+            List<string> runeList = new List<string>();
+            foreach(char rune in data.runeCode){
+                runeList.Add(rune.ToString());
+            }
+
+            int totalDamage = data.GetTotalDamage();
+            
             GameObject aoeEffect = Instantiate(aoeEffectPrefab, hitPoint, Quaternion.Euler(-90, 0, 0)); // 범위 공격 이펙트 생성
             AOEDamage aOEDamage = aoeEffect.GetComponent<AOEDamage>();
-            aOEDamage.Initialize(data.aoeRadius, data.damage); // AOE 범위와 피해량 설정
+            aOEDamage.Initialize(data.aoeRadius, totalDamage); // AOE 범위와 피해량 설정
+
             Destroy(gameObject); // 미사일 오브젝트 제거
         }
     }

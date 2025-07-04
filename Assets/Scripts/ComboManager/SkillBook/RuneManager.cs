@@ -46,6 +46,8 @@ public class RuneManager : MonoBehaviour
         runeDictionary = new Dictionary<string, RuneInfo>();
         foreach(var rune in runeInfoDatabase.runes)
         {
+            rune.CacheInitialValues();
+            rune.ResetToInitialValues();
             runeDictionary[rune.runeCode] = rune; // 룬 코드로 룬 정보를 매핑
         }
     }

@@ -9,6 +9,9 @@ public class RuneInfo
     public int damage;
     public int mpCost;
 
+    private int initialDamage;
+    private int initialMpCost;
+
     public void AddRuneInfo(int damageValue, int mpCostValue)
     {
         damage += damageValue;
@@ -21,4 +24,15 @@ public class RuneInfo
             mpCost += mpCostValue;
         }
     }
+
+    public void CacheInitialValues(){
+        initialDamage = damage;
+        initialMpCost = mpCost;
+    }   
+
+    public void ResetToInitialValues(){
+        damage = initialDamage;
+        mpCost = initialMpCost;
+    }
+
 }

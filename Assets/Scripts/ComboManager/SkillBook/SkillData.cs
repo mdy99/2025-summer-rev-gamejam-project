@@ -51,4 +51,17 @@ public class SkillData : ScriptableObject
             }
         }
     }
+
+    public int GetTotalMpCost(){
+        List<string> runeList = new List<string>();
+        foreach(char rune in runeCode){
+            runeList.Add(rune.ToString());
+        }
+        return RuneManager.Instance.GetRuneStats(runeList).totalMpCost;
+    }
+
+    public int GetTotalDamage(){
+        List<string> runeList = runeCode.Select(c=>c.ToString()).ToList();
+        return RuneManager.Instance.GetRuneStats(runeList).totalDamage;
+    }
 }
