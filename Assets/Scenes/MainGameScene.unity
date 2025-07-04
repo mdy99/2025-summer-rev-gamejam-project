@@ -3895,6 +3895,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b220750947ce66c45b56305398c86217, type: 2}
   - {fileID: 11400000, guid: 0b086cd7e43675144a3c693582f8485e, type: 2}
   - {fileID: 11400000, guid: 170b41a09f91903469cfe2f3f728f545, type: 2}
+  - {fileID: 11400000, guid: 0f16aa75169b4b54ca4c06b42530cf03, type: 2}
   poolSize: 10
   midBossPrefab: {fileID: 9048753774802062996, guid: f871799d13723194990e621deeee1b30, type: 3}
   finalBossPrefab: {fileID: 9048753774802062996, guid: f871799d13723194990e621deeee1b30, type: 3}

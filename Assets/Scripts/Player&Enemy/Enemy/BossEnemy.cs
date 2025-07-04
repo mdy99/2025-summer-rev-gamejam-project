@@ -4,7 +4,7 @@ using UnityEngine;
 public class BossEnemy : Enemy
 {
     [Header("보스 전용 설정")]
-    public float chargeSpeed = 15f;
+    public float chargeSpeed = 18f;
     public float chargeCooldown = 10f;
     public float chargeDuration = 1.5f;
     public float chargeDelay = 1f;

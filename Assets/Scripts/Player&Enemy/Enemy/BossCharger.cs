@@ -41,12 +41,12 @@ public class BossCharger : MonoBehaviour
         targetPosition = player.position;
 
         // 2. 준비 애니메이션
-        animator.SetTrigger("PrepareCharge");
+        //animator.SetTrigger("PrepareCharge");
 
         yield return new WaitForSeconds(chargeDelay);
 
         // 3. 돌진 애니메이션
-        animator.SetTrigger("StartCharge");
+        //animator.SetTrigger("StartCharge");
 
         Vector2 dir = (targetPosition - (Vector2)transform.position).normalized;
         rb.velocity = dir * chargeSpeed;
@@ -56,7 +56,7 @@ public class BossCharger : MonoBehaviour
 
         rb.velocity = Vector2.zero;
 
-        animator.SetTrigger("StopCharge");
+        //animator.SetTrigger("StopCharge");
 
         isCharging = false;
     }
