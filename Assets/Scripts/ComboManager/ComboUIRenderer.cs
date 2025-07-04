@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,9 +40,11 @@ public class ComboUIRenderer : MonoBehaviour
     public void AddSymbolImage(string symbol){
         GameObject prefab = (symbol == ".") ? dotPrefab : dashPrefab; // 심볼에 따라 프리팹 선택
         if(symbol == "."){
+            SoundManager.Instance.PlaySFX("Dot");
             animator.SetTrigger("TriggerDot"); // 점 추가 애니메이션 트리거
         }
         else{
+            SoundManager.Instance.PlaySFX("Dash");
             animator.SetTrigger("TriggerDash"); // 대시 추가 애니메이션 트리거
         }
         GameObject img = Instantiate(prefab, comboPanel); // 콤보 UI 패널에 프리팹 인스턴스 생성

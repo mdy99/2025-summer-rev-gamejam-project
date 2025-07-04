@@ -37,16 +37,19 @@ public class ItemObject : MonoBehaviour
         switch(itemData.itemType)
         {
             case ItemType.HpUp:
+                SoundManager.Instance.PlaySFX("HpPotion");
                 int randomAmount = Random.Range(10, 20); // 랜덤으로 10~20 사이의 체력 회복량 선택
                 BarManager.Instance.UpdateHpBar(randomAmount); // 체력 회복
                 NarrationText.Instance.UpdateNarration("체력이 " + randomAmount + "만큼 회복되었습니다!",Color.green); // 내레이션 업데이트
                 break;
             case ItemType.MpUp:
+                SoundManager.Instance.PlaySFX("MpPotion");
                 int randomMpAmount = Random.Range(10, 30); // 랜덤으로 10~30 사이의 마나 회복량 선택
                 BarManager.Instance.UpdateMpBar(randomMpAmount); // 마나 회복
                 NarrationText.Instance.UpdateNarration("마나가 " + randomMpAmount + "만큼 회복되었습니다!",Color.blue); // 내레이션 업데이트
                 break;
             case ItemType.DamageUp:
+                SoundManager.Instance.PlaySFX("DamageUpItem");
                 int randomDamage = Random.Range(1,5); // 랜덤으로 1~5 사이의 공격력 증가량 선택
                 string runeCode = WaveManager.Instance.ReinforceRandomSkillDamage(randomDamage); // 랜덤 스킬 공격력 증가
                 if (runeCode != null)
@@ -55,6 +58,7 @@ public class ItemObject : MonoBehaviour
                 }
                 break;
             case ItemType.SpeedUp:
+                SoundManager.Instance.PlaySFX("SpeedUp");
                 float randomDuration = Random.Range(3f, 7f); // 랜덤으로 3~7초 사이의 지속 시간 선택
                 float randomMultiplier = Random.Range(1.2f, 2f); // 랜덤으로 1.2~2배 사이의 속도 증가 배율 선택
                 playerMoveController.SpeedUpForDuration(randomDuration, randomMultiplier); // 이동 속도 증가

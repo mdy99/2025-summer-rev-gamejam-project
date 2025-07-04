@@ -39,7 +39,7 @@ public class BossCharger : MonoBehaviour
 
         // 1. 현재 플레이어 위치 저장
         targetPosition = player.position;
-
+        SoundManager.Instance.PlaySFX("BossCharge");
         // 2. 준비 애니메이션
         //animator.SetTrigger("PrepareCharge");
 
@@ -50,7 +50,7 @@ public class BossCharger : MonoBehaviour
 
         Vector2 dir = (targetPosition - (Vector2)transform.position).normalized;
         rb.velocity = dir * chargeSpeed;
-
+        SoundManager.Instance.PlaySFX("RunBoss");
         // 4. 돌진 지속 시간
         yield return new WaitForSeconds(2f);
 

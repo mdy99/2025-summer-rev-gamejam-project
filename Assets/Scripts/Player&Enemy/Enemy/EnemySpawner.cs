@@ -158,6 +158,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnBoss(GameObject bossPrefab)
     {
+        SoundManager.Instance.PlaySFX("SpawnBoss");
         Vector2 bossPosition = new Vector2(0, maxY - 2f);
         GameObject boss = Instantiate(bossPrefab, bossPosition, Quaternion.identity);
 

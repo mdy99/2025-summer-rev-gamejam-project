@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3458153629373590848
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7121782244278892636}
+  - component: {fileID: 2662426083002961881}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7121782244278892636
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3458153629373590848}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.27754363, y: 0.8986674, z: -0.036146693}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2662426083002961881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3458153629373590848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7200774449e0c6e43888584a944f99f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEffects:
+  - {fileID: 8300000, guid: 29f1decce8d49564d8e38a24153fb084, type: 3}
+  - {fileID: 8300000, guid: d4bdb1bdc95f3e64b9fe8718552763ae, type: 3}
+  - {fileID: 8300000, guid: 7af91d247b650ba4cbd7b8a80f28ed37, type: 3}
+  - {fileID: 8300000, guid: 2a08ddceb938cf24b80ad77bc66c9817, type: 3}
+  - {fileID: 8300000, guid: cf01d7bc409a60143a28db5b7940e5bf, type: 3}
+  - {fileID: 8300000, guid: c04fea512855e7941a2e81bf331a7593, type: 3}
+  - {fileID: 8300000, guid: a4fa88e526ce19a4db877af5c119de5a, type: 3}
+  - {fileID: 8300000, guid: bea59c089390ce54c98bf71ab60322ca, type: 3}
+  - {fileID: 8300000, guid: 1e7ff74669e980140bb0b77452ae932e, type: 3}
+  - {fileID: 8300000, guid: 7d61191afa7190b40b3c84712ee414e4, type: 3}
+  - {fileID: 8300000, guid: 89715253f8d350c4c9abecd893e67e2a, type: 3}
+  - {fileID: 8300000, guid: 89715253f8d350c4c9abecd893e67e2a, type: 3}
+  startSceneBGM: {fileID: 8300000, guid: 9b045aa3c241a334194ac43efd0ad418, type: 3}
+  mainGameBGM: {fileID: 8300000, guid: ec58acc480ddcac4f97f15d9d8bae9e5, type: 3}

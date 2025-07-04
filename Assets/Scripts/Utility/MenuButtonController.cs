@@ -5,6 +5,7 @@ public class MenuButtonController : MonoBehaviour
 {
     [SerializeField] private GameObject howToPlayPanel; // 게임 방법 패널
     [SerializeField] private GameObject keySettingPanel; // 키 설정 패널
+    [SerializeField] private GameObject volumeSettingsPanel; // 볼륨 설정 패널
 
     // 게임 시작 (씬 이동)
     public void StartGame(string sceneName)
@@ -20,6 +21,18 @@ public class MenuButtonController : MonoBehaviour
 #else
         Application.Quit(); // 빌드된 게임 종료
 #endif
+    }
+
+    public void OpenVolumeSettings()
+    {
+        if (volumeSettingsPanel != null)
+            volumeSettingsPanel.SetActive(true);
+    }
+
+    public void CloseVolumeSettings()
+    {
+        if (volumeSettingsPanel != null)
+            volumeSettingsPanel.SetActive(false);
     }
 
     // 게임 방법 패널 열기

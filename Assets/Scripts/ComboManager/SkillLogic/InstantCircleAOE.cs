@@ -53,6 +53,7 @@ public class InstantCircleAOE : MonoBehaviour
 
     void DoImmediateDamage()
     {
+        SoundManager.Instance.PlaySFX("adept_attack");
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, radius); // 범위 내의 모든 콜라이더 가져오기
         foreach (Collider2D collider in hitColliders)
         {

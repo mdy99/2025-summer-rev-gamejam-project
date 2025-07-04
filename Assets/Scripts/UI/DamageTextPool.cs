@@ -23,10 +23,12 @@ public class DamageTextPool : MonoBehaviour
         }
     }
 
-    public GameObject GetText(Vector3 position){
+    public GameObject GetText(Vector3 position,int damage){
         GameObject obj = damageTextPool.Count > 0 ? damageTextPool.Dequeue() : Instantiate(damageTextPrefab);
         obj.transform.position = position; // 위치 설정
         obj.SetActive(true); // 활성화
+
+        obj.GetComponent<DamageText>().Init(damage);
         return obj;
     }
 

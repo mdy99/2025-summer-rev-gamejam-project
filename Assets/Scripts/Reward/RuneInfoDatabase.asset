@@ -17,8 +17,8 @@ MonoBehaviour:
     damage: 10
     mpCost: 40
   - runeCode: B
-    damage: 12
-    mpCost: 40
+    damage: 9
+    mpCost: 35
   - runeCode: C
     damage: 11
     mpCost: 40
@@ -62,11 +62,11 @@ MonoBehaviour:
     damage: 9
     mpCost: 40
   - runeCode: Q
-    damage: 16
-    mpCost: 40
-  - runeCode: R
     damage: 12
     mpCost: 40
+  - runeCode: R
+    damage: 10
+    mpCost: 25
   - runeCode: S
     damage: 10
     mpCost: 40
@@ -89,7 +89,7 @@ MonoBehaviour:
     damage: 9
     mpCost: 40
   - runeCode: Z
-    damage: 17
+    damage: 8
     mpCost: 40
   - runeCode: 0
     damage: 9

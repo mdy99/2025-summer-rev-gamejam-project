@@ -56,6 +56,7 @@ public class PlayerMoveController : MonoBehaviour
     void Die(){
         if(isDead) return; // 이미 죽었으면 아무 작업도 하지 않음
         Debug.Log("Player is dead!"); // 플레이어가 죽었을 때 디버그 메시지 출력
+        SoundManager.Instance.PlaySFX("PlayerDie");
         isDead = true; // 플레이어가 죽었음을 표시
         animator.SetTrigger("isDead"); // 애니메이터의 죽음 트리거를 설정
         animator.SetBool("isMoving", false); // 이동 중이 아닐 때 애니메이터의 이동 상태를 false로 설정
@@ -104,6 +105,7 @@ public class PlayerMoveController : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Space)&& isMoving && Time.time - lastGrappleTime > grappleCooldown){
             if(!isGrappling){
+                SoundManager.Instance.PlaySFX("Grapple");
                 isGrappling = true; // 그래플링 훅 사용 시작
                 lastGrappleTime = Time.time; // 그래플링 훅 사용 시간 기록
                 coolDownDisplay.StartCoolDown(grappleCooldown); // 그래플링 훅 쿨타임 시작

@@ -20,6 +20,7 @@ public class InstantCircleSkill : ISkill
             NarrationText.Instance.UpdateNarration("마나가 부족합니다.",Color.gray); // 마나 부족 메시지 표시
             return; // 마나가 부족하면 스킬 실행 중단
         }
+        SoundManager.Instance.PlaySFX("AdeptAdd");
         BarManager.Instance.UpdateMpBar(-skillData.mpCost); // 마나 UI 바 업데이트
         Debug.Log($"Instant Circle Skill Executed: {skillData.runeCode}"); // 스킬
 

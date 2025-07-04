@@ -27,8 +27,8 @@ MonoBehaviour:
   - itemData: {fileID: 11400000, guid: 2edc7fc0da4bd024499b1390c95e4f64, type: 2}
     dropChance: 0.045
   - itemData: {fileID: 11400000, guid: 4515ef7865b1a0a48a049d1dcf1a3281, type: 2}
-    dropChance: 0.2
+    dropChance: 0.103
   - itemData: {fileID: 11400000, guid: e4bd585ea5a7f7f49a516277568b729f, type: 2}
-    dropChance: 0.055555556
+    dropChance: 0.212
   - itemData: {fileID: 11400000, guid: de38793d9f60e3247a073ffb3c777cfb, type: 2}
     dropChance: 0.1

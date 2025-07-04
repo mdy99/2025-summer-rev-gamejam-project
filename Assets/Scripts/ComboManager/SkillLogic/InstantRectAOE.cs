@@ -26,6 +26,7 @@ public class InstantRectAOE : MonoBehaviour
         if(spriteRenderer != null)
         {
             transform.localScale = startSize; // 스킬의 시작 크기로 설정
+            SoundManager.Instance.PlaySFX("Appr_attack");
             StartCoroutine(ShrinkToCenter());
         }
     }
@@ -60,6 +61,7 @@ public class InstantRectAOE : MonoBehaviour
     {
         if(collision.CompareTag("Enemy")) // 적과 충돌 시
         {
+            SoundManager.Instance.PlaySFX("ApprHit");
             collision.GetComponent<Enemy>()?.TakeDamage(damage); // 적의 TakeDamage 메서드를 호출하여 피해를 입힘
         }
     }

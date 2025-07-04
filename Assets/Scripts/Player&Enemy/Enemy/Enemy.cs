@@ -1,9 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Data.Common;
-using UnityEditor.U2D;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public enum EnemyType
 {
@@ -18,6 +14,8 @@ public class Enemy : MonoBehaviour, IEnemy
 {
     public GameObject itemPrefab; // 아이템 프리팹
 
+    [SerializeField] private bool isBoss = false; // 보스 여부
+    
     [Header("컴포넌트")]
     protected Rigidbody2D target; // 플레이어 오브젝트
     private SpriteRenderer spriteRenderer; // 적의 스프라이트 렌더러
@@ -38,7 +36,7 @@ public class Enemy : MonoBehaviour, IEnemy
     void ShowDamageText(int damage, bool isPlayer = false)
     {
         Vector3 spawnPos = isPlayer ? target.position : transform.position + new Vector3(0, 1f, 0); // 피해 텍스트가 적 위에 나타나도록 위치 설정
-        GameObject damageText = DamageTextPool.Instance.GetText(spawnPos); // 피해 텍스트 풀에서 가져오기
+        GameObject damageText = DamageTextPool.Instance.GetText(spawnPos, damage); // 피해 텍스트 풀에서 가져오기
         damageText.GetComponent<DamageText>().Init(damage); // 피해 텍스트에 피해량 설정
     }
 
@@ -78,6 +76,7 @@ public class Enemy : MonoBehaviour, IEnemy
     public void TakeDamage(int damage)
     {
         currentHp -= damage; // 적의 체력 감소
+        if (!isLive) return; // ✅ 죽었으면 더 이상 데미지 받지 않음
         StartCoroutine(HitFlash()); // 적이 맞았을 때 색상 변경 효과 시작
         ShowDamageText(damage); // 피해 텍스트 표시
         Debug.Log($"Enemy {enemyData.name} took {damage} damage! Remaining HP: {currentHp}"); // 디버그 메시지 출력
@@ -95,7 +94,10 @@ public class Enemy : MonoBehaviour, IEnemy
     protected virtual void Die()
     {
         if (!isLive) return; // 적이 이미 죽었으면 함수 종료
-
+        if(isBoss){
+            WaveManager.Instance.OnBossKilled(); // 보스 처치 시 웨이브 매니저에 알림
+        }
+        SoundManager.Instance.PlaySFX("MonsterDie");
         isLive = false; // 적을 죽음 상태로 변경
         enemyAnimator.SetTrigger("isDead"); // 죽음 애니메이션 트리거 설정
         StartCoroutine(DisableAfterAnimation(0.1f)); // 대기 후 적 오브젝트 비활성화
@@ -112,7 +114,7 @@ public class Enemy : MonoBehaviour, IEnemy
             {
                 Vector2 offset = GetRandomDropPosition(); // 아이템 드랍 위치 오프셋 계산
                 Vector2 dropPosition = (Vector2)transform.position + offset; // 드랍 위치
-
+                SoundManager.Instance.PlaySFX("Drop");
                 GameObject drop = Instantiate(itemPrefab, dropPosition, Quaternion.identity); // 아이템 프리팹 인스턴스 생성
                 drop.GetComponent<ItemObject>().itemData = dropInfo.itemData; // 아이템 데이터 설정
                 // break; // 아이템 하나만 드랍하고 루프 종료 지금은 여러개 드롭 가능
@@ -189,7 +191,7 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         if (isPlayerDead) return; // 플레이어가 죽었으면 함수 종료
         lastAttackTime = Time.time; // 마지막 공격 시간을 현재 시간으로 갱신
-    
+        SoundManager.Instance.PlaySFX("DamagePlayer");
         BarManager.Instance.UpdateHpBar(-damage); // 플레이어의 체력 UI 바를 감소시킴
         ShowDamageText(damage,true); // 피해 텍스트 표시
         Debug.Log($"Enemy {enemyData.name} attacked the player for {enemyData.atk} damage!"); // 디버그 메시지 출력

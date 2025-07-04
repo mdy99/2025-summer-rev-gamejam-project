@@ -61,11 +61,23 @@ public class WaveManager : MonoBehaviour
 
     public void OnEnemyKilled(){
         killCount++;
+        NarrationText.Instance.UpdateNarration($"적을 죽였다! {killCount}/{waveSettings[currentWave-1].enemyGoalTotal}", Color.red); // 적 처치 시 내레이션 업데이트
         Debug.Log($"Enemy killed! Current kill count: {killCount}");
         if(killCount >= waveSettings[currentWave-1].enemyGoalTotal){
             EndCurrentWave();
         }
     }
+
+    public void OnBossKilled()
+{
+    // 4번 또는 7번 웨이브일 때만 즉시 종료
+    if (currentWave == 4 || currentWave == 7)
+    {
+        Debug.Log("보스가 처치되어 웨이브가 즉시 종료됩니다.");
+        NarrationText.Instance.UpdateNarration($"보스 처치! 웨이브 {currentWave} 종료", Color.red); // 보스 처치 시 내레이션 업데이트
+        EndCurrentWave();
+    }
+}
 
     void Awake()
     {
@@ -113,10 +125,17 @@ public class WaveManager : MonoBehaviour
         return ratios[ratios.Count - 1].enemyType; // 모든 확률을 합쳐도 랜덤 값이 범위를 벗어날 경우 마지막 타입 반환
     }
 
+    IEnumerator GetReadySound(){
+        SoundManager.Instance.PlaySFX("GetReady");
+        yield return new WaitForSeconds(2f);
+        SoundManager.Instance.PlaySFX("Go");
+    }
+
     private void StartNextWave()
     {
+        StartCoroutine(GetReadySound());
         killCount = 0; // 웨이브 시작 시 처치 카운트 초기화
-        
+        NarrationText.Instance.UpdateNarration($"웨이브 {currentWave + 1} 시작!", Color.green); // 웨이브 시작 시 내레이션 업데이트
         if (CurrentState == WaveState.InWave && rewardPanelController.GetActive())
         {
             rewardPanelController.ClosePanel(); // 보상 패널 닫기
@@ -137,11 +156,12 @@ public class WaveManager : MonoBehaviour
             enemySpawner.AdjustPoolSizeForWave(waveSettings[currentWave - 1]); // 적 풀 사이즈 조정
             backgroundDimmer.ApplyWaveEffect(currentWave); // 배경 디머 활성화
 
-            if(currentWave == 3){
+            if(currentWave == 4){
                 Debug.Log("Mid-boss wave started!");
+                NarrationText.Instance.UpdateNarration("크르릉..!",Color.red);
                 enemySpawner.SpawnBoss(enemySpawner.midBossPrefab); // 중간 보스 스폰
             }
-            else if(currentWave == 6){
+            else if(currentWave == 7){
                 enemySpawner.SpawnBoss(enemySpawner.finalBossPrefab); // 최종 보스 스폰
             }
         }

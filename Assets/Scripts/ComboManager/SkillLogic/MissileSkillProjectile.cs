@@ -11,6 +11,7 @@ public class MissileSkillProjectile : MonoBehaviour
 
     public void Initialize(Vector2 direction)
     {
+        SoundManager.Instance.PlaySFX("noviceAttack");
         this.direction = direction.normalized; // 방향 벡터를 정규화
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f); // z축 위치를 0으로 설정 (2D 게임에서 z축은 사용하지 않음)
         Destroy(gameObject, 1f); // 1초 후에 미사일 오브젝트 제거
@@ -28,6 +29,7 @@ public class MissileSkillProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Enemy")) // 적과 충돌 시
         {
+            SoundManager.Instance.PlaySFX("Hit");
             Vector3 hitPoint = other.transform.position; // 충돌 지점
 
             GameObject aoeEffect = Instantiate(aoeEffectPrefab, hitPoint, Quaternion.Euler(-90, 0, 0)); // 범위 공격 이펙트 생성

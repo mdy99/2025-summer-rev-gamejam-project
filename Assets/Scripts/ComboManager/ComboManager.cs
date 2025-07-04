@@ -48,6 +48,7 @@ public class ComboManager : MonoBehaviour
     {
         if(Input.GetKeyDown(ENTER_KEY)) // 스페이스바를 눌렀을 때
         {
+            SoundManager.Instance.PlaySFX("Enter");
             SubmitCombo(); // 현재 콤보 제출
         }
 
@@ -91,6 +92,7 @@ public class ComboManager : MonoBehaviour
 
         if(skillBook.TryGetSkill(runeKey, out ISkill skill)) // 스킬북에서 룬에 해당하는 스킬을 찾음
         {
+            SoundManager.Instance.PlaySFX("Execute");
             skill.Execute(); // 스킬 사용
         }
         else
@@ -101,6 +103,7 @@ public class ComboManager : MonoBehaviour
     }
 
     void EndCombo(){
+        SoundManager.Instance.PlaySFX("Cancel");
         ClearCombo(); // 현재 쌓여있는 콤보들 다 제거
         comboUIRenderer.SetPanelActive(false); // 콤보 UI 패널 비활성화
         magicCircleEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -138,6 +141,7 @@ public class ComboManager : MonoBehaviour
     void ActivePanel(){
         if(comboUIRenderer.IsPanelActive()==false) // 콤보 UI 패널이 활성화되어 있지 않으면
         {
+            SoundManager.Instance.PlaySFX("ActivePanel");
             comboUIRenderer.SetPanelActive(true); // 콤보 UI 패널 활성화
             magicCircleEffect.Play(); // 마법진 이펙트 재생
         }
