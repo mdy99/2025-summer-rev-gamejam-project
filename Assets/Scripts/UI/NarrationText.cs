@@ -28,8 +28,8 @@ public class NarrationText : MonoBehaviour
 
     void Start()
     {
-        UpdateNarration($"{KeySettingManager.Instance.morseKey}를 눌러 마법진 소환", Color.blue); // 게임 시작 시 내레이션 업데이트
-        UpdateNarration($"{KeySettingManager.Instance.enterKey}를 눌러 룬 새김", new Color(0,0,139,255)); // 게임 시작 시 내레이션 업데이트
+        UpdateNarration($"{KeySettingManager.Instance.morseKey}를 눌러 마법진 소환", Color.black); // 게임 시작 시 내레이션 업데이트
+        UpdateNarration($"{KeySettingManager.Instance.enterKey}를 눌러 룬 새김", Color.black); // 게임 시작 시 내레이션 업데이트
     }
 
 public void UpdateNarration(string newNarration, Color color)
