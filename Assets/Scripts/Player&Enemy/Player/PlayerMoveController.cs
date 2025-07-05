@@ -118,6 +118,17 @@ public class PlayerMoveController : MonoBehaviour
 
     }
 
+public void ForceStopGrappling()
+{
+    isMoving = false;
+    isGrappling = false;
+    playerRigidbody.velocity = Vector2.zero;
+    lineRenderer.positionCount = 0;
+    animator.SetBool("isGrappling", false);
+    animator.SetBool("isMoving", false);
+}
+
+
 void FixedUpdate()
 {
     if (isDead) return;

@@ -26,11 +26,11 @@ public class NarrationText : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        UpdateNarration($"{KeySettingManager.Instance.morseKey}를 눌러 마법진 소환", Color.black); // 게임 시작 시 내레이션 업데이트
-        UpdateNarration($"{KeySettingManager.Instance.enterKey}를 눌러 룬 새김", Color.black); // 게임 시작 시 내레이션 업데이트
-    }
+public void  DelayedNarration()
+{
+    UpdateNarration($"{KeySettingManager.Instance.morseKey}를 눌러 마법진 소환", Color.black); // 게임 시작 시 내레이션 업데이트
+    UpdateNarration($"{KeySettingManager.Instance.enterKey}를 눌러 룬 새김", Color.black); // 게임 시작 시 내레이션 업데이트
+}
 
 public void UpdateNarration(string newNarration, Color color)
 {

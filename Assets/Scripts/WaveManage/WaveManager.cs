@@ -41,6 +41,7 @@ public class WaveManager : MonoBehaviour
     [Header("배경 전환 관련")]
     [SerializeField] private Transform playerTransform; // 플레이어의 Transform
 
+    [SerializeField] private PlayerMoveController playerMoveController;
 
     private void HandleVictory(){
         NarrationText.Instance.UpdateNarration($"모든 적을 무찔렀습니다. 마왕 또한 쓰러졌습니다.", Color.cyan); // 웨이브 완료 시 내레이션 업데이트
@@ -95,11 +96,17 @@ public class WaveManager : MonoBehaviour
     {
         if(Instance == null) Instance = this; // 싱글톤 인스턴스 설정
         else Destroy(gameObject); // 이미 인스턴스가 존재하면 현재 오브젝트 제거
+
+            // 안전한 playerMoveController 연결
+        if (playerMoveController == null && playerTransform != null)
+        {
+            playerMoveController = playerTransform.GetComponent<PlayerMoveController>();
+        }
     }
 
     void Start(){
         rewardPanelController = GetComponent<RewardPanelController>();
-        StartNextWave(); // 첫 번째 웨이브 시작
+        StartCoroutine(DelayedStartNextWave()); // 첫 번째 웨이브 시작
         RuneReinforceTracker.Instance.ResetTracker();
     }
 
@@ -145,16 +152,46 @@ public class WaveManager : MonoBehaviour
         SoundManager.Instance.PlaySFX("Go");
     }
 
+
+private IEnumerator DelayedStartNextWave()
+{
+    yield return null; // 한 프레임 대기 (다른 오브젝트들 Start 완료될 때까지)
+    
+    if (playerMoveController == null && playerTransform != null)
+        playerMoveController = playerTransform.GetComponent<PlayerMoveController>();
+
+    if (playerMoveController == null)
+        Debug.LogError("[WaveManager] playerMoveController 연결 실패!");
+
+    StartNextWave(); // 이제 안전하게 호출
+    NarrationText.Instance.DelayedNarration(); // 게임 시작 시 내레이션 업데이트
+
+}
+
     private void StartNextWave()
     {
+        if (playerTransform != null)
+        {
+            playerTransform.position = Vector3.zero;
+
+            if (playerMoveController == null)
+            {
+                playerMoveController = playerTransform.GetComponent<PlayerMoveController>();
+            }
+
+            playerMoveController?.ForceStopGrappling(); // null-safe 호출
+        }
+
         if(currentWave >= totalWaves){
             HandleVictory(); // 웨이브 완료 처리
             return;
         }
 
     // ✅ 플레이어 위치 초기화
-        if(playerTransform != null)
+        if(playerTransform != null){
             playerTransform.position = Vector3.zero;
+            playerMoveController.ForceStopGrappling(); // 그래플링 훅 강제 중지
+        }
 
         currentWave ++;
         killCount=0;
@@ -170,11 +207,11 @@ public class WaveManager : MonoBehaviour
             backgroundDimmer.ApplyWaveEffect(currentWave); // 배경 디머 활성화
 
             if(currentWave == 4){
-                Debug.Log("Mid-boss wave started!");
                 NarrationText.Instance.UpdateNarration("크르릉..!",Color.red);
                 enemySpawner.SpawnBoss(enemySpawner.midBossPrefab); // 중간 보스 스폰
             }
             else if(currentWave == 7){
+                NarrationText.Instance.UpdateNarration("크르릉..!",Color.red);
                 enemySpawner.SpawnBoss(enemySpawner.finalBossPrefab); // 최종 보스 스폰
             }
     }
