@@ -58,7 +58,8 @@ public class EnemySpawner : MonoBehaviour
                 EnemyData data = GetEnemyDataByType(type); // 해당 타입의 적 데이터 가져오기
                 for(int i=0;i<needToAdd;i++)
                 {
-                    GameObject enemy = Instantiate(data.enemyPrefab); // 적 프리팹 인스턴스화
+                    Vector2 hiddenPosition = new Vector2(9999, 9999); // 생성 위치를 맵 밖으로 설정
+                    GameObject enemy = Instantiate(data.enemyPrefab, hiddenPosition, Quaternion.identity); // 적 프리팹 인스턴스화
                     enemy.SetActive(false); // 비활성화 상태로 설정
                     enemy.GetComponent<IEnemy>().Init(data); // 적 초기화
                     pool.Enqueue(enemy); // 풀에 추가

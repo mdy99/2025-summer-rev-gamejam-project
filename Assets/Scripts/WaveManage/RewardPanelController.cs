@@ -37,7 +37,7 @@ public class RewardPanelController : MonoBehaviour
             {
                 slot.Initialize(matchingSkill); // 슬롯에 스킬 데이터 설정
                 slot.ShowReinforceInfo();  // 슬롯에 강화 정보 표시
-            }
+            } 
             else{
                 Debug.LogWarning($"No matching skill found for slot type: {type}"); // 해당 타입의 스킬이 없는 경우 경고 메시지 출력
             }
