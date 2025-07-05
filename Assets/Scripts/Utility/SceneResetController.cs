@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SceneResetController : MonoBehaviour
 {
-    private Color32 resetBackgroundColor = new Color32(53, 102, 33, 255); // #4D7241
+    private Color32 resetBackgroundColor = new Color32(86, 94, 35, 0); // #4D7241
 
     [SerializeField] private GameObject backbackground; // 게임 오브젝트의 스프라이트 렌더러
     [SerializeField] private bool disableSprites = true;

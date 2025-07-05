@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour, IEnemy
 
     public void Init(EnemyData data)
     {
-        enemyData = data; // 적의 데이터를 초기화
+        enemyData = data; // 적의 데이터를 설정
         currentHp = enemyData.hp; // 현재 체력을 적의 체력으로 설정
         debugSpeed = enemyData.speed; // 디버그용 속도 설정
         isLive = true; // 적을 살아있는 상태로 초기화
@@ -91,6 +91,10 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         yield return new WaitForSeconds(delay); // 딜레이 시간 대기
         if (spriteRenderer != null) spriteRenderer.enabled = true; // 스프라이트 렌더러 활성화
+          // 투명도도 바로 1로!
+        Color color = spriteRenderer.color;
+        color.a = 1f;
+        spriteRenderer.color = color;
     }
 
     // Start is called before the first frame update
@@ -115,9 +119,17 @@ public class Enemy : MonoBehaviour, IEnemy
         else enemyAnimator.SetTrigger("isDamaged"); // 적이 공격을 받았을 때 맞는 애니메이션 트리거 설정
     }
 
-    IEnumerator HitFlash(){
+    IEnumerator HitFlash(float blinkDuration=0.1f, int blinkCount = 1){
         spriteRenderer.color = Color.red; // 적의 색상을 빨간색으로 변경하여 맞았음을 표시
+        
         yield return new WaitForSeconds(0.1f); // 0.1초 대기
+        for(int i=0;i< blinkCount; i++)
+        {
+            spriteRenderer.enabled = false; // 스프라이트 비활성화
+            yield return new WaitForSeconds(blinkDuration / (blinkCount * 2)); // 딜레이 시간 대기
+            spriteRenderer.enabled = true; // 스프라이트 활성화
+            yield return new WaitForSeconds(blinkDuration / (blinkCount * 2)); // 딜레이 시간 대기
+        }
         spriteRenderer.color = Color.white; // 적의 색상을 원래대로 되돌림
     }
 

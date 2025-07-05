@@ -18,7 +18,7 @@ public class GameResultUIController : MonoBehaviour
 
     private bool resultShown = false;
 
-    string winText = "마왕을 무찔렀지만, 그가 남기고 간 상처는 깊었습니다. 지금 우리가 취해야 할 일은 그 상처를 치유하고, 다시 일어서는 것입니다.";
+    string winText = "승리!\n마왕은 쓰러졌지만, 그가 남기고 간 상처는 깊었습니다. 지금 우리가 해야 할 일은 그 상처를 치유하고, 다시 일어서는 것입니다.";
     string loseText = "패배!ㅋㅋ";
 
     void Start()

@@ -15,17 +15,6 @@ public class BossEnemy : Enemy
 
     public GameObject spawnVFXPrefab;
 
-    public void SpawnWithEffect(float fadeDuration = 0.5f)
-    {
-        if (spawnVFXPrefab != null)
-        {
-            GameObject vfx = Instantiate(spawnVFXPrefab, transform.position, Quaternion.identity);
-            Destroy(vfx, 3f);
-        }
-
-        DelayedShowSprite(); // ✅ 상속받은 Enemy의 public 메서드 호출
-    }
-
     protected override void Start()
     {
         base.Start();
@@ -54,8 +43,9 @@ public class BossEnemy : Enemy
         // 돌진 준비 애니메이션
 //        enemyAnimator.SetTrigger("PrepareCharge");
         SoundManager.Instance.PlaySFX("BossCharge");
-        
-        yield return new WaitForSeconds(chargeDelay);
+
+    yield return new WaitForSeconds(chargeDelay);
+
 
         // 돌진 애니메이션
   //      enemyAnimator.SetTrigger("StartCharge");

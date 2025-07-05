@@ -22,6 +22,10 @@ public class KeyPressedDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(WaveManager.Instance.CurrentState != WaveState.InWave) // 현재 웨이브 상태가 InWave가 아니면
+        {
+            return; // 함수 종료
+        }
         if(Input.GetKeyDown(keyToDetect))
         {
             if (!isKeyPressed)

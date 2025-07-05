@@ -46,6 +46,10 @@ public class ComboManager : MonoBehaviour
 
     void Update()
     {
+        if(WaveManager.Instance.CurrentState != WaveState.InWave) // 현재 웨이브 상태가 InWave가 아니면
+        {
+            return; // 함수 종료
+        }
         if(Input.GetKeyDown(ENTER_KEY)) // 스페이스바를 눌렀을 때
         {
             SoundManager.Instance.PlaySFX("Enter");

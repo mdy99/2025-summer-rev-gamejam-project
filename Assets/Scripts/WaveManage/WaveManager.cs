@@ -38,10 +38,8 @@ public class WaveManager : MonoBehaviour
 
     public static event System.Action OnWaveFinished; // ✅ 승리 이벤트 추가
 
-    [SerializeField] private GameObject rotatingBackground; // 회전하는 배경 스프라이트 렌더러
-
     [Header("배경 전환 관련")]
-    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Transform playerTransform; // 플레이어의 Transform
 
 
     private void HandleVictory(){
@@ -154,6 +152,10 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
+    // ✅ 플레이어 위치 초기화
+        if(playerTransform != null)
+            playerTransform.position = Vector3.zero;
+
         currentWave ++;
         killCount=0;
         CurrentState = WaveState.InWave;
@@ -175,20 +177,20 @@ public class WaveManager : MonoBehaviour
             else if(currentWave == 7){
                 enemySpawner.SpawnBoss(enemySpawner.finalBossPrefab); // 최종 보스 스폰
             }
-
-            if (currentWave == 5)
-            {
-                if (mainCamera != null)
-                    mainCamera.backgroundColor = Color.black;
-                if (rotatingBackground != null)
-                    rotatingBackground.SetActive(true); // 회전하는 배경 활성화
-            }   
     }
 
     private void EndCurrentWave()
     {
         enemySpawner.DisableAllEnemies(); // 모든 적 비활성화
         enemySpawner.IncreaseAllEnemiesStatus(); // 모든 적의 상태 증가
+
+        // ✅ 마지막 웨이브(7)가 끝났으면 보상 없이 바로 승리 처리
+        if (currentWave == totalWaves)
+        {
+            CurrentState = WaveState.Finished;
+            HandleVictory(); // 즉시 승리 처리
+            return;
+        }
 
         CurrentState = WaveState.RewardTime; // 현재 웨이브 종료 상태로 변경
         rewardPanelController.SetupRewardSlots(memorizedSkills); // 보상 슬롯 설정

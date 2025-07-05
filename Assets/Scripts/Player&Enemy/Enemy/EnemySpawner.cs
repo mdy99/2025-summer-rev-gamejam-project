@@ -172,10 +172,13 @@ public class EnemySpawner : MonoBehaviour
         if (bossEnemy != null && bossData != null)
         {
             bossEnemy.Init(bossData);
-        }
+            bossEnemy.DelayedShowSprite(); // 딜레이 후 스프라이트 활성화
         
+        }
+
         if(WaveManager.Instance.currentWave == 7){
-            bossEnemy.SpawnWithEffect(); // 또는 bossEnemy.DelayedShowSprite();
+            bossData.hp += bossData.increaseHp;
+            bossData.atk += bossData.increaseAtk;
         }
     }
 }
