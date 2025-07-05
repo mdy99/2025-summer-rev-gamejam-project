@@ -63,8 +63,9 @@ public void ToMain()
     // 게임 방법 패널 열기
     public void OpenHowToPlay()
     {
-        if (howToPlayPanel != null)
+        if (howToPlayPanel != null){
             howToPlayPanel.SetActive(true);
+        }
     }
 
     // 게임 방법 패널 닫기

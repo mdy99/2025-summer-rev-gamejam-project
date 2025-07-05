@@ -15,6 +15,17 @@ public class HowToPlayController : MonoBehaviour
 
     private int currentPage = 0;
 
+    public void ResetToFirstPage()
+    {
+        currentPage = 0;
+        UpdateText();
+    }
+
+    void OnEnable()
+    {
+        ResetToFirstPage();
+    }
+
     private void Start()
     {
         UpdateText();
