@@ -32,6 +32,9 @@ public class Enemy : MonoBehaviour, IEnemy
 
     private bool isPlayerDead = false; // 플레이어가 죽었는지 여부
 
+    [SerializeField] private float spriteAppearDelay = 0.05f; // 짧은 딜레이 후 나타나게 하기
+    [SerializeField] private float fadeInDuration = 0.3f;
+
 
     void ShowDamageText(int damage, bool isPlayer = false)
     {
@@ -66,6 +69,28 @@ public class Enemy : MonoBehaviour, IEnemy
         isLive = true; // 적을 살아있는 상태로 초기화
         isPlayerDead = false; // 플레이어가 죽지 않은 상태로 초기화
         lastAttackTime = -999f; // 마지막 공격 시간을 초기화
+
+        // ✅ 스프라이트 색상 초기화
+        if (spriteRenderer != null){
+            Color color = spriteRenderer.color;
+            color.a = 0f; // 투명도 0으로 설정
+            spriteRenderer.color = color; // 스프라이트 색상 설정
+            
+            spriteRenderer.enabled = false; // 스프라이트 렌더러 비활성화
+        }
+            
+    }
+
+    public void DelayedShowSprite()
+    {
+        StartCoroutine(ShowSpriteWithDelay(spriteAppearDelay));
+    }
+
+
+    private IEnumerator ShowSpriteWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay); // 딜레이 시간 대기
+        if (spriteRenderer != null) spriteRenderer.enabled = true; // 스프라이트 렌더러 활성화
     }
 
     // Start is called before the first frame update
@@ -105,11 +130,30 @@ public class Enemy : MonoBehaviour, IEnemy
         SoundManager.Instance.PlaySFX("MonsterDie");
         isLive = false; // 적을 죽음 상태로 변경
         enemyAnimator.SetTrigger("isDead"); // 죽음 애니메이션 트리거 설정
-        StartCoroutine(DisableAfterAnimation(0.1f)); // 대기 후 적 오브젝트 비활성화
+        StartCoroutine(BlinkAndDisable(0.3f,3)); // 대기 후 적 오브젝트 비활성화
         WaveManager.Instance.OnEnemyKilled(); // 웨이브 매니저에 적 처치 알림
         GiveReward(); // 보상 지급 함수 호출
         TryDropItem(); // 아이템 드랍 시도
         Debug.Log($"Enemy {enemyData.name} has died!"); // 디버그 메시지 출력
+    }
+
+    IEnumerator BlinkAndDisable(float blinkDuration, int blinkCount)
+    {
+        while(!enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Dead")) // 애니메이션이 "Dead" 상태가 될 때까지 대기
+        {
+            yield return null; // 다음 프레임까지 대기
+        }
+        float dieAnimLength = enemyAnimator.GetCurrentAnimatorStateInfo(0).length; // 죽음 애니메이션의 길이 가져오기
+        yield return new WaitForSeconds(dieAnimLength); // 애니메이션이 끝날 때까지 대기 후 추가 딜레이 시간 대기
+
+        for(int i=0;i< blinkCount; i++)
+        {
+            spriteRenderer.enabled = false; // 스프라이트 비활성화
+            yield return new WaitForSeconds(blinkDuration / (blinkCount * 2)); // 딜레이 시간 대기
+            spriteRenderer.enabled = true; // 스프라이트 활성화
+            yield return new WaitForSeconds(blinkDuration / (blinkCount * 2)); // 딜레이 시간 대기
+        }
+        gameObject.SetActive(false); // 적 오브젝트를 비활성화
     }
 
     void TryDropItem(){
@@ -140,20 +184,6 @@ public class Enemy : MonoBehaviour, IEnemy
     void GiveReward()
     {
         BarManager.Instance.UpdateMpBar(enemyData.rewardMp); // 적 처치 시 플레이어에게 체력 보상 지급
-    }
-
-    private IEnumerator DisableAfterAnimation(float delay = 0f)
-    {
-        //yield return null; // 현재 애니메이션이 끝날 때까지 대기
-        while(!enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Dead")) // 애니메이션이 "Dead" 상태가 될 때까지 대기
-        {
-            yield return null; // 다음 프레임까지 대기
-        }
-        float dieAnimLength = enemyAnimator.GetCurrentAnimatorStateInfo(0).length; // 죽음 애니메이션의 길이 가져오기
-        yield return new WaitForSeconds(dieAnimLength); // 애니메이션이 끝날 때까지 대기 후 추가 딜레이 시간 대기
-
-        yield return new WaitForSeconds(delay); // 추가 딜레이 시간 대기
-        gameObject.SetActive(false); // 적 오브젝트를 비활성화
     }
 
     protected virtual void FixedUpdate()

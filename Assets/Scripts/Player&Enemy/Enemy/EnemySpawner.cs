@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -58,8 +59,7 @@ public class EnemySpawner : MonoBehaviour
                 EnemyData data = GetEnemyDataByType(type); // 해당 타입의 적 데이터 가져오기
                 for(int i=0;i<needToAdd;i++)
                 {
-                    Vector2 hiddenPosition = new Vector2(9999, 9999); // 생성 위치를 맵 밖으로 설정
-                    GameObject enemy = Instantiate(data.enemyPrefab, hiddenPosition, Quaternion.identity); // 적 프리팹 인스턴스화
+                    GameObject enemy = Instantiate(data.enemyPrefab); // 적 프리팹 인스턴스화
                     enemy.SetActive(false); // 비활성화 상태로 설정
                     enemy.GetComponent<IEnemy>().Init(data); // 적 초기화
                     pool.Enqueue(enemy); // 풀에 추가
@@ -105,9 +105,12 @@ public class EnemySpawner : MonoBehaviour
                 Vector2 spawnPosition = GetValidSpawnPosition(); // 유효한 생성 위치를 가져옴
                 if(spawnPosition == Vector2.negativeInfinity) return; // 유효한 위치가 없으면 함수 종료
 
-                enemy.transform.position = spawnPosition; // 적의 위치 설정
                 enemy.GetComponent<IEnemy>().Init(GetEnemyDataByType(type)); // 적 초기화
+                enemy.transform.position = spawnPosition; // 적의 위치 설정
                 enemy.SetActive(true); // 적 활성화
+
+                //(enemy.GetComponent<IEnemy>() as Enemy)?.StartFadeIn(); // 딜레이 후 스프라이트 활성화
+                (enemy.GetComponent<IEnemy>() as Enemy)?.DelayedShowSprite(); // 딜레이 후 스프라이트 활성화
                 return; // 하나의 적만 생성하고 함수 종료
             }
         }
