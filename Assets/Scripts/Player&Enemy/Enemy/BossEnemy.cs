@@ -13,6 +13,19 @@ public class BossEnemy : Enemy
     private Vector2 chargeTargetPos;
     private Coroutine chargeCoroutine;
 
+    public GameObject spawnVFXPrefab;
+
+    public void SpawnWithEffect(float fadeDuration = 0.5f)
+    {
+        if (spawnVFXPrefab != null)
+        {
+            GameObject vfx = Instantiate(spawnVFXPrefab, transform.position, Quaternion.identity);
+            Destroy(vfx, 3f);
+        }
+
+        DelayedShowSprite(); // ✅ 상속받은 Enemy의 public 메서드 호출
+    }
+
     protected override void Start()
     {
         base.Start();

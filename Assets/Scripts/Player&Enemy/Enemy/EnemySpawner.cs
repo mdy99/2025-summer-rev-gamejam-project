@@ -173,5 +173,9 @@ public class EnemySpawner : MonoBehaviour
         {
             bossEnemy.Init(bossData);
         }
+        
+        if(WaveManager.Instance.currentWave == 7){
+            bossEnemy.SpawnWithEffect(); // 또는 bossEnemy.DelayedShowSprite();
+        }
     }
 }

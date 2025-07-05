@@ -38,6 +38,12 @@ public class WaveManager : MonoBehaviour
 
     public static event System.Action OnWaveFinished; // ✅ 승리 이벤트 추가
 
+    [SerializeField] private GameObject rotatingBackground; // 회전하는 배경 스프라이트 렌더러
+
+    [Header("배경 전환 관련")]
+    [SerializeField] private Camera mainCamera;
+
+
     private void HandleVictory(){
         NarrationText.Instance.UpdateNarration($"모든 적을 무찔렀습니다. 마왕 또한 쓰러졌습니다.", Color.cyan); // 웨이브 완료 시 내레이션 업데이트
         CurrentState = WaveState.Finished; // 웨이브 상태를 Finished로 변경
@@ -133,6 +139,8 @@ public class WaveManager : MonoBehaviour
         return ratios[ratios.Count - 1].enemyType; // 모든 확률을 합쳐도 랜덤 값이 범위를 벗어날 경우 마지막 타입 반환
     }
 
+    
+
     IEnumerator GetReadySound(){
         SoundManager.Instance.PlaySFX("GetReady");
         yield return new WaitForSeconds(1.9f);
@@ -167,6 +175,14 @@ public class WaveManager : MonoBehaviour
             else if(currentWave == 7){
                 enemySpawner.SpawnBoss(enemySpawner.finalBossPrefab); // 최종 보스 스폰
             }
+
+            if (currentWave == 5)
+            {
+                if (mainCamera != null)
+                    mainCamera.backgroundColor = Color.black;
+                if (rotatingBackground != null)
+                    rotatingBackground.SetActive(true); // 회전하는 배경 활성화
+            }   
     }
 
     private void EndCurrentWave()
