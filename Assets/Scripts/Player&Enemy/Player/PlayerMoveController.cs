@@ -118,53 +118,45 @@ public class PlayerMoveController : MonoBehaviour
 
     }
 
-    void FixedUpdate()
+void FixedUpdate()
+{
+    if (isDead) return;
+    if (!isMoving)
     {
-        if(isDead) return; // 플레이어가 죽었으면 업데이트 중지
-        if(!isMoving) {
-            animator.SetBool("isMoving", false); // 이동 중이 아닐 때 애니메이터의 이동 상태를 false로 설정
-            return;
-        } // 이동 중이 아닐 때는 아무 작업도 하지 않음
-
-        Vector2 currentPosition = playerRigidbody.position; // 현재 플레이어 위치
-        Vector2 direction = (targetPosition - currentPosition).normalized; // 목표 위치로 향하는 방향 벡터
-
-        float currentSpeed = isGrappling ? grapplingSpeed : moveSpeed; // 그래플링 훅 사용 중이면 그래플링 속도, 아니면 일반 이동 속도
-        Vector2 newPosition = currentPosition + direction * currentSpeed * Time.fixedDeltaTime; // 새로운 위치 계산
-
-        if(isGrappling)
-        {
-            // 그래플링 훅을 사용 중일 때는 LineRenderer를 사용하여 그래플링 훅을 시각적으로 표시
-            lineRenderer.positionCount = 2; // 두 점으로 구성된 선
-            lineRenderer.SetPosition(0, currentPosition); // 시작점은 현재 플레이어 위치
-            lineRenderer.SetPosition(1, targetPosition); // 끝점은 목표 위치
-        }
-        else
-        {
-            lineRenderer.positionCount = 0; // 그래플링 훅을 사용하지 않을 때는 LineRenderer를 비활성화
-        }
-
-        if(Vector2.Distance(newPosition, targetPosition) < 0.2f)
-        {
-            playerRigidbody.MovePosition(targetPosition); // 목표 위치에 도달하면 정확히 이동
-            isMoving = false; // 이동 완료
-            isGrappling = false; // 그래플링 훅 사용 중지
-            animator.SetBool("isGrappling", false); // 애니메이터의 그래플링 훅 상태를 false로 설정
-            playerRigidbody.velocity = Vector2.zero; // 속도를 0으로 설정하여 이동 중지
-            animator.SetBool("isMoving", false); // 이동 중이 아닐 때 애니메이터의 이동 상태를 false로 설정
-            return;
-        }
-        playerRigidbody.MovePosition(newPosition); // 플레이어 위치 업데이트
-        // 이동 중인데 그래플링이 아님 → 걷는 애니메이션
-        if (isMoving && !isGrappling)
-        {
-            animator.SetBool("isMoving", true);
-        }
-        else
-        {
-            animator.SetBool("isMoving", false);
-        }
+        animator.SetBool("isMoving", false);
+        return;
     }
+
+    Vector2 currentPosition = playerRigidbody.position;
+    Vector2 direction = (targetPosition - currentPosition).normalized;
+    float currentSpeed = isGrappling ? grapplingSpeed : moveSpeed;
+    Vector2 newPosition = currentPosition + direction * currentSpeed * Time.fixedDeltaTime;
+
+    float distanceToTarget = Vector2.Distance(currentPosition, targetPosition);
+
+    if (distanceToTarget < 0.2f)
+    {
+        playerRigidbody.MovePosition(targetPosition);
+        StopMovement(); // 목표 위치에 도달하면 이동 중지
+        return;
+    }
+
+    playerRigidbody.MovePosition(newPosition);
+
+    if (isGrappling)
+    {
+        lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(0, currentPosition);
+        lineRenderer.SetPosition(1, targetPosition);
+    }
+    else
+    {
+        lineRenderer.positionCount = 0;
+    }
+
+    animator.SetBool("isMoving", !isGrappling);
+}
+
 
     void LateUpdate()
     {
@@ -183,4 +175,15 @@ public class PlayerMoveController : MonoBehaviour
             animator.SetBool("isMoving", false); // 이동 중이 아닐 때 애니메이터의 이동 상태를 false로 설정
         }
     }
+
+    private void StopMovement()
+{
+    isMoving = false;
+    isGrappling = false;
+    playerRigidbody.velocity = Vector2.zero;
+
+    lineRenderer.positionCount = 0;
+    animator.SetBool("isMoving", false);
+    animator.SetBool("isGrappling", false);
+}
 }

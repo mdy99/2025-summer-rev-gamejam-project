@@ -73,6 +73,16 @@ public class RewardSlotController : MonoBehaviour
         }
     }
 
+    void Awake()
+{
+    if (runeManager == null)
+    {
+        runeManager = FindObjectOfType<RuneManager>();
+        if (runeManager == null)
+            Debug.LogError("RuneManager not found in scene!");
+    }
+}
+
     public SkillType GetSkillType()
     {
         return slotSkillType; // 슬롯의 스킬 타입 반환
@@ -99,6 +109,10 @@ public class RewardSlotController : MonoBehaviour
         // 강화 수치 외부 Tracker에 위임
         var (damage, mpCost) = RuneReinforceTracker.Instance.ReinforceRune(runeCode);
 
+        if (runeManager == null)
+        {
+            Debug.LogError("RuneManager is not assigned!");
+        }
         runeManager.ReinforceRune(runeCode, damage, mpCost);
 
         RuneReinforceTracker.Instance.UpdateReinforceInfo(); // 룬 강화 정보 업데이트
