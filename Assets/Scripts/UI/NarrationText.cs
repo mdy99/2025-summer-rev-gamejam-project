@@ -28,9 +28,8 @@ public class NarrationText : MonoBehaviour
 
     void Start()
     {
-        UpperNarrationText.text = "";
-        MiddleNarrationText.text = "";
-        LowerNarrationText.text = "";
+        UpdateNarration($"{KeySettingManager.Instance.morseKey}를 눌러 마법진 소환", Color.blue); // 게임 시작 시 내레이션 업데이트
+        UpdateNarration($"{KeySettingManager.Instance.enterKey}를 눌러 룬 새김", new Color(0,0,139,255)); // 게임 시작 시 내레이션 업데이트
     }
 
 public void UpdateNarration(string newNarration, Color color)
@@ -39,17 +38,17 @@ public void UpdateNarration(string newNarration, Color color)
     UpperNarrationText.text = MiddleNarrationText.text;
     UpperNarrationText.color = MiddleNarrationText.color;
     if (upperCoroutine != null) StopCoroutine(upperCoroutine);
-    upperCoroutine = StartCoroutine(ClearAfterDelay(UpperNarrationText, 3f));
+    upperCoroutine = StartCoroutine(ClearAfterDelay(UpperNarrationText, 5f));
 
     MiddleNarrationText.text = LowerNarrationText.text;
     MiddleNarrationText.color = LowerNarrationText.color;
     if (middleCoroutine != null) StopCoroutine(middleCoroutine);
-    middleCoroutine = StartCoroutine(ClearAfterDelay(MiddleNarrationText, 3f));
+    middleCoroutine = StartCoroutine(ClearAfterDelay(MiddleNarrationText, 5f));
 
     LowerNarrationText.text = newNarration;
     LowerNarrationText.color = color;
     if (lowerCoroutine != null) StopCoroutine(lowerCoroutine);
-    lowerCoroutine = StartCoroutine(ClearAfterDelay(LowerNarrationText, 3f));
+    lowerCoroutine = StartCoroutine(ClearAfterDelay(LowerNarrationText, 5f));
 }
 
     private IEnumerator ClearAfterDelay(TMP_Text text, float delay)

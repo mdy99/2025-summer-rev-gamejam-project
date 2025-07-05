@@ -44,6 +44,7 @@ public class RuneManager : MonoBehaviour
         }
     }
 
+
     private void Awake()
     {
             if (Instance == null)

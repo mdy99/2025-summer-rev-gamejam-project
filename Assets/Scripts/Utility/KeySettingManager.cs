@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 public class KeySettingManager : MonoBehaviour
 {
@@ -20,26 +22,42 @@ public class KeySettingManager : MonoBehaviour
     private KeySettingType waitingForKey = KeySettingType.None;
     private bool isListeningForKey = false;
 
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
-    void Start()
-    {
-        morseKeyButton.onClick.AddListener(() => StartKeyListening(KeySettingType.Morse));
-        enterKeyButton.onClick.AddListener(() => StartKeyListening(KeySettingType.Enter));
 
-        UpdateUI();
+
+void Awake()
+{
+    if (Instance == null)
+    {
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
+    else
+    {
+        Destroy(gameObject); // 중복이면 삭제
+    }
+}
+
+
+void Start()
+{
+    UpdateUI();
+}
+
+
+public void BindUI(TMP_Text morseText, TMP_Text enterText, Button morseBtn, Button enterBtn)
+{
+    morseKeyText = morseText;
+    enterKeyText = enterText;
+    morseKeyButton = morseBtn;
+    enterKeyButton = enterBtn;
+
+    morseKeyButton.onClick.AddListener(() => StartKeyListening(KeySettingType.Morse));
+    enterKeyButton.onClick.AddListener(() => StartKeyListening(KeySettingType.Enter));
+
+    UpdateUI();
+}
+
 
     void Update()
     {

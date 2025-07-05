@@ -64,6 +64,16 @@ public class RuneScrollController : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        if(RuneManager.Instance != null){
+            RuneManager.Instance.OnRuneChanged-= UpdateRuneScroll;
+        }
+        if(WaveManager.Instance != null){
+            WaveManager.Instance.OnMemorizedSkillsChanged -= UpdateRuneScroll; // 기억된 스킬이 변경될 때 룬 스크롤 업데이트
+        }
+    }
+
     public void UpdateRuneScroll(){
         Debug.Log("Updating Rune Scroll");
         if (updateCoroutine != null)
