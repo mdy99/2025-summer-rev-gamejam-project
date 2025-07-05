@@ -65,8 +65,8 @@ MonoBehaviour:
     damage: 12
     mpCost: 40
   - runeCode: R
-    damage: 10
-    mpCost: 30
+    damage: 20
+    mpCost: 25
   - runeCode: S
     damage: 10
     mpCost: 40

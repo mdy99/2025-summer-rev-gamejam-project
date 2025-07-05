@@ -121,7 +121,7 @@ public class EnemySpawner : MonoBehaviour
             IEnemy enemyComponent = enemy.GetComponent<IEnemy>();
             if(enemyComponent != null && enemy.activeInHierarchy)
             {
-                (enemyComponent as Enemy)?.IncreaseStatus(); // 적의 체력과 공격력 증가
+               // (enemyComponent as Enemy)?.IncreaseStatus(); // 적의 체력과 공격력 증가
             }
             else
             {
@@ -169,6 +169,7 @@ public class EnemySpawner : MonoBehaviour
         // ✅ EnemyData 초기화
         BossEnemy bossEnemy = boss.GetComponent<BossEnemy>();
         EnemyData bossData = GetEnemyDataByType(EnemyType.Boss); // EnemyType.Boss에 해당하는 데이터
+
         if (bossEnemy != null && bossData != null)
         {
             bossEnemy.Init(bossData);
@@ -176,9 +177,5 @@ public class EnemySpawner : MonoBehaviour
         
         }
 
-        if(WaveManager.Instance.currentWave == 7){
-            bossData.hp += bossData.increaseHp;
-            bossData.atk += bossData.increaseAtk;
-        }
     }
 }

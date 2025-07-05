@@ -64,8 +64,8 @@ public class Enemy : MonoBehaviour, IEnemy
     public void Init(EnemyData data)
     {
         enemyData = data; // 적의 데이터를 설정
-        currentHp = enemyData.hp; // 현재 체력을 적의 체력으로 설정
-        debugSpeed = enemyData.speed; // 디버그용 속도 설정
+        currentHp = data.hp; // 적의 체력을 데이터에서 가져옴
+        debugSpeed = data.speed; // 디버그용 속도 설정
         isLive = true; // 적을 살아있는 상태로 초기화
         isPlayerDead = false; // 플레이어가 죽지 않은 상태로 초기화
         lastAttackTime = -999f; // 마지막 공격 시간을 초기화
