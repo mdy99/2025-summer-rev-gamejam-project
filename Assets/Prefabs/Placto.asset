@@ -16,7 +16,7 @@ MonoBehaviour:
   description: "\uAE30\uC0DD \uD50C\uB77C\uC2A4\uD2F1 \uC219\uC8FC \uBB38\uC5B4\uB2E4"
   hp: 15
   atk: 22
-  speed: 3.7
+  speed: 2.8
   attackCooldown: 1
   rewardMp: 30
   increaseHp: 10
