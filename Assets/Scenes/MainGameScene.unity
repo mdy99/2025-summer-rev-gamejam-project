@@ -4244,8 +4244,8 @@ MonoBehaviour:
     - enemyType: 2
       spawnRatio: 0.2
   - waveNumber: 3
-    enemyCount: 35
-    enemyGoalTotal: 35
+    enemyCount: 40
+    enemyGoalTotal: 40
     enemySpawnRatios:
     - enemyType: 1
       spawnRatio: 0.7
@@ -4274,17 +4274,17 @@ MonoBehaviour:
     enemyGoalTotal: 40
     enemySpawnRatios:
     - enemyType: 1
-      spawnRatio: 0.4
+      spawnRatio: 0.45
     - enemyType: 2
       spawnRatio: 0.3
     - enemyType: 3
-      spawnRatio: 0.3
+      spawnRatio: 0.25
   - waveNumber: 7
     enemyCount: 40
     enemyGoalTotal: 99999
     enemySpawnRatios:
     - enemyType: 1
-      spawnRatio: 0.2
+      spawnRatio: 0.4
     - enemyType: 2
       spawnRatio: 0.4
     - enemyType: 3
@@ -5253,7 +5253,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyToDetect: 97
-  threshold: 0.5
 --- !u!114 &856924775
 MonoBehaviour:
   m_ObjectHideFlags: 0

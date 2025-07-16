@@ -94,7 +94,7 @@ private void PlayInitialBGM()
         {
             if (!sfxClips.ContainsKey(clip.name))
                 sfxClips[clip.name] = clip;
-                Debug.Log($"[SoundManager] Loaded SFX: {clip.name}");
+                //ebug.Log($"[SoundManager] Loaded SFX: {clip.name}");
         }
     }
 
@@ -123,10 +123,8 @@ private void PlayInitialBGM()
     {
         if (clip == null) return;
 
-        if (bgmSource.clip != clip)
-        {
-            bgmSource.clip = clip;
-            bgmSource.Play();
-        }
+        bgmSource.Stop(); // 현재 BGM 정지
+        bgmSource.clip = clip;
+        bgmSource.Play();
     }
 }

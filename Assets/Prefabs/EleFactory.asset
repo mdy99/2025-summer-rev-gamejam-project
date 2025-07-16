@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: EleFactory
   description: "\uC5F0\uAE30\uB97C \uB0B4\uBFDC\uB294 \uACF5\uB07C\uB9AC\uB2E4"
-  hp: 70
+  hp: 45
   atk: 30
   speed: 1.4
   attackCooldown: 1
-  rewardMp: 12
+  rewardMp: 40
   increaseHp: 12
   increaseAtk: 3
   enemyType: 3
