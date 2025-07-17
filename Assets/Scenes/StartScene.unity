@@ -1802,7 +1802,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -5
   m_Sprite: {fileID: 21300000, guid: ede88cea99011f440ad736487204843f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2959,7 +2959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3118690345657020414, guid: 8792aaaa9642e1e49a3122168405ca4b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -703.26685
+      value: -703.2668
       objectReference: {fileID: 0}
     - target: {fileID: 3118690345657020414, guid: 8792aaaa9642e1e49a3122168405ca4b, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3649,11 +3649,11 @@ Transform:
   m_GameObject: {fileID: 1048567638}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -961.07, y: -537.76, z: 0}
+  m_LocalPosition: {x: -3.12, y: 3.06, z: 90}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1195001179}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1048567640
 MonoBehaviour:
@@ -4095,8 +4095,8 @@ Canvas:
   m_GameObject: {fileID: 1195001175}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1779099980}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -4107,7 +4107,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 32767
   m_TargetDisplay: 0
 --- !u!224 &1195001179
 RectTransform:
@@ -4121,7 +4121,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1048567639}
   - {fileID: 1593892248}
   - {fileID: 1379883491}
   - {fileID: 1751943899}
@@ -4328,7 +4327,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u203B\uD0A4\uC138\uD305\u203B"
+  m_text: "\uD0A4\uC138\uD305"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c31c654d74b4b094694a6165576357df, type: 2}
   m_sharedMaterial: {fileID: 2990442505729930982, guid: c31c654d74b4b094694a6165576357df, type: 2}
@@ -6563,3 +6562,4 @@ SceneRoots:
   - {fileID: 159987642}
   - {fileID: 789888403}
   - {fileID: 1633032232}
+  - {fileID: 1048567639}
