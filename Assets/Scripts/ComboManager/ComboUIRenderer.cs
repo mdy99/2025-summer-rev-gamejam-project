@@ -140,9 +140,13 @@ public class ComboUIRenderer : MonoBehaviour
             Debug.LogError("콤보 UI 패널에 CanvasGroup 컴포넌트가 없습니다.");
             return;
         }
-        hiddenPosition = new Vector2(comboPanel.position.x, -3f); // 숨길 위치 설정
-        visiblePosition = comboPanel.position; // 표시할 위치 설정
-        comboPanel.position = hiddenPosition; // 초기 위치를 숨길 위치로 설정
+
+        RectTransform rectTransform = comboPanel.GetComponent<RectTransform>();
+
+        visiblePosition = rectTransform.anchoredPosition; // 표시할 위치를 현재 위치로 설정
+        hiddenPosition = new Vector2(visiblePosition.x, -3f); // 숨길 위치를 현재 위치에서 y 좌표만 변경
+
+        rectTransform.anchoredPosition = hiddenPosition; // 초기 위치를 숨길 위치로 설정
         canvasGroup.alpha = 0f; // 초기 투명도 설정
         canvasGroup.interactable = false; // 초기 상호작용 불가능 설정
         canvasGroup.blocksRaycasts = false; // 초기 레이캐스트 차단 설정
