@@ -1,5 +1,7 @@
 플레이 영상: 
 https://drive.google.com/file/d/1U7BfdvRH8XFT_gJWegVhsS4VO8tz2tm9/view?usp=sharing
+플레이 영상(효과 추가 및 차징 시간 줄임(dll 도입)): 
+https://drive.google.com/file/d/1-zQaNI-We2Kt8Sr0b0-qBAq6a4cT2rQb/view?usp=sharing
 
 # 간단 설명
 
