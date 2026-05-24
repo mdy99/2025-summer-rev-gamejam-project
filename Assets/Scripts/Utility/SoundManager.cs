@@ -44,7 +44,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-private void PlayInitialBGM()
+    private void PlayInitialBGM()
     {
         PlaySceneBGM(SceneManager.GetActiveScene().name);
     }
@@ -105,6 +105,13 @@ private void PlayInitialBGM()
     public void SetSFXVolume(float volume)
     {
         SFXVolume = Mathf.Clamp01(volume);
+    }
+
+    public void SetBGMPitch(float pitch)
+    {
+        if(bgmSource.clip == null) return; // BGM이 없는 경우 예외 처리
+        bgmSource.pitch = pitch;
+
     }
 
     public void PlaySFX(string name)

@@ -49,12 +49,12 @@ public class BossCharger : MonoBehaviour
         //animator.SetTrigger("StartCharge");
 
         Vector2 dir = (targetPosition - (Vector2)transform.position).normalized;
-        rb.velocity = dir * chargeSpeed;
+        rb.linearVelocity = dir * chargeSpeed;
         SoundManager.Instance.PlaySFX("RunBoss");
         // 4. 돌진 지속 시간
         yield return new WaitForSeconds(2f);
 
-        rb.velocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
 
         //animator.SetTrigger("StopCharge");
 

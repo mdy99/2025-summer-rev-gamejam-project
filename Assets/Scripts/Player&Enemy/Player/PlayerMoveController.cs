@@ -61,7 +61,7 @@ public class PlayerMoveController : MonoBehaviour
         animator.SetTrigger("isDead"); // 애니메이터의 죽음 트리거를 설정
         animator.SetBool("isMoving", false); // 이동 중이 아닐 때 애니메이터의 이동 상태를 false로 설정
 
-        playerRigidbody.velocity = Vector2.zero; // 플레이어의 속도를 0으로 설정하여 이동 중지
+        playerRigidbody.linearVelocity = Vector2.zero; // 플레이어의 속도를 0으로 설정하여 이동 중지
         isMoving = false; // 이동 중지
         isGrappling = false; // 그래플링 훅 사용 중지
         lineRenderer.positionCount = 0; // LineRenderer 비활성화
@@ -122,7 +122,7 @@ public void ForceStopGrappling()
 {
     isMoving = false;
     isGrappling = false;
-    playerRigidbody.velocity = Vector2.zero;
+    playerRigidbody.linearVelocity = Vector2.zero;
     lineRenderer.positionCount = 0;
     animator.SetBool("isGrappling", false);
     animator.SetBool("isMoving", false);
@@ -181,7 +181,7 @@ void FixedUpdate()
         {
             isMoving = false; // 장애물에 충돌하면 이동 중지
             isGrappling = false; // 그래플링 훅 사용 중지
-            playerRigidbody.velocity = Vector2.zero; // 속도를 0으로 설정하여 이동 중지
+            playerRigidbody.linearVelocity = Vector2.zero; // 속도를 0으로 설정하여 이동 중지
             lineRenderer.positionCount = 0; // LineRenderer 비활성화
             animator.SetBool("isMoving", false); // 이동 중이 아닐 때 애니메이터의 이동 상태를 false로 설정
         }
@@ -191,7 +191,7 @@ void FixedUpdate()
 {
     isMoving = false;
     isGrappling = false;
-    playerRigidbody.velocity = Vector2.zero;
+    playerRigidbody.linearVelocity = Vector2.zero;
 
     lineRenderer.positionCount = 0;
     animator.SetBool("isMoving", false);

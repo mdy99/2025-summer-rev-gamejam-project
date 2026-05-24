@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class CameraZoomController : MonoBehaviour
 {
-
     // 상수: 줌 관련 설정
     [Header("Zoom Settings")]
     float zoomSpeed = 2.0f; // 한번 줌 입력 정도(줌 스피드)
@@ -13,10 +12,10 @@ public class CameraZoomController : MonoBehaviour
     float maxZoom = 20.0f; // 최대 카메라 사이즈
     private float zoomResetSpeed = 5.0f; // 줌 리셋 속도
     private float zoomFollowSpeed = 10.0f; // 줌 따라가기 속도
-    
+    [SerializeField] private float defaultZoomSize = 9.3f; // 기본 카메라 크기
+
     // 변수: 줌 관련
     private float targetZoomSize; // 목표 카메라 크기
-    private float defaultZoomSize; // 기본 카메라 크기
     private bool isZoomResetting = false; // 줌 리셋 중인지 여부
     
     // 컴포넌트
@@ -28,8 +27,7 @@ public class CameraZoomController : MonoBehaviour
     void Start()
     {
         cam = GetComponent<Camera>(); // Get the main camera
-        targetZoomSize = cam.orthographicSize; // Initialize target zoom size
-        defaultZoomSize = cam.orthographicSize; // Initialize default zoom size
+        targetZoomSize = defaultZoomSize; // Initialize target zoom size
     }
 
     void Update()

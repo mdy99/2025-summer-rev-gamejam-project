@@ -35,6 +35,8 @@ public class Enemy : MonoBehaviour, IEnemy
     [SerializeField] private float spriteAppearDelay = 0.05f; // 짧은 딜레이 후 나타나게 하기
     [SerializeField] private float fadeInDuration = 0.3f;
 
+    private Collider2D enemyCollider;
+
 
     void ShowDamageText(int damage, bool isPlayer = false)
     {
@@ -47,6 +49,7 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         BarUpdater.OnPlayerDead += OnPlayerDead; // 플레이어가 죽었을 때 이벤트 핸들러 등록
         spriteRenderer.color = Color.white; // ✅ 활성화될 때 색상 초기화
+        enemyCollider.enabled = true; // ✅ 활성화될 때 콜라이더 활성화
     }
 
     void OnPlayerDead(){
@@ -59,6 +62,7 @@ public class Enemy : MonoBehaviour, IEnemy
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyRigid = GetComponent<Rigidbody2D>();
         enemyAnimator = GetComponent<Animator>();
+        enemyCollider = GetComponent<Collider2D>();
     }
 
     public void Init(EnemyData data)
@@ -142,6 +146,9 @@ public class Enemy : MonoBehaviour, IEnemy
         SoundManager.Instance.PlaySFX("MonsterDie");
         isLive = false; // 적을 죽음 상태로 변경
         enemyAnimator.SetTrigger("isDead"); // 죽음 애니메이션 트리거 설정
+
+        enemyCollider.enabled = false; // 적의 콜라이더 비활성화하여 더 이상 플레이어와 충돌하지 않도록 함
+
         StartCoroutine(BlinkAndDisable(0.3f,3)); // 대기 후 적 오브젝트 비활성화
         WaveManager.Instance.OnEnemyKilled(); // 웨이브 매니저에 적 처치 알림
         GiveReward(); // 보상 지급 함수 호출
@@ -223,7 +230,7 @@ public class Enemy : MonoBehaviour, IEnemy
         Vector2 nextVector = directVector.normalized * enemyData.speed* Time.fixedDeltaTime; // 플레이어 방향으로 이동 벡터
         enemyRigid.MovePosition(enemyRigid.position + nextVector); // 플레이어 방향으로 이동
 
-        enemyRigid.velocity = Vector2.zero; // Rigidbody2D의 속도를 0으로 설정하여 중력 영향을 받지 않도록 함
+        enemyRigid.linearVelocity = Vector2.zero; // Rigidbody2D의 속도를 0으로 설정하여 중력 영향을 받지 않도록 함
     }
 
     private void OnCollisionStay2D(Collision2D col)

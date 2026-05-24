@@ -26,6 +26,10 @@ public class ComboManager : MonoBehaviour
 
     [SerializeField] private ParticleSystem magicCircleEffect; // 마법진 이펙트
 
+    [Header("시간 지연(슬로우 모션) 설정")]
+    [SerializeField, Range(0.01f, 1f)] private float slowMotionTimeScale = 0.2f; // UI 활성화 시 시간 배율 (0.2 = 20% 속도)
+    private float originalFixedDeltaTime; // 원래의 FixedDeltaTime 저장용
+
     public void SetKeys(KeyCode morseKey, KeyCode enterKey)
     {
         MORSE_KEY = morseKey; // 모스 부호 입력 키 설정
@@ -111,6 +115,7 @@ public class ComboManager : MonoBehaviour
         ClearCombo(); // 현재 쌓여있는 콤보들 다 제거
         comboUIRenderer.SetPanelActive(false); // 콤보 UI 패널 비활성화
         magicCircleEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        ExitSlowMotion(); // 슬로우 모션 종료
     }
 
     void OnEnable()
@@ -120,6 +125,7 @@ public class ComboManager : MonoBehaviour
     void OnDisable()
     {
         keyPressedDetector.OnSymbolDetected -= AddSymbol; // 심볼 감지 이벤트에서 콜백 제거
+        ExitSlowMotion(); // 슬로우 모션 종료 (예외 상황 대비)
     }
 
     // Start is called before the first frame update
@@ -132,6 +138,7 @@ public class ComboManager : MonoBehaviour
         keyPressedDetector = GetComponent<KeyPressedDetector>(); // 키 입력 탐지기 초기화
         keyPressedDetector.KeySetting(MORSE_KEY); // 키 입력 탐지기에 모스 부호 입력 키 설정
         skillBook = new SkillBook(skillDatas, ()=> playerTransform.position, runeInfoDatabase.ToDictionary()); // 스킬북 초기화
+        originalFixedDeltaTime = Time.fixedDeltaTime; // 원래의 FixedDeltaTime 저장
     }
 
     void AddSymbol(string symbol)
@@ -148,6 +155,7 @@ public class ComboManager : MonoBehaviour
             SoundManager.Instance.PlaySFX("ActivePanel");
             comboUIRenderer.SetPanelActive(true); // 콤보 UI 패널 활성화
             magicCircleEffect.Play(); // 마법진 이펙트 재생
+            EnterSlowMotion(); // 슬로우 모션 시작
         }
     }
 
@@ -178,4 +186,19 @@ public class ComboManager : MonoBehaviour
         }
         RemoveMorse(); // 모스부호 입력만 제거
     }
+
+    #region Time Manipulation (시간 지연 로직)
+    private void EnterSlowMotion()
+    {
+        Time.timeScale = slowMotionTimeScale;
+        // 💡 이제 오리지널 물리 스텝(보통 0.02) 기준으로 안전하게 배율이 감소합니다.
+        Time.fixedDeltaTime = originalFixedDeltaTime * Time.timeScale;
+    }
+
+    private void ExitSlowMotion()
+    {
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = originalFixedDeltaTime;
+    }
+    #endregion
 }

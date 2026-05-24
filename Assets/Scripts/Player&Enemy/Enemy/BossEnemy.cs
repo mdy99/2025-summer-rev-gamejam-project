@@ -61,7 +61,7 @@ public class BossEnemy : Enemy
             yield return new WaitForFixedUpdate();
         }
 
-        enemyRigid.velocity = Vector2.zero;
+        enemyRigid.linearVelocity = Vector2.zero;
     //    enemyAnimator.SetTrigger("StopCharge");
 
         isCharging = false;
